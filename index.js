@@ -1,18 +1,17 @@
-const express = require('express');
-/* const webRoutes = require('./routes/web'); */
-/* const bodyParser = require('body-parser'); */
+const express = require("express");
+const fs = require("fs/promises");
 
-const port = process.env.PORT || 3306;
+const port = process.env.PORT || 3000;
 const app = express();
-
-/* app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public'));
-app.set('view engine', 'ejs'); */
-
-/* app.use('/', webRoutes()); */
 
 app.get('/', (req, res) => {
     res.send('Hello World');
   });
+
+app.get('/.well-known/acme-challenge/kHjQZMGUWXX1nKCjOPI-kRYinufSDPpydmnAaMSSkpg', (req, res) => {    
+    fs.readFile("SSL-certificates.txt")
+        .then(data => res.send(data.toString()));
+});
+
 
 app.listen(port, () => console.log(`server running on port: ${port}`));
