@@ -15,6 +15,7 @@ app.use("/", webRoutes());
 
 app.get('/', (req, res) => {
 
+    res.render('login');
     //let {avatarURL, email, id, name} = req.body;
 
   });
