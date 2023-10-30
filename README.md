@@ -6,6 +6,7 @@
   git push -set-upstream origin development 
 
 Everytime you start a new task create a new branch from development using the commad: \
+  git checkout development
   git checkout -b [new branch name] 
   
 When you are done with the task and you can merge it into development with the following commands: \
