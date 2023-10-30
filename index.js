@@ -4,17 +4,17 @@ const app = express();
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+
+    let {avatarURL, email, id, name} = req.body;
+    
   });
 
 app.post ("/", (req, res) => {
 
-    var avatarURL = req.body.avatar;
-    var email = req.body.email;
-    var id = req.body.id;
-    var name = req.body.name;
+    let {avatarURL, email, id, name} = req.body;
+  
     
-    connection.query("INSERT INTO user (avatarURL, email, id, name) VALUES", (avatarURL , email, id, name), function (err, result) {
+    etellerandet.query("INSERT INTO user (avatarURL, email, id, name) VALUES", (avatarURL , email, id, name), function (err, result) {
         if (err) throw err;
     });
 });
