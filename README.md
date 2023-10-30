@@ -5,7 +5,7 @@
   git checkout -b development \
   git push -set-upstream origin development 
 
-Everytime you start a new task create a new branch from development using the commad: \
+Everytime you start a new task create a new branch from development using these commands: \
   git checkout development \
   git checkout -b [new branch name] 
   
