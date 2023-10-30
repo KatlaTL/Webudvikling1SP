@@ -1,3 +1,24 @@
+# Git branch commands
+1. Clone the project and navigate to the folder. 
+2. Write the following commands to create and sync your development branch with the remote development branch: \
+  git checkout -b development \
+  git push -set-upstream origin development 
+
+Everytime you start a new task create a new branch from development using the commad: \
+  git checkout -b [new branch name] 
+  
+When you are done with the task and you can merge it into development with the following commands: \
+  git merge development \
+  git checkout development \
+  git merge [new branch name] 
+
+Make sure to fix possible merge confict.
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
