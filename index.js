@@ -2,7 +2,7 @@ const express = require('express');
 /* const webRoutes = require('./routes/web'); */
 /* const bodyParser = require('body-parser'); */
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3306;
 const app = express();
 
 /* app.use(bodyParser.urlencoded({ extended: false }));
