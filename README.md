@@ -1,6 +1,7 @@
 # Git branch commands
 1. Clone the project and navigate to the folder. 
 2. Write the following commands to create and sync your development branch with the remote development branch: \
+  git fetch --all \
   git checkout -b development \
   git push -set-upstream origin development 
 
