@@ -14,7 +14,7 @@ app.use("/", webRoutes());
 
 
 app.get('/', (req, res) => {
-
+    res.render('../views/pages/index');
     //let {avatarURL, email, id, name} = req.body;
 
   });
@@ -30,3 +30,5 @@ app.post ("/", (req, res) => {
 });
 
 app.listen(port, () => console.log(`server running on port: ${port}`));
+
+

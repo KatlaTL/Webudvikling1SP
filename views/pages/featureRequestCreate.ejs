@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<main class="container">
+  <h2>New feature request</h2>
+
+  <form action="/featureRequests/create" method="POST">
+    <div>
+      <select name="category">
+        <option value="Feature">Dashboard Features</option>
+        <option value="Documentation">Documentation</option>
+        <option value="Billing-features">Billing features</option>
+        <option value="Networking">Networking</option>
+        <option value="Hardware">Hardware and products</option>
+        <option value="Perfect-server-stacks">Perfect server stacks</option>
+        <option value="Mobile-app">Mobile app</option>
+        <option value="Webdock-API">Webdock API</option>
+        <option value="Competetion">Competetion</option>
+        <option value="Uncategorized">Uncategorized</option>
+      </select>
+    </div>
+
+    <div>
+      <input type="text" value="" name="title" placeholder="Title" />
+    </div>
+
+    <div>
+      <textarea name="details" placeholder="Details"></textarea>
+    </div>
+
+    <button type="submit">submit</button>
+  </form>
+</main>
+<%- include('../partials/footer') %>
