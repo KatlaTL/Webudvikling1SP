@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const webRoutes = require('./routes/web');
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8081;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,6 +13,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
 
     res.render('login');
+    
     //let {avatarURL, email, id, name} = req.body;
 
   });
