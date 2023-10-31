@@ -9,9 +9,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.use("/", webRoutes());
-
-
 
 app.get('/', (req, res) => {
 
@@ -25,7 +22,7 @@ app.post ("/", (req, res) => {
     let {avatarURL, email, id, name} = req.body;
   
     
-    etellerandet.query("INSERT INTO user (avatarURL, email, id, name) VALUES", (avatarURL , email, id, name), function (err, result) {
+    etellerandet.query("INSERT INTO etellerandet (etellerandet, etellerandet, etellerandet, etellerandet) VALUES", (etellerandet , etellerandet, etellerandet, etellerandet), function (err, result) {
         if (err) throw err;
     });
 });
