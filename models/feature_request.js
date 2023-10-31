@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     imageURL: DataTypes.STRING(255),
     allowNull: false,
     parent_feature_request_id: DataTypes.INTEGER,
-    allowNull: false,
     status_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     category_id: DataTypes.STRING,
