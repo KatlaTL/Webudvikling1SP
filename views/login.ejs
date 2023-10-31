@@ -19,16 +19,13 @@
 </body>
 <script>    
 
-
-    let url = location.href;
+    /* let url = location.href;
     document.getElementById("url").innerHTML = url;
-
-    
 
     let newURL= url;
     let splitURL=newURL.toString().split("/");
-    /* console.log(splitURL);
-    console.log(splitURL[3]); */
+    console.log(splitURL);
+    console.log(splitURL[3]);
 
     function getSubstring(string, char1, char2) {
     return string.split(char1).pop().split(char2)[0];
@@ -56,10 +53,14 @@
     console.log(tokenKeyDecoded);
     console.log(tokenKeyDecodedStringify);
 
-    document.getElementById("tokenKeyDecoded").innerHTML = tokenKeyDecodedStringify;
+    document.getElementById("tokenKeyDecoded").innerHTML = tokenKeyDecodedStringify; */
 
     document.getElementById("createNewUserBTN").onclick = function () {
-        location.href = "http://127.0.0.1:8081/?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io";
+        location.href = "http://127.0.0.1:8081/login/ssoredirect";
     };
 </script>  
 </html>
+
+<!-- document.getElementById("createNewUserBTN").onclick = function () {
+    location.href = "http://127.0.0.1:8081/?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io";
+}; -->
