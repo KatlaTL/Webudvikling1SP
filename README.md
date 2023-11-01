@@ -8,6 +8,9 @@
 Everytime you start a new task create a new branch from development using these commands: \
   git checkout development \
   git checkout -b [new branch name] 
+
+To check which branch you are located in: \
+  git branch 
   
 When you are done with the task and you can merge it into development with the following commands: \
   git merge development \
@@ -17,9 +20,9 @@ When you are done with the task and you can merge it into development with the f
 Make sure to fix possible merge confict.
 
 To push your changes to git: \
-  git add .
-  git commit -m "some relevant message"
-  git push
+  git add . \
+  git commit -m "some relevant message" \
+  git push \
 
 
 
