@@ -24,7 +24,7 @@ exports.update = async (req, res) => {
     } catch(err) {
         return res.status(500).json({
             message: "The request for updating the status failed",
-            error: err
+            error: err.message
         });
     }
 }
