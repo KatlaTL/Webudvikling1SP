@@ -22,7 +22,7 @@ Make sure to fix possible merge confict.
 To push your changes to git: \
   git add . \
   git commit -m "some relevant message" \
-  git push \
+  git push
 
 
 
