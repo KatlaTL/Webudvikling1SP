@@ -11,6 +11,7 @@ exports.create = (req, res) => {
   };
 
   let tokenKeyDecoded = parseJwt(req.query.ssoToken);
+  
 
   console.log(req.query.ssoToken);
   console.log(tokenKeyDecoded);
