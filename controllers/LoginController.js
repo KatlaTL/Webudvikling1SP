@@ -1,11 +1,13 @@
+const { createUsers } = require('./UsersController');
+
 exports.login = (req, res) => {
   return res.render('login');
-
-  };
+};
 
 exports.redirect = (req, res) => {
   return res.redirect('https://webdock.io/en/login?companyID=ucl_feedback_tool&redirect=http%3A%2F%2Fwebdockproje.vps.webdock.cloud%2Flogin%2Fssoredirect%2Ftoken');
 };
+
 
 exports.ssoToken = ( req, res) => {
   function parseJwt (token) {
@@ -22,7 +24,8 @@ exports.ssoToken = ( req, res) => {
   
   console.log(req.query.ssoToken);
   console.log(tokenKeyDecoded);
-  return res.render( 'login', {
+  createUsers(tokenKeyDecoded);
+  return res.render( 'index', { 
     message: 'Succes'
   });
 };
