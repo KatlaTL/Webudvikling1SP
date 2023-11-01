@@ -5,7 +5,7 @@ const sequelize = require("sequelize");
 exports.update = async (req, res) => {
     try {
         
-        const result = await sequelize.Transaction(async (t) => {
+        const result = await sequelize.transaction(async (t) => {
             const { feature_request_id, status } = req.body;
             
             const foundStatus = await Status.findOne({ 
