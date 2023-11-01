@@ -6,8 +6,61 @@
     <title>Document</title>
 </head>
 <body>
-    
-        <button id="createNewUserBTN" href ="">Create new user</button>
+    <h3>URL'en på denne side:</h3>
+    <p id="url"></p>
+    <br>
+    <h3>Token nøglen på brugeren som er logget ind:</h3>
+    <p id="tokenKey"></p>
+    <br>
+    <h3>Decoded token nøglen på brugeren som er logget ind:</h3>
+    <p id="tokenKeyDecoded"></p>
+        
+        <button id="createNewUserBTN">Create new user</button>
 </body>
+<script>    
 
+    /* let url = location.href;
+    document.getElementById("url").innerHTML = url;
+
+    let newURL= url;
+    let splitURL=newURL.toString().split("/");
+    console.log(splitURL);
+    console.log(splitURL[3]);
+
+    function getSubstring(string, char1, char2) {
+    return string.split(char1).pop().split(char2)[0];
+    }
+
+    let tokenKeyIS = getSubstring(splitURL[3], 'Token=', '&');
+    console.log(tokenKeyIS);
+
+
+    document.getElementById("tokenKey").innerHTML = tokenKeyIS;
+
+    function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+    };
+
+    let tokenKeyDecoded = parseJwt(tokenKeyIS);
+    let tokenKeyDecodedStringify = JSON.stringify(tokenKeyDecoded);
+
+    console.log(tokenKeyDecoded);
+    console.log(tokenKeyDecodedStringify);
+
+    document.getElementById("tokenKeyDecoded").innerHTML = tokenKeyDecodedStringify; */
+
+    document.getElementById("createNewUserBTN").onclick = function () {
+        location.href = "http://127.0.0.1:8081/login/ssoredirect";
+    };
+</script>  
 </html>
+
+<!-- document.getElementById("createNewUserBTN").onclick = function () {
+    location.href = "http://127.0.0.1:8081/?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io";
+}; -->
