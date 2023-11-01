@@ -20,7 +20,6 @@ exports.ssoToken = ( req, res) => {
 
   let tokenKeyDecoded = parseJwt(req.query.ssoToken);
   
-
   console.log(req.query.ssoToken);
   console.log(tokenKeyDecoded);
   return res.render( 'login', {
