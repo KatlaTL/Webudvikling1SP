@@ -1,10 +1,8 @@
 const { Feature_request } = require("../../../models/feature_request");
 const { Status } = require("../../../models/status");
-const sequelize = require("sequelize");
 
 exports.update = async (req, res) => {
     try {
-        
         const result = await sequelize.transaction(async (t) => {
             const { feature_request_id, status } = req.body;
             
