@@ -16,7 +16,10 @@ When you are done with the task and you can merge it into development with the f
 
 Make sure to fix possible merge confict.
 
-
+To push your changes to git: \
+  git add .
+  git commit -m "some relevant message"
+  git push
 
 
 
