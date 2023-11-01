@@ -2,13 +2,14 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const webRoutes = require('./routes/web');
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 4000;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+app.use('/', webRoutes());
 
 app.get('/', (req, res) => {
     res.render('../views/pages/index');

@@ -1,8 +1,17 @@
-<%- include('../partials/header') %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <link rel="stylesheet" href="/css/app.css" />
+  </head>
+  <body>
+
 <main class="container">
   <h2>New feature request</h2>
 
-  <form action="/featureRequests/create" method="POST">
+  <form action="/featureRequest/create" method="post">
     <div>
       <select name="category">
         <option value="Feature">Dashboard Features</option>
@@ -29,4 +38,6 @@
     <button type="submit">submit</button>
   </form>
 </main>
-<%- include('../partials/footer') %>
+
+</body>
+</html>
