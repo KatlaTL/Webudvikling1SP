@@ -11,6 +11,6 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.use("/", webRoutes());
-app.use("/", api());
+app.use("/", apiRoutes());
 
 app.listen(port, () => console.log(`server running on port: ${port}`));
