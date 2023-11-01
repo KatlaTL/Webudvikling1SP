@@ -4,6 +4,7 @@ const { sequelize } = require("../../../models");
 
 exports.update = async (req, res) => {
     try {
+        console.log(req.header("Origin"))
         const result = await sequelize.transaction(async (t) => {
             const { feature_request_id, status } = req.body;
 
