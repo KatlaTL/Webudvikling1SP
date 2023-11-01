@@ -21,7 +21,10 @@ exports.update = async (req, res) => {
             feature_request: result
         });
 
-    } catch(e) {
-        return res.status(500).json({message: "The request for updating the status failed"});
+    } catch(err) {
+        return res.status(500).json({
+            message: "The request for updating the status failed",
+            error: err
+        });
     }
 }
