@@ -5,20 +5,30 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Statuses', [
       {
-      status:'Under Review'
+      status:'Under Review',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
-      status:'Planned'
+      status:'Planned',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
-      status:'In Progress'
+      status:'In Progress',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
-      status:'Completed'
+      status:'Completed',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
-      status:'Closed'
-    } 
+      status:'Closed',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
     ]);
   },
 
