@@ -1,9 +1,5 @@
 const { User } = require('../models');
 
-exports.index = (req, res) => {
-  return res.render('index');
-};
-
 exports.createUsers = async (data) => {
   try {
     const { avatarURL, email, id, name } = data;

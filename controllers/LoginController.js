@@ -4,13 +4,16 @@ exports.login = (req, res) => {
   return res.render('login');
 };
 
+exports.indexRedirect = (req, res) => {
+  return res.render('index');
+};
+
 exports.redirect = (req, res) => {
   return res.redirect('https://webdock.io/en/login?companyID=ucl_feedback_tool&redirect=http%3A%2F%2Fwebdockproje.vps.webdock.cloud%2Flogin%2Fssoredirect%2Ftoken');
 };
 
-
 exports.ssoToken = ( req, res) => {
-  function parseJwt (token) {
+  try{ function parseJwt (token) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
@@ -28,4 +31,8 @@ exports.ssoToken = ( req, res) => {
   return res.render( 'index', { 
     message: 'Succes'
   });
+} catch (e) {
+  console.log(e);
+  return res.sen('error');
+} 
 };
