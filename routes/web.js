@@ -5,7 +5,7 @@ const LoginController = require("../controllers/LoginController");
 const UsersController = require("../controllers/UsersController");
 
 const router = express.Router();
-const featureRequests = require('../controllers/FeatureRequestsController');
+const featureRequests = require('../controllers/featureRequestsController');
 
 module.exports = () => {
     router.get('/featureRequests/create', featureRequests.createForm);
