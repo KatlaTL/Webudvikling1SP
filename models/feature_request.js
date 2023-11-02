@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Feature_request.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     title: DataTypes.STRING(100),
     description: DataTypes.STRING,
     imageURL: DataTypes.STRING(255),

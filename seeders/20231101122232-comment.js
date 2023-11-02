@@ -5,8 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Comments', [{
       Comments:'Hest',
-      User_id:'1',
-      Feature_request_id:'1',
+      user_id: 1,
+      feature_request_id: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);
