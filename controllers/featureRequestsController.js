@@ -1,8 +1,20 @@
-const { featureRequest } = require('../models');
+const { Feature_request } = require('../models');
 const sequelize = require("sequelize");
 const axios = require("axios");
 const express = require('express');
 const app = express();
+
+
+exports.getRequest = async (req, res) => {
+  try {
+    const request = await Feature_request.findOne({ where: { id: Number(req.params.requestId)}});
+    return res.render("pages/index", { request: request});
+  } catch(err) {
+    console.error(err);
+    return res.send("Error in getRequest");
+  }
+};
+
 
 
 const featureRequestData = {
@@ -32,7 +44,7 @@ exports.create = async (req, res) => {
 //axios post her
     try {
     const { category, title, details } = req.body;
-    const featureRequest = await featureRequest.create({category, title, details});
+    const featureRequest = await Feature_request.create({category, title, details});
     return res.render('pages/featureRequestCreate');
   } catch (e) {
     console.log(e);
