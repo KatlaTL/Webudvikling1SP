@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 5010;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,3 +22,5 @@ app.use("/", webRoutes());
 app.use("/", apiRoutes());
 
 app.listen(port, () => console.log(`server running on port: ${port}`));
+
+
