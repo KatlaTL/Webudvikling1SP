@@ -15,7 +15,32 @@ module.exports = {
       status_id: 1,
       user_id: 1,
       category_id: 1
-    }], {});
+    },
+    {
+      id: 1537979745,
+      title: "Hamsters with tiny hats",
+      description: "some description",
+      imageURL: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      parent_feature_request_id: null,
+      status_id: 1,
+      user_id: 1,
+      category_id: 1
+    },
+    {
+      id: 1537979745,
+      title: "Tiny boots on cute tiny fur balls aka hamsters",
+      description: "some description",
+      imageURL: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      parent_feature_request_id: null,
+      status_id: 1,
+      user_id: 1,
+      category_id: 1
+    }
+  ], {});
 
   },
 
