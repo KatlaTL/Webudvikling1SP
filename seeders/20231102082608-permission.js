@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Roles', [{
+    return queryInterface.bulkInsert('Permissions', [{
       permission:'EmailNotification',
       description: "Permission to receive email notifications of new feature requests and comments",
       createdAt: new Date(),
