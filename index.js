@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors");
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
@@ -12,11 +12,6 @@ app.use(express.json())
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.use(cors({
-    origin: "https://webdock.io",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: "Content-Type"
-}));
 
 app.use("/", webRoutes());
 app.use("/", apiRoutes());
