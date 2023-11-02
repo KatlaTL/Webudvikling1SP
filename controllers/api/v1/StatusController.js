@@ -28,11 +28,11 @@ exports.update = async (req, res) => {
 
     } catch(err) {
         let statusCode = 500;
-        let message = "The request for updating the status failed"
+        let message = "The request for updating the status failed";
 
         if (err.message == 400) {
             statusCode = 400;
-            message = "Status should be one of Under Review, Planned, In Progress, Completed or Closed"
+            message = "Status should be one of Under Review, Planned, In Progress, Completed or Closed";
         }
 
         return res.status(statusCode).json({
