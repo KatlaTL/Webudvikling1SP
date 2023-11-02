@@ -14,8 +14,8 @@ const corsConfig = (origin, methods) => {
 };
 
 module.exports = () => {
-    router.options("/api/vi/status/:id", cors(corsConfig("https://webdock.io", ["PUT", "POST"])));
-    router.put("/api/vi/status/:id", cors(), Status.update);
-    router.post("/api/vi/status/:id", cors(), Status.update);
+    router.options("/api/vi/status/:statusId", cors(corsConfig("https://webdock.io", ["PUT", "POST"])));
+    router.put("/api/vi/status/:statusId", cors(), Status.update);
+    router.post("/api/vi/status/:statusId", cors(), Status.update);
     return router;
 };
