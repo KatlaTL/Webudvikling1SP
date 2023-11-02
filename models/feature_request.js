@@ -25,8 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     parent_feature_request_id: DataTypes.INTEGER,
     status_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
-    category_id: DataTypes.STRING,
-    upvote_id: DataTypes.INTEGER
+    category_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Feature_request',

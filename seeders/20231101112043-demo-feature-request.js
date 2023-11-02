@@ -14,8 +14,7 @@ module.exports = {
       parent_feature_request_id: null,
       status_id: 1,
       user_id: 1,
-      category_id: 1,
-      upvote_id: 1
+      category_id: 1
     }], {});
 
   },

@@ -11,6 +11,15 @@ module.exports = {
       Role_id: '1',
       createdAt: new Date(),
       updatedAt: new Date()
+    }, 
+    {
+      id: 2,
+      email: 'example@example.com',
+      Name: 'John Doey Moey',
+      avatarURL:'#',
+      Role_id: '2',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }]);
   },
 
