@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <link rel="stylesheet" href="/css/app.css" />
+  </head>
+  <body>
+
+<main class="container">
+  <h2>New feature request</h2>
+
+  <form id="createForm" action="/featureRequest/create" method="post">
+    <div>
+      <select name="category">
+        <option value="Feature">Dashboard Features</option>
+        <option value="Documentation">Documentation</option>
+        <option value="Billing-features">Billing features</option>
+        <option value="Networking">Networking</option>
+        <option value="Hardware">Hardware and products</option>
+        <option value="Perfect-server-stacks">Perfect server stacks</option>
+        <option value="Mobile-app">Mobile app</option>
+        <option value="Webdock-API">Webdock API</option>
+        <option value="Competetion">Competetion</option>
+        <option value="Uncategorized">Uncategorized</option>
+      </select>
+    </div>
+
+    <div>
+      <input type="text" value="" name="title" placeholder="Title" />
+    </div>
+
+    <div>
+      <textarea name="details" placeholder="Details"></textarea>
+    </div>
+
+    <button type="submit">submit</button>
+  </form>
+</main>
+<script src="/controllers/featureRequestsController.js">
+  document.getElementById('createForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Forhindrer formularen i at sende en standard POST-anmodning
+
+    // Hent værdierne fra formularfelterne
+    const category = document.querySelector('select[name="category"]').value;
+    const title = document.querySelector('input[name="title"]').value;
+    const details = document.querySelector('textarea[name="details"]').value;
+
+    // Data til feature request
+    const featureRequestData = {
+        category: category,
+        title: title,
+        description: details
+    };
+
+    // Konfiguration for Axios-anmodning
+    const axiosConfig = {
+        method: 'post',
+        url: 'https://webdock.io/en/platform_data/feature_requests/new',
+        data: featureRequestData,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    // Send POST-anmodningen
+    axios(axiosConfig)
+        .then(response => {
+            if (response.status === 200) {
+                console.log("Feature request added. ID:", response.data.id);
+            } else {
+                console.error("An error occurred:", response.data.message);
+            }
+        })
+        .catch(error => {
+            console.error("An error occurred:", error.message);
+        });
+});
+
+</script>
+</body>
+</html>
