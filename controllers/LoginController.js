@@ -1,4 +1,5 @@
 const { createUsers } = require('./UsersController');
+const{ loginLocalStorage } = require('./LocalStorageController');
 
 exports.login = (req, res) => {
   return res.render('login');
@@ -25,14 +26,16 @@ exports.ssoToken = ( req, res) => {
 
   let tokenKeyDecoded = parseJwt(req.query.ssoToken);
   
-  console.log(req.query.ssoToken);
-  console.log(tokenKeyDecoded);
+ /*  console.log(req.query.ssoToken);
+  console.log(tokenKeyDecoded); */
   createUsers(tokenKeyDecoded);
+  loginLocalStorage(tokenKeyDecoded);
   return res.render( 'index', { 
     message: 'Succes'
   });
 } catch (e) {
   console.log(e);
-  return res.sen('error');
+  return res.send('error');
 } 
 };
+
