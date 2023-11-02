@@ -1,7 +1,7 @@
 const express = require("express");
 
 const LoginController = require("../controllers/LoginController");
-const LocalStorageController = require("../controllers/LocalStorageController");
+const LocalStorageController = require("../services/localStorage");
 const UsersController = require("../controllers/UsersController");
 
 const router = express.Router();
