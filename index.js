@@ -1,31 +1,25 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require('body-parser');
 const webRoutes = require('./routes/web');
+const apiRoutes = require('./routes/api');
 
 const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json())
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.use('/', webRoutes());
+app.use(cors({
+    origin: "https://webdock.io",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: "Content-Type"
+}));
 
-app.get('/', (req, res) => {
-    res.render('../views/pages/index');
-    //let {avatarURL, email, id, name} = req.body;
-
-  });
-
-app.post ("/", (req, res) => {
-
-    let {avatarURL, email, id, name} = req.body;
-  
-    
-    etellerandet.query("INSERT INTO etellerandet (etellerandet, etellerandet, etellerandet, etellerandet) VALUES", (etellerandet , etellerandet, etellerandet, etellerandet), function (err, result) {
-        if (err) throw err;
-    });
-});
+app.use("/", webRoutes());
+app.use("/", apiRoutes());
 
 app.listen(port, () => console.log(`server running on port: ${port}`));
 

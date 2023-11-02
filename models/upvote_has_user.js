@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Feature_request extends Model {
+  class Upvote_has_user extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,23 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Feature_request.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
-    title: DataTypes.STRING(100),
-    description: DataTypes.STRING,
-    imageURL: DataTypes.STRING(255),
-    allowNull: false,
-    parent_feature_request_id: DataTypes.INTEGER,
-    status_id: DataTypes.INTEGER,
+  Upvote_has_user.init({
     user_id: DataTypes.INTEGER,
-    category_id: DataTypes.STRING,
     upvote_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Feature_request',
+    modelName: 'Upvote_has_user',
   });
-  return Feature_request;
+  return Upvote_has_user;
 };
