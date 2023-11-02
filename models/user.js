@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: DataTypes.STRING(100),
     name: DataTypes.STRING(50),
-    avatarURL: DataTypes.STRING(255),
+    avatarURL: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
     role_id: DataTypes.INTEGER
   }, {
     sequelize,

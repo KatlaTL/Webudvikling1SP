@@ -20,9 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.STRING(100),
     description: DataTypes.STRING,
-    imageURL: DataTypes.STRING(255),
-    allowNull: false,
-    parent_feature_request_id: DataTypes.INTEGER,
+    imageURL: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    parent_feature_request_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     status_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     category_id: DataTypes.STRING
