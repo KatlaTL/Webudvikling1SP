@@ -1,9 +1,39 @@
 <div class="feature-request">
-    <p><%= request.title %></p>
-    <p><%= request.description %></p>
-
-    <div>
-        <span class="upvotes"><%= typeof upvote != "undefined" ? upvote.amount : 0 %></span>
-        <button class="upvote-cta">Upvote</button>
+    <div class="feature-request">
+        <p class="feature-request-title"></p>
+        <p class="feature-request-description"></p>
+        <div class="upvote">
+            <span class="upvote-amount"></span>
+            <button class="upvote-cta">Upvote</button>
+        </div>
     </div>
+    <script>
+        fetch("/featureRequests/1537979745")
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector(".feature-request-title").innerHTML = data.title;
+                document.querySelector(".feature-request-description").innerHTML = data.description;
+            });
+        
+        const getUpvotes = () => {
+            fetch("/upvotes/featureRequests/1537979745")
+                .then(res => res.json())
+                .then(data => {
+                    document.querySelector(".upvote-amount").innerHTML = data.amount;
+                });
+            }
+        getUpvotes();
+
+        document.querySelector(".upvote-cta").addEventListener("click", () => {
+            fetch("/upvotes/featureRequests/1537979745", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: 1
+                })
+            }).then(() => getUpvotes())
+        });
+    </script>
 </div>

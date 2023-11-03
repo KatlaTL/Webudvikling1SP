@@ -1,15 +1,13 @@
 const { Feature_request } = require('../models');
-const { getRequest } = require("../services/featureRequestService");
 const axios = require("axios");
 
 
 exports.single = async (req, res) => {
   try {
-    const request = await getRequest(Number(req.params.requestId));
-    return res.render("pages/index", { request: request});
+    const request = await Feature_request.findOne({ where: { id: Number(req.params.requestId)}});
+    return res.status(200).json(request);
   } catch(err) {
-    console.error(err);
-    return res.send("Error in getRequest");
+    return res.sendStatus(500);
   }
 };
 
