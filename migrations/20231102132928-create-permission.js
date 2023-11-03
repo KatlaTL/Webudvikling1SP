@@ -2,31 +2,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Feature_requests', {
+    await queryInterface.createTable('Permissions', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      permission: {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
-      },
-      imageURL: {
-        type: Sequelize.STRING
-      },
-      parent_feature_request_id: {
-        type: Sequelize.INTEGER
-      },
-      status_id: {
-        type: Sequelize.INTEGER
-      },
-      user_id: {
-        type: Sequelize.INTEGER
-      },
-      category_id: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -40,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Feature_requests');
+    await queryInterface.dropTable('Permissions');
   }
 };
