@@ -1,13 +1,11 @@
 const { Feature_request } = require('../models');
-const sequelize = require("sequelize");
+const { getRequest } = require("../services/featureRequestService");
 const axios = require("axios");
-const express = require('express');
-const app = express();
 
 
-exports.getRequest = async (req, res) => {
+exports.single = async (req, res) => {
   try {
-    const request = await Feature_request.findOne({ where: { id: Number(req.params.requestId)}});
+    const request = await getRequest(Number(req.params.requestId));
     return res.render("pages/index", { request: request});
   } catch(err) {
     console.error(err);
@@ -51,7 +49,7 @@ exports.create = async (req, res) => {
     return res.send('Error');
   }
 };
-
+/* 
 axios.post('https://webdock.io/en/platform_data/feature_requests/new', featureRequestData)
   .then(response => {
     if (response.status === 200) {
@@ -65,4 +63,4 @@ axios.post('https://webdock.io/en/platform_data/feature_requests/new', featureRe
   });
 
   
-  
+   */

@@ -1,0 +1,9 @@
+<div class="feature-request">
+    <p><%= request.title %></p>
+    <p><%= request.description %></p>
+
+    <div>
+        <span class="upvotes"><%= typeof upvote != "undefined" ? upvote.amount : 0 %></span>
+        <button class="upvote-cta">Upvote</button>
+    </div>
+</div>

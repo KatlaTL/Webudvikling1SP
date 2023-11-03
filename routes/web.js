@@ -10,7 +10,7 @@ const router = express.Router();
 module.exports = () => {
     router.get('/', Default.index);
 
-    router.get('/featureRequests/:requestId', FeatureRequests.getRequest);
+    router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequests/create', FeatureRequests.createForm);
     router.post('/featureRequests/create', FeatureRequests.create);
 
