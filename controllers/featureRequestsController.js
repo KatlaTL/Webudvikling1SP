@@ -1,4 +1,4 @@
-const { featureRequest } = require('../models');
+const { Feature_request } = require('../models');
 const sequelize = require("sequelize");
 const axios = require("axios");
 const express = require('express');
@@ -47,3 +47,5 @@ exports.createForm = (req, res) => {
       return res.status(500).send('Der opstod en fejl under oprettelsen af feature-requesten.');
     }
   };
+
+  //få lavet databasen//
