@@ -11,6 +11,7 @@ module.exports = () => {
     router.get('/users', UsersController.createUsers);
     router.get('/index', LoginController.indexRedirect);
     router.get('/login', LoginController.login);
+    router.get('/loggedout', LocalStorageController.localStorageLoggedOutRedirect);
     router.get('/login/ssoredirect', LoginController.redirect);
     router.get('/login/ssotoken', LoginController.ssoToken);
     router.get('/login/localstorage', LocalStorageController.loginLocalStorage);
