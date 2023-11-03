@@ -3,9 +3,10 @@ const sequelize = require("sequelize");
 
 const LoginController = require("../controllers/LoginController");
 const UsersController = require("../controllers/UsersController");
+const featureRequests = require('../controllers/featureRequestsController');
 
 const router = express.Router();
-const featureRequests = require('../controllers/FeatureRequestsController');
+
 
 module.exports = () => {
     router.get('/featureRequests/create', featureRequests.createForm);
@@ -19,4 +20,3 @@ module.exports = () => {
     return router;
 
 };
-

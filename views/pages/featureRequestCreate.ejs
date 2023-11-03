@@ -11,7 +11,7 @@
 <main class="container">
   <h2>New feature request</h2>
 
-  <form id="createForm" action="/featureRequest/create" method="post">
+  <form id="createForm" action="/featureRequests/create" method="post">
     <div>
       <select name="category">
         <option value="Feature">Dashboard Features</option>
@@ -37,46 +37,9 @@
 
     <button type="submit">submit</button>
   </form>
+
+  <p id="message"></p>
 </main>
-<script src="/controllers/featureRequestsController.js">
-  document.getElementById('createForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Forhindrer formularen i at sende en standard POST-anmodning
-
-    // Hent værdierne fra formularfelterne
-    const category = document.querySelector('select[name="category"]').value;
-    const title = document.querySelector('input[name="title"]').value;
-    const details = document.querySelector('textarea[name="details"]').value;
-
-    // Data til feature request
-    const featureRequestData = {
-        category: category,
-        title: title,
-        description: details
-    };
-
-    // Konfiguration for Axios-anmodning
-    const axiosConfig = {
-        method: 'post',
-        url: 'https://webdock.io/en/platform_data/feature_requests/new',
-        data: featureRequestData,
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-
-    // Send POST-anmodningen
-    axios(axiosConfig)
-        .then(response => {
-            if (response.status === 200) {
-                console.log("Feature request added. ID:", response.data.id);
-            } else {
-                console.error("An error occurred:", response.data.message);
-            }
-        })
-        .catch(error => {
-            console.error("An error occurred:", error.message);
-        });
-});
 
 </script>
 </body>
