@@ -10,6 +10,9 @@ exports.loginLocalStorage = (data) => {
           
           localStorage.setItem('userID', data.id);
           console.log(localStorage.getItem('userID'));
+          for (let [key, value] of Object.entries(localStorage)) {
+                console.log(`${key}: ${value}`);
+            }
     return data;
     } catch(e) {
 
