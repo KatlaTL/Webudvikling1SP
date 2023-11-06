@@ -1,8 +1,19 @@
-const { featureRequest } = require('../models');
+const { Feature_request } = require('../models');
 const sequelize = require("sequelize");
 const axios = require("axios");
 const express = require('express');
 const app = express();
+
+///TO DO update for feature request
+exports.getAll = async (req, res) => {
+  try {
+    const featureRequest = await featureRequest.findAll();
+    return res.render('featureRequest', { featureRequest: featureRequest });
+  } catch (e) {
+    console.log(e);
+    return res.send('Error');
+  }
+};
 
 
 const featureRequestData = {

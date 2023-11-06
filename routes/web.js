@@ -8,8 +8,11 @@ const router = express.Router();
 const featureRequests = require('../controllers/FeatureRequestsController');
 
 module.exports = () => {
+    router.get('/featureRequests', featureRequests.getAll);
     router.get('/featureRequests/create', featureRequests.createForm);
     router.post('/featureRequests/create', featureRequests.create);
+
+    //TO DO at route
 
     router.get('/status', (req,res) => res.sendStatus(200))
     //ADD routers here with router.get / router.post
@@ -17,6 +20,6 @@ module.exports = () => {
     router.get('/login', LoginController.login);
     router.get('/login/ssoredirect', LoginController.redirect);
     return router;
-
 };
+
 
