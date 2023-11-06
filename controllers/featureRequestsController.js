@@ -1,8 +1,16 @@
 const { Feature_request } = require('../models');
 const sequelize = require("sequelize");
 const axios = require("axios");
-const express = require('express');
-const app = express();
+
+
+exports.single = async (req, res) => {
+  try {
+    const request = await Feature_request.findOne({ where: { id: Number(req.params.requestId)}});
+    return res.status(200).json(request);
+  } catch(err) {
+    return res.sendStatus(500);
+  }
+};
 
 exports.createForm = (req, res) => {
     return res.render('pages/featureRequestCreate');
