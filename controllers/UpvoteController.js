@@ -51,7 +51,6 @@ exports.upvote = async (req, res) => {
                 }
             });
 
-
             if(!userHasUpvote) {
                 await Upvote.increment("amount", {
                     where: { feature_request_id: feature_request_id}

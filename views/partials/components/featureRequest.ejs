@@ -8,7 +8,7 @@
         </div>
     </div>
     <script>
-        fetch("/featureRequests/1537979745")
+        fetch("/featureRequests/1537979745") //edit to the actually feature requests ID
             .then(res => res.json())
             .then(data => {
                 document.querySelector(".feature-request-title").innerHTML = data.title;
@@ -16,7 +16,7 @@
             });
         
         const getUpvotes = () => {
-            fetch("/upvotes/featureRequests/1537979745")
+            fetch("/featureRequests/1537979745/upvotes") //edit to the actually feature requests ID
                 .then(res => res.json())
                 .then(data => {
                     document.querySelector(".upvote-amount").innerHTML = data.amount;
@@ -25,13 +25,13 @@
         getUpvotes();
 
         document.querySelector(".upvote-cta").addEventListener("click", () => {
-            fetch("/upvotes/featureRequests/1537979745", {
+            fetch("/featureRequests/1537979745/upvotes", { //edit to the actually feature requests ID
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: 1
+                    user_id: 1 //edit to the logged in users ID
                 })
             }).then(() => getUpvotes())
         });

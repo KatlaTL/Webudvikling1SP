@@ -17,11 +17,9 @@ module.exports = () => {
     router.get('/featureRequests/create', FeatureRequests.createForm);
     router.post('/featureRequests/create', FeatureRequests.create);
 
-    router.get('/upvotes/featureRequests/:requestId', Upvote.getUpvotes);
-    router.put('/upvotes/featureRequests/:requestId', Upvote.upvote);
+    router.get('/featureRequests/:requestId/upvotes', Upvote.getUpvotes);
+    router.put('/featureRequests/:requestId/upvotes', Upvote.upvote);
 
-
-    //TO DO at route
 
     router.get('/status', (req,res) => res.sendStatus(200))
 
