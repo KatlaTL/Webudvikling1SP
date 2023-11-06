@@ -4,7 +4,6 @@ const { sequelize } = require("../../../models");
 
 exports.update = async (req, res) => {
     try {
-        console.log(req.header("Origin"))
         const result = await sequelize.transaction(async (t) => {
             const { feature_request_id, status } = req.body;
 
@@ -28,11 +27,11 @@ exports.update = async (req, res) => {
 
     } catch(err) {
         let statusCode = 500;
-        let message = "The request for updating the status failed"
+        let message = "The request for updating the status failed";
 
         if (err.message == 400) {
             statusCode = 400;
-            message = "Status should be one of Under Review, Planned, In Progress, Completed or Closed"
+            message = "Status should be one of Under Review, Planned, In Progress, Completed or Closed";
         }
 
         return res.status(statusCode).json({
