@@ -15,6 +15,14 @@ exports.createForm = (req, res) => {
       if (!category || !title || !details) {
         return res.status(400).send('Alle felter skal udfyldes korrekt.');
       }
+  
+      const featureRequestData = {
+        id: externalId,
+        userID: 22486,
+        title: title,
+        description: details,
+        category: category
+      };
 
       const FeatureRequest = await Feature_request.create(featureRequestData);
 
@@ -25,14 +33,6 @@ exports.createForm = (req, res) => {
             const externalId = response.data.id;
 
             featureRequestData.id = externalId;
-
-            const featureRequestData = {
-              id: externalId,
-              userID: 22486,
-              title: title,
-              description: details,
-              category: category
-            };
             
 
         } else {
