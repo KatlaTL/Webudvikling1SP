@@ -15,18 +15,26 @@ exports.createForm = (req, res) => {
       if (!category || !title || !details) {
         return res.status(400).send('Alle felter skal udfyldes korrekt.');
       }
-  
-      const featureRequestData = {
-        userID: 22486,
-        title: title,
-        description: details,
-        category: category
-      };
+
+      const FeatureRequest = await Feature_request.create(featureRequestData);
 
       axios.post('https://webdock.io/en/platform_data/feature_requests/new', featureRequestData)
       .then(response => {
         if (response.status === 200) {
-          console.log(response.data);
+
+            const externalId = response.data.id;
+
+            featureRequestData.id = externalId;
+
+            const featureRequestData = {
+              id: externalId,
+              userID: 22486,
+              title: title,
+              description: details,
+              category: category
+            };
+            
+
         } else {
           console.error("An error occurred:", response.data.message);
         }
@@ -49,3 +57,6 @@ exports.createForm = (req, res) => {
   };
 
   //få lavet databasen//
+  
+
+  
