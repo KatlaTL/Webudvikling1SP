@@ -4,6 +4,7 @@ const LoginController = require("../controllers/LoginController");
 const LocalStorageController = require("../services/localStorage");
 const UsersController = require("../controllers/UsersController");
 
+
 const router = express.Router();
 
 module.exports = () => {
@@ -11,7 +12,7 @@ module.exports = () => {
     router.get('/users', UsersController.createUsers);
     router.get('/index', LoginController.indexRedirect);
     router.get('/login', LoginController.login);
-    router.get('/loggedout', LocalStorageController.localStorageLoggedOutRedirect);
+    router.get('/loggedout', LoginController.localStorageLoggedOutRedirect);
     router.get('/login/ssoredirect', LoginController.redirect);
     router.get('/login/ssotoken', LoginController.ssoToken);
     router.get('/login/localstorage', LocalStorageController.loginLocalStorage);

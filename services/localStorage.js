@@ -1,4 +1,3 @@
-
 exports.loginLocalStorage = (data) => {
     try{
 
@@ -23,13 +22,16 @@ exports.loginLocalStorage = (data) => {
             
         }; */
 
-        setTimeout(()=> {
+        let timeoutID = setTimeout(()=> {
             console.log('settimeout test1');
             localStorage.clear();
             console.log(localStorage.getItem('userID'));
-        },'5000');
+        },'10000');
 
-        
+
+        timeoutID();
+
+        clearTimeout(timeoutID);        
     } catch(e) {
         console.log('error');
     }
@@ -38,22 +40,3 @@ exports.loginLocalStorage = (data) => {
 
 
 
-exports.localStorageLoggedOutRedirect = (req, res) => {
-    if (typeof localStorage === "undefined" || localStorage === null) {
-        var LocalStorage = require('node-localstorage').LocalStorage;
-        localStorage = new LocalStorage('./localStorage');
-    }
-
-    console.log(localStorage.getItem('userID'));
-
-  try{
-    if(localStorage.getItem('userID') == null) {
-        return res.render('loggedOut');
-    } else (
-        console.log("localstorage is not empty")
-    )
-  }
-  catch(e){
-    console.log('error');
-  }
-};
