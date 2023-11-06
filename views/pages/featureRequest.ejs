@@ -13,8 +13,7 @@
         <div class="list">
           <% for(let index in featureRequest) { %>
             <div class="list__item">
-              <h3><a href="/featureRequest/<%= featureRequests[index].id %>"><%= featureRequests[index].title %></h3></a>
-              <p><%= featureRequests[index].author %></p>
+              <h3><a href="/featureRequest/<%= featureRequest[index].id %>"><%= featureRequest[index].title %></h3></a>
             </div>
           <% } %>
         </div>

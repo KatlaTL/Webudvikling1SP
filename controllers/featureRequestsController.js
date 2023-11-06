@@ -5,8 +5,8 @@ const axios = require("axios");
 ///TO DO update for feature request
 exports.getAll = async (req, res) => {
   try {
-    const featureRequest = await featureRequest.findAll();
-    return res.render('featureRequest', { featureRequest: featureRequest });
+    const featureRequest = await Feature_request.findAll();
+    return res.render('pages/featureRequest', { featureRequest: featureRequest });
   } catch (e) {
     console.log(e);
     return res.send('Error');
