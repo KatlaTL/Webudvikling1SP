@@ -1,0 +1,7 @@
+$test: red;
+
+body {
+background-color: $test;
+}
+
+@import 'bootstrap.css';
