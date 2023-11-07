@@ -2,7 +2,7 @@ exports.loginLocalStorage = (data) => {
     try{
 
         if (typeof localStorage === "undefined" || localStorage === null) {
-            var LocalStorage = require('node-localstorage').LocalStorage;
+            let LocalStorage = require('node-localstorage').LocalStorage;
             localStorage = new LocalStorage('./localStorage');
         } 
           

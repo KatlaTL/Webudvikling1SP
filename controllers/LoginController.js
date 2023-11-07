@@ -44,7 +44,7 @@ exports.ssoToken = ( req, res) => {
 
 exports.localStorageLoggedOutRedirect = (req, res) => {
     if (typeof localStorage === "undefined" || localStorage === null) {
-        var LocalStorage = require('node-localstorage').LocalStorage;
+        let LocalStorage = require('node-localstorage').LocalStorage;
         localStorage = new LocalStorage('./localStorage');
     }
 
