@@ -14,6 +14,7 @@ module.exports = () => {
     router.get('/index', LoginController.indexRedirect);
     router.get('/login', LoginController.login);
     router.get('/comments', CommentsController.comments);
+    router.post('/postcomments', CommentsController.postComments);
     router.get('/loggedout', LoginController.localStorageLoggedOutRedirect);
     router.get('/login/ssoredirect', LoginController.redirect);
     router.get('/login/ssotoken', LoginController.ssoToken);
