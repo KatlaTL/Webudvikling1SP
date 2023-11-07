@@ -1,3 +1,40 @@
 @import url(bootstrap.css);
+/*$turqoise: #00a1a1;
+$green: #00956c;
+$bgwhite: #f4f8f8;
+$white: #FFFF;
+$font-family: 'Raleway', sans-serif;*/
+
+
 body {
-  background-color: red; }
+  font-family: "Raleway", sans-serif; 
+}
+
+.btn-green {
+  background-color: #00956c;
+  color: #FFFF;
+  position: absolute; 
+}
+.card-header {
+  background-color: #00a1a1;
+}
+
+.card-body {
+  height: 80vh;
+}
+header, section, footer {
+  color: black; 
+}
+
+.card-text, .card-title {
+  color: black;
+}
+
+
+footer {
+  font-size: 14px; 
+}
+
+
+
+
