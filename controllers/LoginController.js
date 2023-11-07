@@ -59,7 +59,7 @@ exports.localStorageLoggedOutRedirect = (req, res) => {
     )
   }
   catch(e){
-    console.log('error');
+    console.log('error', e);
   }
 };
 
