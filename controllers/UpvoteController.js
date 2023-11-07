@@ -9,7 +9,8 @@ exports.getUpvotes = async (req, res) => {
             let upvote = await UpvoteService.getUpvote(feature_request_id, transaction);
 
             if(!upvote) {
-                upvote = await UpvoteService.createUpvote(feature_request_id, 0, transaction);
+                const amount = 0;
+                upvote = await UpvoteService.createUpvote(feature_request_id, amount, transaction);
             } 
             return upvote;
         });

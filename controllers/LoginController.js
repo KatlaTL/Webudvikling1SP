@@ -1,66 +1,58 @@
-const { createUsers } = require('./UsersController');
-const{ loginLocalStorage } = require('../services/localStorage');
+const TokenService = require("../services/TokenService");
+const UserService = require("../services/UserService");
+const { serialize } = require("cookie");
+const { sequelize } = require("../models");
 
 
-exports.login = (req, res) => {
-  return res.render('login');
-};
-
-exports.indexRedirect = (req, res) => {
-  return res.render('index');
-};
-
+//TO DO refactor redirect function, make the redirect url more dynamic
 exports.redirect = (req, res) => {
-  return res.redirect('http://localhost:8081/login/ssotoken?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io');
+  return res.redirect('http://localhost:3000/login/ssotoken?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io');
   /* return res.redirect('https://webdock.io/en/login?companyID=ucl_feedback_tool&redirect=http%3A%2F%2Fwebdockproje.vps.webdock.cloud%2Flogin%2Fssoredirect%2Ftoken'); */
 };
 
-exports.ssoToken = ( req, res) => {
-  try{ function parseJwt (token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+exports.login = async (req, res) => {
+  try { 
+    const { ssoToken } = req.query;
+    
+    const decoded = TokenService.verifyToken(ssoToken);
+    const { err, decodedToken} = decoded;
 
-    return JSON.parse(jsonPayload);
-  };
-
-  let tokenKeyDecoded = parseJwt(req.query.ssoToken);
-  
-/*   console.log(req.query.ssoToken);
-  console.log(tokenKeyDecoded.id); 
- */
- // createUsers(tokenKeyDecoded);
-  loginLocalStorage(tokenKeyDecoded);
-  return res.render( 'index', { 
-    message: 'Succes'
-  });
-} catch (e) {
-  console.log(e);
-  return res.send('error');
-} 
-};
-
-exports.localStorageLoggedOutRedirect = (req, res) => {
-    if (typeof localStorage === "undefined" || localStorage === null) {
-        let LocalStorage = require('node-localstorage').LocalStorage;
-        localStorage = new LocalStorage('./localStorage');
+    if (err) {
+      return res.status(401).json({messsage: "Not authorized"});
     }
 
-    console.log(localStorage.getItem('userID'));
+    const user = await sequelize.transaction(async (transaction) => {
+      let user = await UserService.getUser(decodedToken.id, transaction);
 
-  try{
-    if(localStorage.getItem('userID') == null) {
-        return res.render('login');
-    } else (
-      console.log(localStorage.getItem('userID')),
-      res.redirect('index')
-    )
-  }
-  catch(e){
-    console.log('error', e);
-  }
+      if (!user) {
+        user = await UserService.createUser(decodedToken, transaction);
+      }
+      return user;
+    });
+
+    const { id, role_id } = user;
+    const maxAge = 2 * 60 * 60; //2 hours in secounds
+
+    const token = TokenService.createToken({
+      id: id,
+      role_id: role_id
+    }, { expiresIn: maxAge });
+
+    res.setHeader("Set-Cookie", serialize("jwt", token, {
+      httpOnly: true, //makes so the cookie can't be accessed through client site javascript
+      maxAge: maxAge * 1000, //2 hours in milliseconds
+      secure: process.env.NODE_ENV === 'production', //Secure set httpOnly to httpsOnly, for development set it to false
+      sameSite: true, //Cookie will not be sent along with requests initiated by third-party websites
+      path: "/"
+    }));
+
+  res.status(201).json({
+    messsage: "User was successfully logged in",
+    user: id
+  })
+
+} catch (err) {
+  console.log(err)
+  return res.sendStatus(500);
+} 
 };
-
-
