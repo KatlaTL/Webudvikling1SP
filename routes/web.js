@@ -5,6 +5,7 @@ const Login = require("../controllers/LoginController");
 const Users = require("../controllers/UsersController");
 const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
+const SamplePageController = require('../controllers/SamplePageController');
 
 const router = express.Router();
 
@@ -29,6 +30,7 @@ module.exports = () => {
 
     router.get('/login', Login.login);
     router.get('/login/ssoredirect', Login.redirect);
+    router.get('/SamplePage', SamplePageController.render);
 
     return router;
 };
