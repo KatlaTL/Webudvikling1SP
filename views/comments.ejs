@@ -10,6 +10,14 @@
     <% for(let index in Comments) { %>
       <div class="list__item">
         <p><%= Comments[index].comment %></p>
+        <p><%= Comments[index].user_id %></p>
+      </div>
+    <% } %>
+    <br>
+    <% for(let index in Users) { %>
+      <div class="list__item">
+        <p><%= Users[index].name %></p>
+        <p><%= Users[index].id %></p>
       </div>
     <% } %>
   </div>

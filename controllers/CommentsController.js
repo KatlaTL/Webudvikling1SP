@@ -1,10 +1,15 @@
 const { Comment } = require('../models');
+const { User } = require('../models');
 
 exports.comments = async (req, res) => {
   try{
     const Comments = await Comment.findAll();
     console.log(Comments);
-    return res.render('comments', { Comments:Comments });
+
+    const Users = await User.findAll();
+    console.log(Users);
+
+    return res.render('comments', { Comments:Comments, Users:Users });
   } catch(e) {
     console.log(e);
   }
