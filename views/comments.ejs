@@ -6,9 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="commentFeed">
-        <p id="comment"></p>
-    </div>
+    <div class="list">
+    <% for(let index in Comments) { %>
+      <div class="list__item">
+        <p><%= Comments[index].comment %></p>
+      </div>
+    <% } %>
+  </div>
 
     <form action="/postcomments" method="post">
         <input type="text" name="comment">

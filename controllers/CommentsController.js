@@ -1,7 +1,13 @@
 const { Comment } = require('../models');
 
-exports.comments = (req, res) => {
-  return res.render('comments');
+exports.comments = async (req, res) => {
+  try{
+    const Comments = await Comment.findAll();
+    console.log(Comments);
+    return res.render('comments', { Comments:Comments});
+  } catch(e) {
+    console.log(e);
+  }
 };
 
 exports.postComments = async (req,res) => {
@@ -13,5 +19,7 @@ exports.postComments = async (req,res) => {
     console.log(e);
   }
 };
+
+
 
 
