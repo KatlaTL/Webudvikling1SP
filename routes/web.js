@@ -19,6 +19,8 @@ module.exports = () => {
     router.get('/featureRequests/create', FeatureRequests.createForm);
     router.post('/featureRequests/create', FeatureRequests.create);
 
+    router.get('/emailtest', FeatureRequests.email)
+
     router.get('/featureRequests/:requestId/upvotes', userAuth, Upvote.getUpvotes);
     router.put('/featureRequests/:requestId/upvotes', adminAuth, Upvote.upvote);
 
