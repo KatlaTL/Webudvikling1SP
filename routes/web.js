@@ -1,22 +1,33 @@
 const express = require("express");
-const sequelize = require("sequelize");
 
-const LoginController = require("../controllers/LoginController");
-const UsersController = require("../controllers/UsersController");
+const Default = require("../controllers/DefaultController")
+const FeatureRequests = require('../controllers/featureRequestsController');
+const Upvote = require("../controllers/UpvoteController");
+const Login = require("../controllers/LoginController");
+
+const { userAuth, adminAuth } = require("../middleware/auth");
 
 const router = express.Router();
-const featureRequests = require('../controllers/featureRequestsController');
 
 module.exports = () => {
-    router.get('/featureRequests/create', featureRequests.createForm);
-    router.post('/featureRequests/create', featureRequests.create);
+
+    
+    router.get('/', Default.index);
+    
+    router.get('/featureRequests', FeatureRequests.getAll);
+    router.get('/featureRequests/:requestId', FeatureRequests.single);
+    router.get('/featureRequests/create', FeatureRequests.createForm);
+    router.post('/featureRequests/create', FeatureRequests.create);
+
+    router.get('/featureRequests/:requestId/upvotes', userAuth, Upvote.getUpvotes);
+    router.put('/featureRequests/:requestId/upvotes', adminAuth, Upvote.upvote);
+
 
     router.get('/status', (req,res) => res.sendStatus(200))
-    //ADD routers here with router.get / router.post
-    router.get('/users', UsersController.create);
-    router.get('/login', LoginController.login);
-    router.get('/login/ssoredirect', LoginController.redirect);
+
+
+    router.get('/login/ssoredirect', Login.redirect);
+    router.get('/login/ssotoken', Login.login);
+
     return router;
-
 };
-

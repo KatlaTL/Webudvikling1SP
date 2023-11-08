@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webdock</title>
+</head>
+<body>
+    <main class="container">
+        <h2>Feature Request</h2>
+        <a href="/featureRequest">Request</a>
+        <hr>
+        <div class="list">
+          <% for(let index in featureRequest) { %>
+            <div class="list__item">
+              <h3><a href="/featureRequest/<%= featureRequest[index].id %>"><%= featureRequest[index].title %></h3></a>
+            </div>
+          <% } %>
+        </div>
+      </main>
+</body>
+</html>
