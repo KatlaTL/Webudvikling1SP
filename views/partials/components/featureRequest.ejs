@@ -33,7 +33,11 @@
                 body: JSON.stringify({
                     user_id: 1 //edit to the logged in users ID
                 })
-            }).then(() => getUpvotes())
+            }).then((data) => {
+                if(data.status === 200) {
+                    getUpvotes();
+                }
+            })
         });
     </script>
 </div>

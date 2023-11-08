@@ -1,4 +1,6 @@
 const { User } = require("../models");
+const { Role } = require("../models");
+const cache = require("../loaders/cache");
 
 exports.getUser = async (user_id, transaction = null) => {
    try {
@@ -8,7 +10,7 @@ exports.getUser = async (user_id, transaction = null) => {
    } catch(err) {
         throw(err);
    }
-}
+};
 
 exports.createUser = async (data, transaction = null) => {
     try {
@@ -25,3 +27,22 @@ exports.createUser = async (data, transaction = null) => {
         throw(err);
     }
 };
+
+exports.getAllRoles = async () => {
+    try {
+        const roles = await Role.findAll({
+            attributes: ["id", "role", "description"]
+        });
+        
+        let userRoles = {}
+        for (let i = 0; i < roles.length; i++){
+            userRoles[roles[i].role] = roles[i].id;
+        }
+
+        cache.set("userRoles", userRoles);
+
+        return userRoles;
+    } catch (err) {
+        throw(err);
+    }
+}

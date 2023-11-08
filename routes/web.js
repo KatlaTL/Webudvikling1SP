@@ -5,7 +5,7 @@ const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 
-const { userAuth } = require("../middleware/auth");
+const { userAuth, adminAuth } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ module.exports = () => {
     router.post('/featureRequests/create', FeatureRequests.create);
 
     router.get('/featureRequests/:requestId/upvotes', userAuth, Upvote.getUpvotes);
-    router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
+    router.put('/featureRequests/:requestId/upvotes', adminAuth, Upvote.upvote);
 
 
     router.get('/status', (req,res) => res.sendStatus(200))
