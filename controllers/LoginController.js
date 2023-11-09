@@ -1,6 +1,5 @@
 const TokenService = require("../services/TokenService");
 const UserService = require("../services/UserService");
-const PermissionService = require("../services/PermissionService");
 const { serialize } = require("cookie");
 const { sequelize } = require("../models");
 
@@ -28,7 +27,7 @@ exports.login = async (req, res) => {
             if (!user) {
                 user = await UserService.createUser(decodedToken, transaction);
             }
-            user.roles = await PermissionService.getUserRoles(user.id, transaction);
+            user.roles = await UserService.getUserRoles(user.id, transaction);
             return user;
         });
 
