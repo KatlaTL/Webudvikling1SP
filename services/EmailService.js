@@ -12,6 +12,7 @@ exports.email = async (feature_request) => {
         const sender = "uclfeedback@webdock.io";
         const recipients = "admin@webdock.io";
         const ccRecipients = (await getRecipients()).toString(); //get all user emails with email notification permission
+        
         const headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
