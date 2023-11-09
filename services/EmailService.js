@@ -7,8 +7,8 @@ exports.email = (feature_request) => {
         console.log(feature_request)
         const { id, title, description } = feature_request;
         const sender = "uclfeedback@webdock.io";
-        const recipients = "balloupjuske2208@gmail.com";
-        const ccRecipients = ""; //get all user emails with email notification email
+        const recipients = "balloupjuske2208@gmail.com"; //admin@webdock.io
+        const ccRecipients = ""; //get all user emails with email notification permission
 
         const headers = {
             "Content-Type": "application/json",
