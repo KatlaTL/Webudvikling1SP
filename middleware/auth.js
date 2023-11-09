@@ -1,5 +1,5 @@
 const TokenService = require("../services/TokenService");
-const UserService = require("../services/UserService");
+const PermissionService = require("../services/PermissionService");
 const cache = require("../loaders/cache");
 
 exports.userAuth = (req, res, next) => {
@@ -7,11 +7,15 @@ exports.userAuth = (req, res, next) => {
 
     if (token) {
         const decoded = TokenService.verifyToken(token);
-        const { jwtError } = decoded;
+        const { jwtError, decodedToken } = decoded;
         
         if (jwtError) {
             return res.status(401).json({messsage: "Not authorized"});
-        } 
+        }
+
+        if (decodedToken && !decodedToken.roles) {
+            return res.status(401).json({messsage: "Not authorized"});
+        }
 
         next();
     } else {
@@ -29,18 +33,25 @@ exports.adminAuth = async (req, res, next) => {
         if (jwtError) {
             return res.status(401).json({messsage: "Not authorized"});
         }
-        
-        if (decodedToken) {
+
+        if (decodedToken && decodedToken.roles) {
             const cachedRoles = cache.get("userRoles");    
-            let userRoles; 
+            let userRoles = {}; 
             
             if (cachedRoles) {
                 userRoles = cachedRoles;
             } else {
-                userRoles = await UserService.getAllRoles();
+                userRoles = await PermissionService.getAllRoles();
             }
-            
-            if (userRoles && decodedToken.role_id !== userRoles.SuperAdmin && decodedToken.role_id !== userRoles.Admin) {
+
+            let authorized = false;
+            for (let i = 0; i < decodedToken.roles.length; i++) {
+                if (decodedToken.roles[i].role_id === userRoles.SuperAdmin || decodedToken.roles[i].role_id === userRoles.Admin) {
+                    authorized = true;
+                }
+            }
+
+            if (!authorized) {
                 return res.status(401).json({messsage: "Not authorized"});
             }
         } else {

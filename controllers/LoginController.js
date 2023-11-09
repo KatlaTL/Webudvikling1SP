@@ -1,5 +1,6 @@
 const TokenService = require("../services/TokenService");
 const UserService = require("../services/UserService");
+const PermissionService = require("../services/PermissionService");
 const { serialize } = require("cookie");
 const { sequelize } = require("../models");
 
@@ -22,20 +23,21 @@ exports.login = async (req, res) => {
         }
 
         const user = await sequelize.transaction(async (transaction) => {
-        let user = await UserService.getUser(decodedToken.id, transaction);
+            let user = await UserService.getUser(decodedToken.id, transaction);
 
-        if (!user) {
-            user = await UserService.createUser(decodedToken, transaction);
-        }
+            if (!user) {
+                user = await UserService.createUser(decodedToken, transaction);
+            }
+            user.roles = await PermissionService.getUserRoles(user.id, transaction);
             return user;
         });
 
-        const { id, role_id } = user;
+        const { id, roles } = user;
         const maxAge = 2 * 60 * 60; //2 hours in secounds
         
         const token = TokenService.createToken({
-            id: id,
-            role_id: 1//role_id
+            user_id: id,
+            roles: roles
         }, { expiresIn: maxAge });
 
         res.setHeader("Set-Cookie", serialize("jwt", token, {
