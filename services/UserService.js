@@ -32,3 +32,20 @@ exports.createUser = async (data, transaction = null) => {
         throw(err);
     }
 };
+
+
+exports.getUserRoles = async (user_id, transaction = null) => {
+    const roles = await User_has_role.findAll({
+        where: {
+            user_id: user_id
+        }
+    },  { Transaction: transaction });
+
+    let userRoles = [];
+    for (let i = 0; i < roles.length; i++) {
+        userRoles.push({
+            role_id: roles[i].role_id 
+        });
+    }
+    return userRoles;
+}
