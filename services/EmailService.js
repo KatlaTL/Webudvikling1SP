@@ -1,15 +1,17 @@
 const axios = require("axios");
+const UserService = require("./UserService");
+const PermissionService = require("../services/PermissionService");
+const cache = require("../loaders/cache");
 
 const postmarkServerApiToken = "c3d41965-18a4-479f-a591-4369b7f5952c"; //Should be saved in an environment variable
 
-exports.email = (feature_request) => {
+exports.email = async (feature_request) => {
     try {
-        console.log(feature_request)
-        const { id, title, description } = feature_request;
-        const sender = "uclfeedback@webdock.io";
-        const recipients = "balloupjuske2208@gmail.com"; //admin@webdock.io
-        const ccRecipients = ""; //get all user emails with email notification permission
+        const { id, title, description } = feature_request;       
 
+        const sender = "uclfeedback@webdock.io";
+        const recipients = "admin@webdock.io";
+        const ccRecipients = (await getRecipients()).toString(); //get all user emails with email notification permission
         const headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -25,14 +27,14 @@ exports.email = (feature_request) => {
             TextBody: `New feature request created with ID: ${id}. n\n\ Title: ${title} \n\n Description: ${description}`,
             HtmlBody: `<html>
                             <body>
-                                <h1>New feature request created with ID: ${id}.</h1>
-                                <h2>${title}</h2> <br/>
+                                <h1>New feature request created with ID: ${id}.</h1> <br/>
+                                <h2>${title}</h2>
                                 <p>${description}</p>
                             </body>
                         </html>` 
-        }
+        };
 
-        axios({
+        await axios({
             method: "post",
             url: "https://api.postmarkapp.com/email",
             headers: headers,
@@ -40,6 +42,28 @@ exports.email = (feature_request) => {
         });
 
     } catch(err) {
-        throw(err);
+        let error = new Error(`${err.response.statusText}. ${err.response.data.Message}`);
+        error.status = err.response.status;
+        throw error;
     }
+}
+
+const getRecipients = async () => {
+    const cachedRoles = cache.get("userRoles");    
+    let userRoles = {}; 
+    
+    if (cachedRoles) {
+        userRoles = cachedRoles;
+    } else {
+        userRoles = await PermissionService.getAllRoles();
+    }
+    
+    const users = await UserService.getUsersByRole(userRoles.EmailNotifications);
+    
+    let emails = [];
+    for (let i = 0; i < users.length; i++) {
+        emails.push(users[i].email);
+    }
+    
+    return emails;
 }

@@ -1,5 +1,4 @@
 const { Role } = require("../models");
-const { User_has_role } = require("../models");
 const cache = require("../loaders/cache");
 
 exports.getAllRoles = async (transaction = null) => {

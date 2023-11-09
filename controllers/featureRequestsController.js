@@ -81,14 +81,12 @@ const axioscall = async (data) => {
 }
 
 //TODO move functionallity into create() function
-exports.email = (req, res) => {
+exports.email = async (req, res) => {
   try {
-    EmailService.email({ id: 123, title: "DETTE ER EN TEST", description: "DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST." });
-    res.status(200).json({ message: "email sent" });
+    await EmailService.email({ id: 123, title: "DETTE ER EN TEST", description: "DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST." });
+    res.status(200).json("Email sent");
   } catch (err) {
-    console.log("here in error")
-    console.log(err);
-    res.status(500).json({ message: "something went wrong" });
+    res.status(err.status).json(err.message);
   }
 }
 
