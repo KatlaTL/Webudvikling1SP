@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     avatarURL: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    role_id: DataTypes.INTEGER
+    }
   }, {
     sequelize,
     modelName: 'User',

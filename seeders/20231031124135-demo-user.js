@@ -8,7 +8,6 @@ module.exports = {
       email: 'example@example.com',
       Name: 'John Doe',
       avatarURL:'#',
-      Role_id: '1',
       createdAt: new Date(),
       updatedAt: new Date()
     }, 
@@ -17,7 +16,6 @@ module.exports = {
       email: 'example@example.com',
       Name: 'John Doey Moey',
       avatarURL:'#',
-      Role_id: '2',
       createdAt: new Date(),
       updatedAt: new Date()
     }]);
