@@ -7,12 +7,12 @@ const postmarkServerApiToken = "c3d41965-18a4-479f-a591-4369b7f5952c"; //Should 
 
 exports.email = async (feature_request) => {
     try {
-        const { id, title, description } = feature_request;       
+        const { id, title, description } = feature_request;
 
         const sender = "uclfeedback@webdock.io";
         const recipients = "admin@webdock.io";
         const ccRecipients = (await getRecipients()).toString(); //get all user emails with email notification permission
-        
+
         const headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -32,7 +32,7 @@ exports.email = async (feature_request) => {
                                 <h2>${title}</h2>
                                 <p>${description}</p>
                             </body>
-                        </html>` 
+                        </html>`
         };
 
         await axios({
@@ -42,7 +42,7 @@ exports.email = async (feature_request) => {
             data: JSON.stringify(body)
         });
 
-    } catch(err) {
+    } catch (err) {
         let error = new Error(`${err.response.statusText}. ${err.response.data.Message}`);
         error.status = err.response.status;
         throw error;
@@ -50,21 +50,21 @@ exports.email = async (feature_request) => {
 }
 
 const getRecipients = async () => {
-    const cachedRoles = cache.get("userRoles");    
-    let userRoles = {}; 
-    
+    const cachedRoles = cache.get("userRoles");
+    let userRoles = {};
+
     if (cachedRoles) {
         userRoles = cachedRoles;
     } else {
         userRoles = await PermissionService.getAllRoles();
     }
-    
+
     const users = await UserService.getUsersByRole(userRoles.EmailNotifications);
-    
+
     let emails = [];
     for (let i = 0; i < users.length; i++) {
         emails.push(users[i].email);
     }
-    
+
     return emails;
 }

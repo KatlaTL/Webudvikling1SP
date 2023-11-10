@@ -34,6 +34,30 @@ exports.createUser = async (data, transaction = null) => {
     }
 };
 
+exports.getOrCreateUser = async (data, transaction = null) => {
+    try {
+        const { id, avatarURL, email, name, role = 5 } = data;
+        const [user] = await User.findOrCreate({ //returns an array with the user object and a created boolean
+            where: { id: id},
+            defaults: {
+                avatarURL: avatarURL,
+                email: email,
+                name: name
+            },
+            Transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object with where, default and transaction
+        });
+
+        await User_has_role.create({
+            user_id: user.id,
+            role_id: role
+        }, { Transaction: transaction });
+
+        return user;
+    } catch (err) {
+        throw (err);
+    }
+}
+
 exports.getUserRoles = async (user_id, transaction = null) => {
     const roles = await User_has_role.findAll({
         where: {
@@ -48,7 +72,7 @@ exports.getUserRoles = async (user_id, transaction = null) => {
         });
     }
     return userRoles;
-}
+};
 
 exports.getUsersByRole = async (role_id, transaction = null) => {
     const usersByRole = await User_has_role.findAll({
@@ -56,7 +80,7 @@ exports.getUsersByRole = async (role_id, transaction = null) => {
             role_id: role_id
         }
     }, { Transaction: transaction });
-    
+
     let userIds = [];
     for (let i = 0; i < usersByRole.length; i++) {
         userIds.push(usersByRole[i].user_id);
@@ -69,4 +93,4 @@ exports.getUsersByRole = async (role_id, transaction = null) => {
             }
         }
     }, { Transaction: transaction });
-}
+};

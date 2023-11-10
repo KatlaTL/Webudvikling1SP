@@ -22,11 +22,7 @@ exports.login = async (req, res) => {
         }
 
         const user = await sequelize.transaction(async (transaction) => {
-            let user = await UserService.getUser(decodedToken.id, transaction);
-
-            if (!user) {
-                user = await UserService.createUser(decodedToken, transaction);
-            }
+            let user = await UserService.getOrCreateUser(decodedToken, transaction);
             user.roles = await UserService.getUserRoles(user.id, transaction);
             return user;
         });
