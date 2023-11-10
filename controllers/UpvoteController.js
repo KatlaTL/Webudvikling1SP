@@ -19,7 +19,7 @@ exports.getUpvotes = async (req, res) => {
 
 exports.upvote = async (req, res) => {
     try {
-        await sequelize.transaction(async (transaction) => {
+        const result = await sequelize.transaction(async (transaction) => {
             const { user_id } = req.body;
             const feature_request_id = Number(req.params.requestId);
             const amount = 0;
@@ -38,9 +38,11 @@ exports.upvote = async (req, res) => {
 
                 await UpvoteService.destroyUserUpvotes(user_id, upvote.id, transaction);
             }
+
+            return await UpvoteService.getUpvote(feature_request_id, transaction);
         });
 
-        return res.sendStatus(200);
+        return res.status(200).json(result);
     } catch (err) {
         return res.sendStatus(500);
     }
