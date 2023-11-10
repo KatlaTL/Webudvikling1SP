@@ -16,13 +16,16 @@
     "mysql2": "^3.6.2",
     "node-cache": "^5.1.2",
     "node-localstorage": "^3.0.5",
+    "node-sass": "^9.0.0",
     "nodemon": "^3.0.1",
+    "sass": "^1.69.5",
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.1"
   },
   "scripts": {
     "dev": "nodemon index.js",
-    "db:reset": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
+    "db:reset": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
+    "compile-scss": "node-sass public/scss/custom.scss -o public/css/"
   },
   "description": "",
   "main": "index.js",

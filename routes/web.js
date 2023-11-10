@@ -6,6 +6,7 @@ const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 
 const { userAuth, adminAuth } = require("../middleware/auth");
+const SamplePageController = require('../controllers/SamplePageController');
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ module.exports = () => {
 
     router.get('/login/ssoredirect', Login.redirect);
     router.get('/login/ssotoken', Login.login);
+    router.get('/SamplePage', SamplePageController.render);
 
     return router;
 };
