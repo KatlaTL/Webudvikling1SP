@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request comment</title>
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<script>const requestCommentController = {
+    render: (req, res) => {
+        res.render('partials/components/requestComment');
+    },
+};</script>
+<body>
+    <div class="requestcomment">
+        <h6>Placeholder Title</h6>
+                 <h7 class="task-title" data-category="planned"></h7>
+                              <p>Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                               It has roots in a piece of classical Latin literature from 45 BC, 
+                              making it over 2000 years old.</p>
+    </div>
+
+    <div class="requestcomment">
+        <h6>Placeholder Title</h6>
+                 <h7 class="task-title" data-category="in-progress"></h7>
+                              <p>Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                               It has roots in a piece of classical Latin literature from 45 BC, 
+                              making it over 2000 years old.</p>
+    </div>
+
+    <div class="requestcomment">
+        <h6>Placeholder Title</h6>
+                 <h7 class="task-title" data-category="complete"></h7>
+                              <p>Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                               It has roots in a piece of classical Latin literature from 45 BC, 
+                              making it over 2000 years old.</p>
+    </div>
+
+
+    <script>
+        const taskTitles = document.querySelectorAll('.task-title');
+
+taskTitles.forEach(title => {
+    const category = title.dataset.category;
+
+    switch (category) {
+        case 'planned':
+            title.textContent += ' (Planned)';
+            break;
+        case 'in-progress':
+            title.textContent += ' (In Progress)';
+            break;
+        case 'complete':
+            title.textContent += ' (Complete)';
+            break;
+    }
+});
+    </script>
+    
+</body>
+</html>

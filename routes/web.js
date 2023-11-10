@@ -6,6 +6,7 @@ const Users = require("../controllers/UsersController");
 const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
 const SamplePageController = require('../controllers/SamplePageController');
+const Comment = require('../controllers/CommentController');
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ module.exports = () => {
 
     router.get('/upvotes/featureRequests/:requestId', Upvote.getUpvotes);
     router.put('/upvotes/featureRequests/:requestId', Upvote.upvote);
+    router.get('/requestComment', Comment.index);
 
 
     //TO DO at route
