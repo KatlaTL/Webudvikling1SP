@@ -5,8 +5,9 @@ exports.getUpvotes = async (req, res) => {
     try {
         const result = await sequelize.transaction(async (transaction) => {
             const feature_request_id = Number(req.params.requestId);
+            const amount = 0;
 
-            const [upvote] = await UpvoteService.getOrCreateUpvote(feature_request_id, transaction);
+            const [upvote] = await UpvoteService.getOrCreateUpvote(feature_request_id, amount, transaction);
             return upvote;
         });
 
@@ -21,8 +22,9 @@ exports.upvote = async (req, res) => {
         await sequelize.transaction(async (transaction) => {
             const { user_id } = req.body;
             const feature_request_id = Number(req.params.requestId);
+            const amount = 0;
 
-            const [upvote] = await UpvoteService.getOrCreateUpvote(feature_request_id, transaction);
+            const [upvote] = await UpvoteService.getOrCreateUpvote(feature_request_id, amount, transaction);
 
             const userHasUpvote = await UpvoteService.getUserUpvotes(user_id, upvote.id, transaction);
 

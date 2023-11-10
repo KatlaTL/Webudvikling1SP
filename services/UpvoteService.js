@@ -25,8 +25,8 @@ exports.createUpvote = async (request_id, amount = 0, transaction = null) => {
 exports.getOrCreateUpvote = async (request_id, amount = 0, transaction = null) => {
     try {
         return await Upvote.findOrCreate({ //returns an array with the user object and a created boolean
-            where: { feature_request_id: request_id},
-            default: {
+            where: { feature_request_id: request_id },
+            defaults: {
                 amount: amount
             },
             Transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object with where, default and transaction
