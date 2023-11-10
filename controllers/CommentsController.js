@@ -4,12 +4,12 @@ const { User } = require('../models');
 exports.comments = async (req, res) => {
   try{
     const Comments = await Comment.findAll();
-    /* console.log(Comments); */
+    console.log(Comments);
 
-    const Users = await User.findAll();
-    const User_id = await User.findOne({ where: { id: Number(User.id) }});
-    /* console.log(Users); */
-    console.log(User_id);
+    const Users = await User.findAll({
+          where: { id:id }
+      });
+    console.log(Users);
 
     return res.render('comments', { Comments:Comments, Users:Users });
   } catch(e) {
