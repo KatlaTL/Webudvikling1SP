@@ -23,7 +23,7 @@ module.exports = () => {
     router.get('/emailtest', FeatureRequests.email)
 
     router.get('/featureRequests/:requestId/upvotes', userAuth, Upvote.getUpvotes);
-    router.put('/featureRequests/:requestId/upvotes', adminAuth, Upvote.upvote);
+    router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
 
 
     router.get('/status', (req,res) => res.sendStatus(200))

@@ -38,7 +38,7 @@ exports.getOrCreateUser = async (data, transaction = null) => {
     try {
         const { id, avatarURL, email, name, role = 5 } = data;
         const [user] = await User.findOrCreate({ //returns an array with the user object and a created boolean
-            where: { id: id},
+            where: { id: id },
             defaults: {
                 avatarURL: avatarURL,
                 email: email,
@@ -59,38 +59,46 @@ exports.getOrCreateUser = async (data, transaction = null) => {
 }
 
 exports.getUserRoles = async (user_id, transaction = null) => {
-    const roles = await User_has_role.findAll({
-        where: {
-            user_id: user_id
-        }
-    }, { Transaction: transaction });
+    try {
+        const roles = await User_has_role.findAll({
+            where: {
+                user_id: user_id
+            }
+        }, { Transaction: transaction });
 
-    let userRoles = [];
-    for (let i = 0; i < roles.length; i++) {
-        userRoles.push({
-            role_id: roles[i].role_id
-        });
+        let userRoles = [];
+        for (let i = 0; i < roles.length; i++) {
+            userRoles.push({
+                role_id: roles[i].role_id
+            });
+        }
+        return userRoles;
+    } catch (err) {
+        throw (err);
     }
-    return userRoles;
 };
 
 exports.getUsersByRole = async (role_id, transaction = null) => {
-    const usersByRole = await User_has_role.findAll({
-        where: {
-            role_id: role_id
-        }
-    }, { Transaction: transaction });
-
-    let userIds = [];
-    for (let i = 0; i < usersByRole.length; i++) {
-        userIds.push(usersByRole[i].user_id);
-    }
-
-    return await User.findAll({
-        where: {
-            id: {
-                [Op.or]: userIds
+    try {
+        const usersByRole = await User_has_role.findAll({
+            where: {
+                role_id: role_id
             }
+        }, { Transaction: transaction });
+
+        let userIds = [];
+        for (let i = 0; i < usersByRole.length; i++) {
+            userIds.push(usersByRole[i].user_id);
         }
-    }, { Transaction: transaction });
+
+        return await User.findAll({
+            where: {
+                id: {
+                    [Op.or]: userIds
+                }
+            }
+        }, { Transaction: transaction });
+    } catch (err) {
+        throw (err);
+    }
 };
