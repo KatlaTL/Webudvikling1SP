@@ -7,34 +7,35 @@ exports.update = async (req, res) => {
         const result = await sequelize.transaction(async (t) => {
             const { feature_request_id, status } = req.body;
 
-            const foundStatus = await Status.findOne({ 
-                where: { status: status}
-            }, { Transaction: t});
+            const foundStatus = await Status.findOne({
+                where: { status: status }
+            }, { Transaction: t });
 
             if (!foundStatus) {
-                throw new Error(400);
+                throw ("Status not found");
             }
 
-            const feature_request = await Feature_request.update({ status_id: foundStatus.id}, {
+            const feature_request = await Feature_request.update({ status_id: foundStatus.id }, {
                 where: { id: feature_request_id }
-            }, { Transaction: t});
+            }, { Transaction: t });
             return feature_request;
         });
 
         res.status(200).json({
-            message: `affected rows: ${result}`
+            status: 200,
+            message: `Affected rows: ${result}`
         });
 
-    } catch(err) {
+    } catch (err) {
         let statusCode = 500;
         let message = "The request for updating the status failed";
-
-        if (err.message == 400) {
+        if (err == "Status not found") {
             statusCode = 400;
-            message = "Status should be one of Under Review, Planned, In Progress, Completed or Closed";
+            message = `${err}. Status should be one of Under Review, Planned, In Progress, Completed or Closed`;
         }
 
         return res.status(statusCode).json({
+            status: statusCode,
             message: message
         });
     }

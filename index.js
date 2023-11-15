@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 
 
 app.use("/", webRoutes());
-app.use("/", apiRoutes());
+app.use("/api", apiRoutes());
 
 app.listen(port, () => console.log(`server running on port: ${port}`));
 
