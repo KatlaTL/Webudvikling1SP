@@ -11,9 +11,12 @@
     <script>
         document.querySelector("#login").addEventListener("click", (e) => {
             e.preventDefault();
-            fetch("/login/ssoredirect")
-            .then(res => res.json())
-            .then(res => localStorage.setItem("user", JSON.stringify(res)));
+            fetch("/login/sso/redirect", {
+                    mode: "no-cors"
+                })
+                .then(res => res.json())
+                .then(res => localStorage.setItem("user", JSON.stringify(res)))
+                .catch(err => console.log(err));
         });
 
         fetch("/featureRequests/1537979745") //edit to the actually feature requests ID

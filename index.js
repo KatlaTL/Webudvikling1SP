@@ -1,5 +1,4 @@
 const express = require("express");
-const cookieParser = require("cookie-parser");
 require('dotenv').config();
 const bodyParser = require("body-parser");
 const webRoutes = require('./routes/web');
@@ -10,7 +9,6 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
-app.use(cookieParser())
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
