@@ -10,9 +10,16 @@
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.2",
+<<<<<<< HEAD
+=======
+    "node-cache": "^5.1.2",
+    "node-localstorage": "^3.0.5",
+>>>>>>> efcffa3054632dadaa788920b8f66b084fee417e
     "node-sass": "^9.0.0",
     "nodemon": "^3.0.1",
+    "sass": "^1.69.5",
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.1"
   },

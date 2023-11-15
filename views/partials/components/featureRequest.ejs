@@ -1,4 +1,5 @@
 <div class="feature-request">
+    <button id="login">login</button>
     <div class="feature-request">
         <p class="feature-request-title"></p>
         <p class="feature-request-description"></p>
@@ -8,32 +9,53 @@
         </div>
     </div>
     <script>
-        fetch("/featureRequests/1537979745")
+        document.querySelector("#login").addEventListener("click", (e) => {
+            e.preventDefault();
+            fetch("/login/sso/redirect", {
+                    mode: "no-cors"
+                })
+                .then(res => res.json())
+                .then(res => localStorage.setItem("user", JSON.stringify(res)))
+                .catch(err => console.log(err));
+        });
+
+        fetch("/featureRequests/1537979745") //edit to the actually feature requests ID
             .then(res => res.json())
             .then(data => {
                 document.querySelector(".feature-request-title").innerHTML = data.title;
                 document.querySelector(".feature-request-description").innerHTML = data.description;
             });
         
-        const getUpvotes = () => {
-            fetch("/upvotes/featureRequests/1537979745")
-                .then(res => res.json())
-                .then(data => {
-                    document.querySelector(".upvote-amount").innerHTML = data.amount;
-                });
-            }
-        getUpvotes();
+        fetch("/featureRequests/1537979745/upvotes", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`
+
+                }
+            }) //edit to the actually feature requests ID
+            .then(res => res.json())
+            .then(data => document.querySelector(".upvote-amount").innerHTML = data.amount);
 
         document.querySelector(".upvote-cta").addEventListener("click", () => {
-            fetch("/upvotes/featureRequests/1537979745", {
+            fetch("/featureRequests/1537979745/upvotes", { //edit to the actually feature requests ID
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    user_id: 1
-                })
-            }).then(() => getUpvotes())
+                headers: { 
+                    "Content-Type": "application/json", 
+                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
+                }
+            })
+            .then(res => {
+                if (res.status == 200) {
+                    return res.json();
+                } 
+            })
+            .then(data => {
+                if (data) {
+                    document.querySelector(".upvote-amount").innerHTML = data.amount
+                }
+            })
         });
     </script>
 </div>

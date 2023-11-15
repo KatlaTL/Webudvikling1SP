@@ -17,9 +17,6 @@ module.exports = {
       avatarURL: {
         type: Sequelize.STRING
       },
-      role_id: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

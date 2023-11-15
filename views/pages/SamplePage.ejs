@@ -7,22 +7,33 @@
 	<link rel="stylesheet" href="/css/custom.css">
   </head>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <%- include('../partials/components/header') %>
+
+  <body>
     <div class="container">
-        <a class="navbar-brand" href="#">Your Logo/Brand</a>
-        <button class="btn btn-primary ml-auto">Login</button>
-    </div>
-</nav>
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <div class="box box-left border card text-white mb-3">
+					<div class="card-header">Feature requests</div>
+					<div class="card-body bg-white">
+					  <p class="card-text text-black"><%- include('../pages/featureRequestCreate') %></p>
+					</div>
+				</div>
+			</div>
+            <div class="col-md-4">
+                <div class="box box-right border card text-white mb-3">
+					<div class="card-header">Roadmap</div>
+					<div class="card-body bg-white">
+					  <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi illum consequatur alias tempore vero fugiat, illo corrupti unde eum minus, delectus dolore maxime expedita perferendis voluptas provident quis ullam labore.</p>
+					</div>
+            </div>
+        </div>
+</body>
 
-</div>
-<div class="row">
-	<div class="col-md-8">
-		hej
-	</div>
-	<div class="col-md-4">
-		Hej
-	</div>
-</div>
 
-<!-- Turquoise Topbar with "Title" -->
-</div>
+	</div>
+    <footer class="text-center">
+        &copy; 2023
+    </footer>
+</body>
+</html>
