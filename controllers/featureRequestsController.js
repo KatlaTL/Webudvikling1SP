@@ -76,17 +76,16 @@ const axioscall = async (data) => {
     })
     .catch(error => {
       console.error("An error occurred:", error.message);
-    });
+    })
 
 }
 
 //TODO move functionallity into create() function
 exports.email = async (req, res) => {
   try {
-    await EmailService.email({ id: 123, title: "DETTE ER EN TEST", description: "DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST." });
+    await EmailService.email({ id: 123, title: "Feature request submitted with ID: ${FeatureRequest.id}", description: "A new feature request has been added" });
     res.status(200).json("Email sent");
   } catch (err) {
     res.status(err.status).json(err.message);
   }
 }
-

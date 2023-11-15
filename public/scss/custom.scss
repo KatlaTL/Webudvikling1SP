@@ -1,0 +1,55 @@
+$turqoise: #00a1a1;
+$green: #00956c;
+$bgwhite: #f4f8f8;
+$white: #FFFF;
+$font-family: 'Raleway', sans-serif;
+
+body {
+    font-family: $font-family;
+}
+
+.btn-green {
+    background-color: $green;
+    color: $white;
+    position: absolute;
+}
+
+header, section, footer {
+    color: black;
+}
+
+footer {
+    font-size: 14px;
+}
+
+h2 {
+    flex-grow: 1; 
+    background: $turqoise;
+    color: #fff;
+    margin: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+.box {
+    margin: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.box-left {
+    background-color: $white;
+    color: black; 
+}
+
+.box-right {
+    background-color: $white;
+    color: black; 
+}
+
+@import 'bootstrap.css';
