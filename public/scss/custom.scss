@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $turqoise: #00a1a1;
 $green: #00956c;
 $bgwhite: #f4f8f8;
@@ -50,6 +51,12 @@ h2 {
 .box-right {
     background-color: $white;
     color: black; 
+=======
+$test: red;
+
+body {
+background-color: $test;
+>>>>>>> signe
 }
 
 @import 'bootstrap.css';
