@@ -5,7 +5,7 @@ const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 
-const { userAuth, adminAuth } = require("../middleware/auth");
+const { userAuth, adminAuth } = require("../middleware/Auth");
 const SamplePageController = require('../controllers/SamplePageController');
 
 const router = express.Router();
