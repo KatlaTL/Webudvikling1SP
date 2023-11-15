@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 
 const Default = require("../controllers/DefaultController")
 const FeatureRequests = require('../controllers/featureRequestsController');
@@ -11,17 +10,6 @@ const SamplePageController = require('../controllers/SamplePageController');
 
 const router = express.Router();
 
-const corsConfig = (origin) => {
-    return {
-        origin: origin,
-        methods: ["GET", "POST", "PUT"],
-        allowedHeaders: [
-            "Content-Type",
-            "Accept"
-         ],
-        optionsSuccessStatus: 200
-    };
-};
 
 module.exports = () => {
     router.get('/', Default.index);
@@ -39,8 +27,7 @@ module.exports = () => {
 
     router.get('/status', (req,res) => res.sendStatus(200))
 
-    router.options("/login/sso/redirect", cors(corsConfig("https://webdock.io", "http://localhost:3000")));
-    router.get('/login/sso/redirect', cors(), Login.redirect);
+    router.get('/login/sso/redirect', Login.redirect);
     router.get('/login/sso/token', Login.login);
     router.get('/SamplePage', SamplePageController.render);
 
