@@ -29,14 +29,6 @@ exports.login = async (req, res) => {
             user_name: name,
         }, { expiresIn: maxAge });
 
-        /* res.setHeader("Set-Cookie", serialize("jwt", token, {
-            httpOnly: true, //makes so the cookie can't be accessed through client site javascript
-            maxAge: maxAge,
-            secure: process.env.NODE_ENV === 'production', //Secure set httpOnly to httpsOnly, for development set it to false
-            sameSite: true, //Cookie will not be sent along with requests initiated by third-party websites
-            path: "/"
-        })); */
-
         res.status(201).json({
             messsage: "User was successfully logged in",
             user: id,

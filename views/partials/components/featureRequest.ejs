@@ -28,7 +28,7 @@
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
+                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`
 
                 }
             }) //edit to the actually feature requests ID
