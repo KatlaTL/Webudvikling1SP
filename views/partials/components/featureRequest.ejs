@@ -41,14 +41,15 @@
                 headers: { 
                     "Content-Type": "application/json", 
                     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
-                },
-                body: JSON.stringify({
-                    user_id: 1 //edit to the logged in users ID
-                })
+                }
             })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status == 200) {
+                    return res.json();
+                } 
+            })
             .then(data => {
-                if (!data.status || data.status != 401) {
+                if (data) {
                     document.querySelector(".upvote-amount").innerHTML = data.amount
                 }
             })

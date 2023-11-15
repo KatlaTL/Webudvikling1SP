@@ -13,14 +13,17 @@ exports.getUpvotes = async (req, res) => {
 
         return res.status(200).json(result);
     } catch (err) {
-        return res.sendStatus(500);
+        return res.status(500).json({
+            status: 500,
+            message: "Invalid request"
+        });
     }
 };
 
 exports.upvote = async (req, res) => {
     try {
         const result = await sequelize.transaction(async (transaction) => {
-            const { user_id } = req.body;
+            const user_id = req.user.id;
             const feature_request_id = Number(req.params.requestId);
             const amount = 0;
 
@@ -44,6 +47,9 @@ exports.upvote = async (req, res) => {
 
         return res.status(200).json(result);
     } catch (err) {
-        return res.sendStatus(500);
+        return res.status(500).json({
+            status: 500,
+            message: "Invalid request"
+        });
     }
 };
