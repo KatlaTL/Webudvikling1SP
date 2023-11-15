@@ -1,4 +1,5 @@
 <div class="feature-request">
+    <button id="login">login</button>
     <div class="feature-request">
         <p class="feature-request-title"></p>
         <p class="feature-request-description"></p>
@@ -8,6 +9,13 @@
         </div>
     </div>
     <script>
+        document.querySelector("#login").addEventListener("click", (e) => {
+            e.preventDefault();
+            fetch("/login/ssoredirect")
+            .then(res => res.json())
+            .then(res => localStorage.setItem("user", JSON.stringify(res)));
+        });
+
         fetch("/featureRequests/1537979745") //edit to the actually feature requests ID
             .then(res => res.json())
             .then(data => {
@@ -15,20 +23,35 @@
                 document.querySelector(".feature-request-description").innerHTML = data.description;
             });
         
-        fetch("/featureRequests/1537979745/upvotes") //edit to the actually feature requests ID
+        fetch("/featureRequests/1537979745/upvotes", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
+
+                }
+            }) //edit to the actually feature requests ID
             .then(res => res.json())
             .then(data => document.querySelector(".upvote-amount").innerHTML = data.amount);
 
         document.querySelector(".upvote-cta").addEventListener("click", () => {
             fetch("/featureRequests/1537979745/upvotes", { //edit to the actually feature requests ID
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json", 
+                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
+                },
                 body: JSON.stringify({
                     user_id: 1 //edit to the logged in users ID
                 })
             })
             .then(res => res.json())
-            .then(data =>  document.querySelector(".upvote-amount").innerHTML = data.amount)
+            .then(data => {
+                if (!data.status || data.status != 401) {
+                    document.querySelector(".upvote-amount").innerHTML = data.amount
+                }
+            })
         });
     </script>
 </div>

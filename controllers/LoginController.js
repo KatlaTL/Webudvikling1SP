@@ -1,7 +1,7 @@
 const TokenService = require("../services/TokenService");
 const UserService = require("../services/UserService");
-const { serialize } = require("cookie");
-const { sequelize } = require("../models");
+//const { serialize } = require("cookie");
+
 
 
 //TO DO refactor redirect function, make the redirect url more dynamic
@@ -21,31 +21,27 @@ exports.login = async (req, res) => {
             return res.status(401).json({messsage: "Not authorized"});
         }
 
-        const user = await sequelize.transaction(async (transaction) => {
-            let user = await UserService.getOrCreateUser(decodedToken, transaction);
-            user.roles = await UserService.getUserRoles(user.id, transaction);
-            return user;
-        });
-
-        const { id, roles } = user;
-        const maxAge = 2 * 60 * 60; //2 hours in secounds
+        const { id, name } = await UserService.getOrCreateUser(decodedToken);
+        const maxAge = 0.5 * 60 * 60; //30 min in secounds
         
         const token = TokenService.createToken({
             user_id: id,
-            roles: roles
+            user_name: name,
         }, { expiresIn: maxAge });
 
-        res.setHeader("Set-Cookie", serialize("jwt", token, {
+        /* res.setHeader("Set-Cookie", serialize("jwt", token, {
             httpOnly: true, //makes so the cookie can't be accessed through client site javascript
             maxAge: maxAge,
             secure: process.env.NODE_ENV === 'production', //Secure set httpOnly to httpsOnly, for development set it to false
             sameSite: true, //Cookie will not be sent along with requests initiated by third-party websites
             path: "/"
-        }));
+        })); */
 
         res.status(201).json({
             messsage: "User was successfully logged in",
-            user: id
+            user: id,
+            userName: name,
+            jwt: token
         });
 
     } catch (err) {

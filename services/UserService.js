@@ -1,8 +1,18 @@
-const { User } = require("../models");
+const { User, sequelize } = require("../models");
 const { User_has_role } = require("../models");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
-exports.getUser = async (user_id, transaction = null) => {
+exports.getUser = async (attributes = {}, transaction = null) => {
+    try {
+        return await User.findOne({
+            where: attributes 
+        }, { Transaction: transaction });
+    } catch (err) {
+        throw (err);
+    }
+};
+
+exports.getUserById = async (user_id, transaction = null) => {
     try {
         return await User.findOne({
             where: { id: user_id }
@@ -63,7 +73,10 @@ exports.getUserRoles = async (user_id, transaction = null) => {
         const roles = await User_has_role.findAll({
             where: {
                 user_id: user_id
-            }
+            },
+            attributes: [
+                [Sequelize.fn("DISTINCT", sequelize.col("role_id")), "role_id"]
+            ]
         }, { Transaction: transaction });
 
         let userRoles = [];
