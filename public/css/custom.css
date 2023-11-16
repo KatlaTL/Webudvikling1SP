@@ -1,8 +1,5 @@
 @import url(bootstrap.css);
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Lato:wght@900&family=Poppins&family=Raleway&display=swap');
-=======
->>>>>>> signe
 /*$turqoise: #00a1a1;
 $green: #00956c;
 $bgwhite: #f4f8f8;
@@ -22,8 +19,6 @@ h2 {
   font-weight: 700;
 }
 
-=======
->>>>>>> signe
 textarea {
   width: auto;
 }
@@ -82,11 +77,7 @@ margin-bottom: 25px;
   }
 
 .card-header {
-<<<<<<< HEAD
   background-color: #008970;
-=======
-  background-color: #6c8e84;
->>>>>>> signe
 }
 
 .card-body {
@@ -103,7 +94,6 @@ header, section, footer {
 
 footer {
   font-size: 14px; 
-<<<<<<< HEAD
 }
 
 hr {
@@ -113,6 +103,4 @@ hr {
 
 
 
-=======
-}
->>>>>>> signe
+ß
