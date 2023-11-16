@@ -1,17 +1,21 @@
 const express = require("express");
 
+
 const Default = require("../controllers/DefaultController")
 const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 const { userAuth, adminAuth } = require("../middleware/Auth");
 const SamplePageController = require('../controllers/SamplePageController');
+const CommentsController = require('../controllers/CommentsController');
+
 
 
 const router = express.Router();
 
 
 module.exports = () => {
+
     router.get('/', Default.index);
     
     router.get('/featureRequests', FeatureRequests.getAll);
@@ -30,6 +34,9 @@ module.exports = () => {
     router.get('/login/sso/redirect', Login.redirect);
     router.get('/login/sso/token', Login.login);
     router.get('/SamplePage', SamplePageController.render);
+
+    router.get('/comments', CommentsController.comments);
+    router.post('/postcomments', CommentsController.postComments);
 
     return router;
 };

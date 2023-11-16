@@ -1,3 +1,4 @@
+
 const { User, sequelize } = require("../models");
 const { User_has_role } = require("../models");
 const { Op, Sequelize } = require("sequelize");
@@ -12,7 +13,7 @@ exports.getUser = async (attributes = {}, transaction = null) => {
     }
 };
 
-exports.getUserById = async (user_id, transaction = null) => {
+exports.getUser = async (user_id, transaction = null) => {
     try {
         return await User.findOne({
             where: { id: user_id }
@@ -43,6 +44,7 @@ exports.createUser = async (data, transaction = null) => {
         throw (err);
     }
 };
+
 
 exports.getOrCreateUser = async (data, transaction = null) => {
     try {
@@ -115,3 +117,41 @@ exports.getUsersByRole = async (role_id, transaction = null) => {
         throw (err);
     }
 };
+
+exports.getUserRoles = async (user_id, transaction = null) => {
+    const roles = await User_has_role.findAll({
+        where: {
+            user_id: user_id
+        }
+    }, { Transaction: transaction });
+
+    let userRoles = [];
+    for (let i = 0; i < roles.length; i++) {
+        userRoles.push({
+            role_id: roles[i].role_id
+        });
+    }
+    return userRoles;
+}
+
+exports.getUsersByRole = async (role_id, transaction = null) => {
+    const usersByRole = await User_has_role.findAll({
+        where: {
+            role_id: role_id
+        }
+    }, { Transaction: transaction });
+    
+    let userIds = [];
+    for (let i = 0; i < usersByRole.length; i++) {
+        userIds.push(usersByRole[i].user_id);
+    }
+
+    return await User.findAll({
+        where: {
+            id: {
+                [Op.or]: userIds
+            }
+        }
+    }, { Transaction: transaction });
+}
+
