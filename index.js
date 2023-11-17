@@ -4,11 +4,7 @@ const bodyParser = require("body-parser");
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
 
-<<<<<<< HEAD
-const port = process.env.PORT || 80;
-=======
 const port = process.env.PORT || 3000;
->>>>>>> development
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
