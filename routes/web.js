@@ -8,6 +8,8 @@ const Login = require("../controllers/LoginController");
 const { userAuth, adminAuth } = require("../middleware/Auth");
 const SamplePageController = require('../controllers/SamplePageController');
 const CommentsController = require('../controllers/CommentsController');
+const CommentController = require('../controllers/CommentController');
+
 
 
 
@@ -22,6 +24,8 @@ module.exports = () => {
     router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequests/create', FeatureRequests.createForm);
     router.post('/featureRequests/create', FeatureRequests.create);
+    router.get('/featureRequest/requestComments', CommentController.index);
+ 
 
     router.get('/emailtest', FeatureRequests.email)
 
