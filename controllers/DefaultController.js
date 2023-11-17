@@ -1,5 +1,5 @@
 exports.index = async (req, res) => {
-  res.render('../views/pages/index');
+  //res.render('../views/pages/index');
 
   const page = req.query.page;
 

@@ -14,3 +14,12 @@
         </ul>
     </div>
 </nav>
+<script>
+    document.querySelector("#login").addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        fetchWrapper.get("/login/sso/redirect")
+            .then(res => localStorage.setItem("user", JSON.stringify(res)))
+            .catch(err => console.error(err))
+        });
+</script>

@@ -6,11 +6,10 @@ const axios = require("axios");
 ///TO DO update for feature request
 exports.getAll = async (req, res) => {
   try {
-    const featureRequest = await Feature_request.findAll();
-    return res.render('pages/featureRequest', { featureRequest: featureRequest });
+    const requests = await Feature_request.findAll();
+    return res.status(200).json({ featureRequests: requests});
   } catch (e) {
-    console.log(e);
-    return res.send('Error');
+    return res.sendStatus(500);
   }
 };
 
@@ -25,6 +24,7 @@ exports.single = async (req, res) => {
 };
 
 exports.createForm = (req, res) => {
+  return res.render('v2/pages/createFeatureRequest');
   return res.render('pages/featureRequestCreate');
 };
 
