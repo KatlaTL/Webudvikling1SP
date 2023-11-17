@@ -1,10 +1,9 @@
 const { Feature_request } = require('../models');
 
-exports.getAll = async (req, res) => {
+exports.getAllRequests = async (transaction = null) => {
     try {
-      const requests = await Feature_request.findAll();
-      return res.status(200).json({ featureRequests: requests});
-    } catch (e) {
-      return res.sendStatus(500);
+        return await Feature_request.findAll({ Transaction: transaction });
+    } catch (err) {
+        throw (err);
     }
-  };
+};
