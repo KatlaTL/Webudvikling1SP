@@ -32,17 +32,26 @@ exports.comments = async (req, res) => {
       };
     }
 
-    return res.render('comments', { Comments:Comments, username:userName });
+
+    return res.status(200).json({Comments, userName});
   } catch(e) {
     console.log(e);
   }
 };
 
+
+
+exports.postCommentForm = async (req, res) => {
+  res.render('comments');
+};
+
+
 exports.postComments = async (req,res) => {
   try {
+    console.log(req.user);
     let comment =req.body.comment;
     let commentPost = await Comment.create({ comment:comment });
-    return commentPost;
+    return res.status(200).json({commentPost});
   } catch (e) {
     console.log(e);
   }

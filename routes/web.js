@@ -40,7 +40,8 @@ module.exports = () => {
     router.get('/SamplePage', SamplePageController.render);
 
     router.get('/comments', CommentsController.comments);
-    router.post('/postcomments', CommentsController.postComments);
+    router.get('/comments/postcomments', CommentsController.postCommentForm);
+    router.post('/comments/postcomments/posted', userAuth, CommentsController.postComments);
 
     return router;
 };
