@@ -13,16 +13,6 @@ exports.getUser = async (attributes = {}, transaction = null) => {
     }
 };
 
-exports.getUser = async (user_id, transaction = null) => {
-    try {
-        return await User.findOne({
-            where: { id: user_id }
-        }, { Transaction: transaction });
-    } catch (err) {
-        throw (err);
-    }
-};
-
 exports.createUser = async (data, transaction = null) => {
     try {
         //Set role to 5 by default. 5 is the user role
