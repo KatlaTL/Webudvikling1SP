@@ -1,0 +1,93 @@
+@import url(bootstrap.css);
+/*$turqoise: #00a1a1;
+$green: #00956c;
+$bgwhite: #f4f8f8;
+$white: #FFFF;
+$font-family: 'Raleway', sans-serif;*/
+
+
+body {
+  font-family: "Raleway", sans-serif; 
+  background-color: #f1fafa;
+}
+
+textarea {
+  width: auto;
+}
+
+.navbar {
+background-color: #1f9e85;
+margin-bottom: 25px;
+}
+
+#signin {
+  line-height: 43px !important;
+  margin-left: 2px;
+  padding: 0 34px;
+  background: #fff;
+  color: #01a1a1;
+  border: 2px solid #fff;
+  font-weight: 700 !important;
+  border-radius: 4px
+} 
+
+#login {
+  line-height: 43px !important;
+  padding: 0 34px;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: 700 !important;
+  border-radius: 4px
+}
+
+#login:hover {
+  background: #fff;
+  color: #01a1a1
+}
+
+#btngreen {
+  background-color: #00956c;
+    line-height: 43px !important;
+    padding: 0 34px;
+    color: #fff;
+    border: 2px solid #fff;
+    font-weight: 700 !important;
+    border-radius: 4px;
+    float: right;
+    margin: 10px;
+  }
+  
+  #btngreen:hover {
+    background: #fff;
+    color: #01a1a1;
+    border: 2px solid #00956c;
+    float: right;
+  }
+
+  #details {
+    height: 200px;
+  }
+
+.card-header {
+  background-color: #6c8e84;
+}
+
+.card-body {
+  height: 80vh;
+}
+header, section, footer {
+  color: black; 
+}
+
+.card-text, .card-title {
+  color: black;
+}
+
+
+footer {
+  font-size: 14px; 
+}
+
+
+
+

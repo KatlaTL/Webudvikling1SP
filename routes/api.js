@@ -8,14 +8,16 @@ const corsConfig = (origin, methods) => {
     return {
         origin: origin,
         methods: methods,
-        allowedHeaders: "Content-Type",
-        optionsSuccessStatus: 204
+        allowedHeaders: [
+            "Content-Type",
+            "Accept"
+         ],
+        optionsSuccessStatus: 200
     };
 };
 
 module.exports = () => {
-    router.options("/api/vi/status/:statusId", cors(corsConfig("https://webdock.io", ["PUT", "POST"])));
-    router.put("/api/vi/status/:statusId", cors(), Status.update);
-    router.post("/api/vi/status/:statusId", cors(), Status.update);
+    router.options("/v1/status/update", cors(corsConfig("https://webdock.io", ["POST"])));
+    router.post("/v1/status/update", cors(), Status.update);
     return router;
 };

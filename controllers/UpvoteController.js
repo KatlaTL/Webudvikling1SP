@@ -5,37 +5,33 @@ exports.getUpvotes = async (req, res) => {
     try {
         const result = await sequelize.transaction(async (transaction) => {
             const feature_request_id = Number(req.params.requestId);
+            const amount = 0;
 
-            let upvote = await UpvoteService.getUpvote(feature_request_id, transaction);
-
-            if(!upvote) {
-                const amount = 0;
-                upvote = await UpvoteService.createUpvote(feature_request_id, amount, transaction);
-            } 
+            const [upvote] = await UpvoteService.getOrCreateUpvote(feature_request_id, amount, transaction);
             return upvote;
         });
 
         return res.status(200).json(result);
-    } catch(err) {
-        return res.sendStatus(500);
+    } catch (err) {
+        return res.status(500).json({
+            status: 500,
+            message: "Invalid request"
+        });
     }
-}
+};
 
 exports.upvote = async (req, res) => {
     try {
-        await sequelize.transaction(async (transaction) => {
-            const { user_id } = req.body;
+        const result = await sequelize.transaction(async (transaction) => {
+            const user_id = req.user.id;
             const feature_request_id = Number(req.params.requestId);
-            
-            let upvote = await UpvoteService.getUpvote(feature_request_id, transaction);
+            const amount = 0;
 
-            if(!upvote) {
-                upvote = await UpvoteService.createUpvote(feature_request_id, 0, transaction);
-            }
+            const [upvote] = await UpvoteService.getOrCreateUpvote(feature_request_id, amount, transaction);
 
             const userHasUpvote = await UpvoteService.getUserUpvotes(user_id, upvote.id, transaction);
 
-            if(!userHasUpvote) {
+            if (!userHasUpvote) {
                 await UpvoteService.increment(feature_request_id, transaction);
 
                 await UpvoteService.createUserUpvotes(user_id, upvote.id, transaction);
@@ -45,11 +41,15 @@ exports.upvote = async (req, res) => {
 
                 await UpvoteService.destroyUserUpvotes(user_id, upvote.id, transaction);
             }
+
+            return await UpvoteService.getUpvote(feature_request_id, transaction);
         });
-        
-        return res.sendStatus(200);
-    } catch(err) {
-        console.log(err)
-        return res.sendStatus(500);
+
+        return res.status(200).json(result);
+    } catch (err) {
+        return res.status(500).json({
+            status: 500,
+            message: "Invalid request"
+        });
     }
-}
+};
