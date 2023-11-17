@@ -21,9 +21,9 @@ module.exports = () => {
     router.get('/', Default.index);
     
     router.get('/featureRequests', FeatureRequests.getAll);
-    router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequests/create', FeatureRequests.createForm);
     router.post('/featureRequests/create', FeatureRequests.create);
+    router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequest/requestComments', CommentController.index);
  
 

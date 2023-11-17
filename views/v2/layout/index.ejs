@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Make the title dynamic -->
+    <%- include("../partials/header.ejs", {title: "Feature Requests"}) %>
+
+    <body>
+        <%- include("../partials/navbar.ejs") %>
+        
+        <%- include("../partials/components/createrequestCTA.ejs") %>
+
+        <div id="main-content">
+            <% if (typeof mainPage == "string" && mainPage) { %>
+                <%- include("../pages/" + mainPage + ".ejs") %>          
+            <% } %>
+        </div>
+
+        <%- include("../partials/footer.ejs") %>
+    </body>
+</html>
