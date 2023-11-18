@@ -6,7 +6,7 @@ exports.comments = async (req, res) => {
   try{
     
     const Comments = await Comment.findAll({
-      where: { feature_request_id: 1}
+      where: { feature_request_id: 1035925280}
     });
 
     let userIds = [];

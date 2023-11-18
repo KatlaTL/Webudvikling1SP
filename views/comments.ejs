@@ -7,9 +7,43 @@
 </head>
 <body>
 
-    <form action="/comments/postcomments/posted" method="post">
-        <input type="text" name="comment">
-        <input type="submit" value="submit">
+    <form action="" id="commentForm">
+        <input type="text" name="comment" id="comment">
+        <input type="submit" value="submit" id="submit">
     </form>
 </body>
+<script>
+    document.querySelector("#commentForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (comment.value == "") {
+            alert("Ensure you input a value in the field!");
+        } else {
+            alert("This form has been successfully submitted!");
+            console.log(
+            `This form has a comment of ${comment.value}`
+            );
+
+            let commentData = comment.value;
+
+            let formData = new FormData();
+
+            console.log(formData);
+
+            comment.value = "";
+
+            const response = await fetch("/comments/postcomments/posted", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`
+
+                }
+            });
+
+        }
+    });
+
+</script>
 </html>
