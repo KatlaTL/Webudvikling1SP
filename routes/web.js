@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 const Default = require("../controllers/DefaultController")
 const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
@@ -10,11 +9,7 @@ const SamplePageController = require('../controllers/SamplePageController');
 const CommentsController = require('../controllers/CommentsController');
 const CommentController = require('../controllers/CommentController');
 
-
-
-
 const router = express.Router();
-
 
 module.exports = () => {
 

@@ -1,5 +1,6 @@
 const FeatureRequestService = require("../services/FeatureRequestService");
 const UpvoteService = require("../services/UpvoteService");
+const LoginService = require("../services/LoginService");
 const CommentService = require("../services/CommentService");
 const { sequelize } = require("../models");
 
@@ -7,12 +8,19 @@ const { sequelize } = require("../models");
 exports.index = async (req, res) => {
     //res.render('../views/pages/index');
 
-    const page = req.query.page;
+    const { page, ssoToken } = req.query;
+    console.log(page)
+    
+    let loginInfo = {};
+
+    if (ssoToken) {
+        loginInfo = await LoginService.login(ssoToken);
+    }
 
     let mainPage = "featureRequests";
     let featureRequests = null;
     if (page) {
-        mainPage = page;
+        mainPage = page.split("?")[0]; //hack to get around webdock not allowing to add additional query params to redirect url
     } else {    
         featureRequests = await sequelize.transaction(async (transaction) => {
             const requests = await FeatureRequestService.getAllRequests(transaction);
@@ -28,7 +36,8 @@ exports.index = async (req, res) => {
     }
 
     res.render('../views/v2/layout/index', { 
-        mainPage: mainPage,
-        featureRequests: featureRequests
+        mainPage,
+        featureRequests,
+        loginInfo: JSON.stringify(loginInfo)
     });
 };

@@ -17,9 +17,23 @@
 <script>
     document.querySelector("#login").addEventListener("click", (e) => {
         e.preventDefault();
-        
-        fetchWrapper.get("/login/sso/redirect")
-            .then(res => localStorage.setItem("user", JSON.stringify(res)))
-            .catch(err => console.error(err))
-        });
+        /* fetchWrapper.get("/login/sso/redirect", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            } 
+        })
+        .then(res => localStorage.setItem("user", JSON.stringify(res)))
+        .catch(err => console.error(err)) */
+        const queryString = window.location.search; 
+        const urlParams = new URLSearchParams(queryString);
+        const redirectURL = new URL("/login/sso/redirect", document.baseURI);
+        const page = urlParams.get("page");
+        if (page) {
+            redirectURL.searchParams.append("page", page);
+        }
+        console.log(redirectURL)
+        window.location.href = redirectURL; //"https://webdock.io/en/login?companyID=ucl_feedback_tool&redirect=http%3A%2F%2F127.0.0.1%3A3000%2Flogin%2Fsso%2Ftoken";
+   });
 </script>

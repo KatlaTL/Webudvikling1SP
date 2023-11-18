@@ -9,11 +9,18 @@
         <%- include("../partials/components/createrequestCTA.ejs") %>
 
         <div id="main-content">
-            <% if (typeof mainPage == "string" && mainPage) { %>
+            <% if (mainPage) { %>
                 <%- include("../pages/" + mainPage + ".ejs") %>          
             <% } %>
         </div>
 
         <%- include("../partials/footer.ejs") %>
     </body>
+    <% if (loginInfo) { %>
+        <script>
+            const user = <%- loginInfo %>
+            localStorage.setItem("user", JSON.stringify(user));
+        </script>
+    <% } %>
+
 </html>

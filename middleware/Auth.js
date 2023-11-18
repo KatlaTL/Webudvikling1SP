@@ -71,19 +71,20 @@ const auth = async (headers) => {
 
         const decoded = TokenService.verifyToken(token);
         const { jwtError, decodedToken } = decoded;
+        console.log(decodedToken)
 
         if (jwtError) {
             throw (jwtError.message);
         }
 
-        if (!decodedToken || !decodedToken.user_id || !decodedToken.user_name) {
+        if (!decodedToken || !decodedToken.user_id || !decodedToken.user_email) {
             throw ("Invalid token");
         }
 
         const user = await sequelize.transaction(async (transaction) => {
             let user = await UserService.getUser({
                 id: decodedToken.user_id,
-                name: decodedToken.user_name
+                email: decodedToken.user_email,
             }, transaction);
 
             if (!user || !user.id) {

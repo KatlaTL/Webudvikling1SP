@@ -1,6 +1,5 @@
 const { Feature_request } = require('../models');
 const EmailService = require("../services/EmailService");
-const sequelize = require("sequelize");
 const axios = require("axios");
 
 ///TO DO update for feature request
@@ -12,7 +11,6 @@ exports.getAll = async (req, res) => {
     return res.sendStatus(500);
   }
 };
-
 
 exports.single = async (req, res) => {
   try {
