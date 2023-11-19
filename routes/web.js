@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 const Default = require("../controllers/DefaultController")
 const FeatureRequests = require('../controllers/featureRequestsController');
 const Upvote = require("../controllers/UpvoteController");
@@ -10,22 +9,19 @@ const SamplePageController = require('../controllers/SamplePageController');
 const CommentsController = require('../controllers/CommentsController');
 const CommentController = require('../controllers/CommentController');
 
-
-
-
 const router = express.Router();
-
 
 module.exports = () => {
 
     router.get('/', Default.index);
     
     router.get('/featureRequests', FeatureRequests.getAll);
-    router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequests/create', FeatureRequests.createForm);
-    router.post('/featureRequests/create', FeatureRequests.create);
+    router.post('/featureRequests/create', userAuth, FeatureRequests.create);
+    router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequest/requestComments', CommentController.index);
  
+    router.get('/categories', FeatureRequests.getAllCategories);
 
     router.get('/emailtest', FeatureRequests.email)
 

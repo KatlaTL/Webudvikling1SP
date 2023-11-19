@@ -10,7 +10,7 @@ exports.email = async (feature_request) => {
         const { id, title, description } = feature_request;
 
         const sender = "uclfeedback@webdock.io";
-        const recipients = "admin@webdock.io";
+        const recipients = "ballopjuske2208@gmail.com";// "admin@webdock.io";
         const ccRecipients = (await getRecipients()).toString(); //get all user emails with email notification permission
 
         const headers = {
@@ -41,11 +41,12 @@ exports.email = async (feature_request) => {
             headers: headers,
             data: JSON.stringify(body)
         });
-
+        return true;
     } catch (err) {
         let error = new Error(`${err.response.statusText}. ${err.response.data.Message}`);
         error.status = err.response.status;
-        throw error;
+        //throw error;
+        return false;
     }
 }
 

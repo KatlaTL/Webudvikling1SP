@@ -93,11 +93,11 @@ footer {
    }
 
    /*Tekst*/
-   #commenttekst{
+   .commenttekst{
     color: black;
          }
     
-    #commenttitle{
+    .commenttitle{
       color: black;
       font-weight: bold;
            }
