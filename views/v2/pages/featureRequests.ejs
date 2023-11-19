@@ -127,6 +127,11 @@
 
                             </div>
                         </div>
+                        
+                    </div>
+                    <div class="commentsShow">
+                        <p>comments</p>
+                        <button id="backBtnComments">Back</button>
                     </div>
                 </div>
             </div>
@@ -156,6 +161,37 @@
                 .catch(err => console.error(err));
             }
         })
-    })
+    });
+
+
+    function toggleCommentsShow() {
+    let showFeatures = document.querySelector(".FeaureRequest");
+        let commentShow = document.querySelector(".commentsShow");
+
+        if (showFeatures.style.display === 'none') {
+            showFeatures.style.display = 'block';
+        } else {
+            showFeatures.style.display = 'none';
+            commentShow.style.display = 'block';
+        }
+    };
+
+
+   window.addEventListener('DOMContentLoaded', (e) => {
+    e.preventDefault();
+     let x = document.querySelectorAll(".comment");
+     for(i=0;i<x.length; i++){
+        x[i].addEventListener('click',function (e) {
+            console.log("clicked");
+            toggleCommentsShow();
+
+        })
+    }});
+
+    document.querySelector("#backBtnComments").addEventListener("click", (e) =>{
+    e.preventDefault();
+    toggleCommentsShow();
+
+    });
 
 </script>

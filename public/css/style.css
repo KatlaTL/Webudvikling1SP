@@ -206,11 +206,17 @@ h2 {
 
 
 .with-scroll .scroll-box-feature {
-    max-height: 550px; 
-    overflow-y: auto;
-    padding: 5px;
-  }
-  
-  .with-scroll .scroll-box-feature p {
-   margin: 20;
-  }
+  max-height: 550px; 
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.with-scroll .scroll-box-feature p {
+  margin: 20;
+}
+
+
+.commentsShow {
+  color: black;
+  display: none;
+}
