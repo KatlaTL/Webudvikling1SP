@@ -13,10 +13,12 @@
     </form>
 </body>
 <script>
-    document.querySelector("#commentForm").addEventListener("submit", async (e) => {
+    let commentFormData = document.querySelector("#commentForm");
+    commentFormData.addEventListener("submit",  (e) => {
         e.preventDefault();
         if (comment.value == "") {
             alert("Ensure you input a value in the field!");
+
         } else {
             alert("This form has been successfully submitted!");
 
@@ -24,24 +26,15 @@
 
             console.log(commentData);
 
-            let formData = new FormData(commentData);
-
+            let formData = new FormData(commentFormData);
             
-            console.log(formData);
-
-            comment.value = "";
-
-            const response = await fetch("/comments/postcomments/posted", {
+            fetch("/comments/postcomments/posted", {
                 method: "POST",
                 body: formData,
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`
-
-                }
+                }   
             });
-
         }
     });
 
