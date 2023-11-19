@@ -166,7 +166,7 @@
 
     function toggleCommentsShow() {
     let showFeatures = document.querySelector(".FeaureRequest");
-        let commentShow = document.querySelector(".commentsShow");
+    let commentShow = document.querySelector(".commentsShow");
 
         if (showFeatures.style.display === 'none') {
             showFeatures.style.display = 'block';
@@ -177,16 +177,16 @@
     };
 
 
-   window.addEventListener('DOMContentLoaded', (e) => {
-    e.preventDefault();
-     let x = document.querySelectorAll(".comment");
-     for(i=0;i<x.length; i++){
-        x[i].addEventListener('click',function (e) {
+    const commentsBtn = document.querySelectorAll(".comment");
+
+    commentsBtn.forEach((x) => {
+        x.addEventListener('click',function (e) {
+            e.preventDefault();
             console.log("clicked");
             toggleCommentsShow();
 
         })
-    }});
+    });
 
     document.querySelector("#backBtnComments").addEventListener("click", (e) =>{
     e.preventDefault();
