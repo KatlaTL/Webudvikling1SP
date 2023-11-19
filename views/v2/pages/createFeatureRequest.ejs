@@ -6,22 +6,12 @@
                 <div class="card-body bg-white">
 
                     <h4 class="card card-header">New feature request</h2>
-
-                        <form id="createForm" action="/featureRequests/create" method="post">
+                        <!-- action="/featureRequests/create" method="post" -->
+                        <form id="createForm">
                             <div class="form-group">
                                 <label for="category">Category</label>
                                 <select class="form-control" id="category" name="category">
                                     <option value="" disabled selected>Select a Category</option>
-                                    <option value="Feature">Dashboard Features</option>
-                                    <option value="Documentation">Documentation</option>
-                                    <option value="Billing-features">Billing features</option>
-                                    <option value="Networking">Networking</option>
-                                    <option value="Hardware">Hardware and products</option>
-                                    <option value="Perfect-server-stacks">Perfect server stacks</option>
-                                    <option value="Mobile-app">Mobile app</option>
-                                    <option value="Webdock-API">Webdock API</option>
-                                    <option value="Competetion">Competetion</option>
-                                    <option value="Uncategorized">Uncategorized</option>
                                 </select>
                             </div>
 
@@ -46,3 +36,43 @@
         <%- include("../partials/roadmap.ejs") %>
     </div>
 </div>
+
+<script>
+    fetchWrapper.get("categories")
+        .then(data => {
+            const selectList = document.querySelector(".form-control");
+            for (let i = 0; i < data.categories.length; i++) {
+                const category = data.categories[i].category; 
+                const option = document.createElement("option");
+                const textNode = document.createTextNode(category);
+
+                option.appendChild(textNode);
+                option.setAttribute("value", category);
+                option.setAttribute("data-id", data.categories[i].id)
+                selectList.appendChild(option);
+            }
+        })
+        .catch(err => console.error(err));    
+    
+    const form = document.querySelector("#createForm");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const { category, title, details} = e.target;
+
+        fetchWrapper.post("/featureRequests/create", {
+            headers: {
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
+            },
+            body: {
+                category: { 
+                    id: category.options[category.selectedIndex].dataset.id,
+                    category: category.value
+                },
+                title: title.value,
+                details: details.value
+            }
+        })
+        .then(data =>  window.location.href = new URL(document.baseURI).origin)
+        .catch(err => console.error(err));
+    });
+</script>

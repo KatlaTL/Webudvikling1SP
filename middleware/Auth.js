@@ -71,7 +71,6 @@ const auth = async (headers) => {
 
         const decoded = TokenService.verifyToken(token);
         const { jwtError, decodedToken } = decoded;
-        console.log(decodedToken)
 
         if (jwtError) {
             throw (jwtError.message);

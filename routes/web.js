@@ -17,10 +17,11 @@ module.exports = () => {
     
     router.get('/featureRequests', FeatureRequests.getAll);
     router.get('/featureRequests/create', FeatureRequests.createForm);
-    router.post('/featureRequests/create', FeatureRequests.create);
+    router.post('/featureRequests/create', userAuth, FeatureRequests.create);
     router.get('/featureRequests/:requestId', FeatureRequests.single);
     router.get('/featureRequest/requestComments', CommentController.index);
  
+    router.get('/categories', FeatureRequests.getAllCategories);
 
     router.get('/emailtest', FeatureRequests.email)
 

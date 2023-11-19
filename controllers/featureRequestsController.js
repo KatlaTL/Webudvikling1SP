@@ -1,12 +1,12 @@
-const { Feature_request } = require('../models');
 const EmailService = require("../services/EmailService");
-const axios = require("axios");
+const FeatureRequestService = require("../services/FeatureRequestService");
+const { sequelize } = require("../models");
 
 ///TO DO update for feature request
 exports.getAll = async (req, res) => {
   try {
     const requests = await Feature_request.findAll();
-    return res.status(200).json({ featureRequests: requests});
+    return res.status(200).json({ featureRequests: requests });
   } catch (e) {
     return res.sendStatus(500);
   }
@@ -29,53 +29,81 @@ exports.createForm = (req, res) => {
 exports.create = async (req, res) => {
   try {
     const { category, title, details } = req.body;
+    const userId = req.user.id;
 
     if (!category || !title || !details) {
-      return res.status(400).send('Alle felter skal udfyldes korrekt.');
+      return res.status(400).json({
+        status: 400,
+        message: 'All fields are required'
+      });
     }
 
-    const featureRequestData = {
-      userID: 22486,
+    const webdockRequestData = {
+      userID: userId,
       title: title,
       description: details,
-      category: category
+      category: category.category
     };
 
-    const data = await axioscall(featureRequestData);
+    const response = await FeatureRequestService.axiosPost(webdockRequestData);
+    if (response.status != 200) {
+      return res.status(response.status).json({
+        status: response.status,
+        message: response.message
+      })
+    }
 
-    const externalId = data.data.id;
+    const featureRequest = await sequelize.transaction(async (transaction) => {
+      const status = await FeatureRequestService.getStatusByName("Under Review", transaction);  //Under Review is the default status
 
-    featureRequestData.id = externalId;
+      if (!status || !status.id) {
+        throw ("status not found");
+      }
+
+      const requestData = {
+        id: response.data.id,
+        status: status.id,
+        user_id: userId,
+        category_id: category.id,
+        title: title,
+        description: details
+      }
+  
+      return await FeatureRequestService.createRequest(requestData, transaction);
+    });
 
 
-    const FeatureRequest = await Feature_request.create(featureRequestData);
+    if (!featureRequest || !featureRequest.id || !featureRequest.title || !featureRequest.description) {
+      throw ("featureRequest not found");
+    }
 
-
-    res.status(200).send(`Feature request oprettet med ID: ${FeatureRequest.id}`);
-
-
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send('Der opstod en fejl under oprettelsen af feature-requesten.');
+    const emailSent = await EmailService.email({ id: featureRequest, title: "DETTE ER EN TEST", description: "DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST." });
+    if (!emailSent) {
+      throw ("email failed")
+    }
+    res.status(201).json({
+      status: 201,
+      message: `Feature request created with ID: ${featureRequest.id}`
+    });
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    }); //TODO enhance error handling
   }
 };
 
-const axioscall = async (data) => {
-
-  return await axios.post('https://webdock.io/en/platform_data/feature_requests/new', data)
-    .then(response => {
-      if (response.status === 200) {
-        return response
-
-
-      } else {
-        console.error("An error occurred:", response.data.message);
-      }
+exports.getAllCategories = async (req, res) => {
+  try {
+    const categories = await FeatureRequestService.getAllCategories();
+    res.status(200).json({
+      status: 200,
+      categories: categories
     })
-    .catch(error => {
-      console.error("An error occurred:", error.message);
-    });
-
+  } catch (err) {
+    res.sendStatus(500);
+  }
 }
 
 //TODO move functionallity into create() function

@@ -9,8 +9,8 @@
         <%- include("../partials/components/createrequestCTA.ejs") %>
 
         <div id="main-content">
-            <% if (mainPage) { %>
-                <%- include("../pages/" + mainPage + ".ejs") %>          
+            <% if (pageExists && mainPage) { %>
+                <%- include("../pages/" + mainPage + ".ejs") %>
             <% } %>
         </div>
 

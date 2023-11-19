@@ -10,11 +10,12 @@ function get(url, options = {}) {
         method: 'GET',
         ...options
     };
-    console.log(requestOptions)
     return fetch(url, requestOptions).then(handleResponse);
 }
 
-function post(url, body, headers = {}) {
+function post(url, options = {}) {
+    const body = options.body || {};
+    const headers = options.headers || {};
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -27,8 +28,8 @@ function post(url, body, headers = {}) {
 }
 
 function put(url, options = {}) {
-    const body = options.body || {}
-    const headers = options.headers || {}
+    const body = options.body || {};
+    const headers = options.headers || {};
     const requestOptions = {
         method: 'PUT',
         headers: {
@@ -51,8 +52,6 @@ function _delete(url, options = {}) {
 
 // helper function
 function handleResponse(response) {
-    console.log(response)
-    if (!response.body) return null;
     return response.json().then(data => {   
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;
