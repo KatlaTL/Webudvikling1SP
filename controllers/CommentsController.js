@@ -48,9 +48,10 @@ exports.postCommentForm = async (req, res) => {
 
 exports.postComments = async (req,res) => {
   try {
-    console.log(req.user);
+    let user_id = req.user.id;
     let comment =req.body.comment;
-    let commentPost = await Comment.create({ comment:comment });
+    console.log(comment);
+    let commentPost = await Comment.create({ comment:comment, user_id:user_id });
     return res.status(200).json({commentPost});
   } catch (e) {
     console.log(e);
