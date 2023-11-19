@@ -9,6 +9,8 @@ const { userAuth, adminAuth } = require("../middleware/Auth");
 const SamplePageController = require('../controllers/SamplePageController');
 const CommentsController = require('../controllers/CommentsController');
 const CommentController = require('../controllers/CommentController');
+const CommentController = require('../controllers/CommentController');
+
 
 
 
