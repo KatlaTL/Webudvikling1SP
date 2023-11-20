@@ -244,5 +244,23 @@ h2 {
 }
 
 #backBtnComments {
+  margin-bottom: 20px;
+}
+
+.feature-request{
+  cursor: pointer;
+}
+
+.commentFormDiv {
+  background-color: #cccccc33;
   margin-top: 20px;
+}
+
+#comment {
+  width: 100%;
+}
+
+#submit {
+  margin-top: 10px;
+  float: right;
 }
