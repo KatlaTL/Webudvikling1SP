@@ -3,6 +3,7 @@
         <div class="col-md-8 mb-3">
             <div class="box box-left border card text-white mb-3">
                 <div class="card-header">Feature requests</div>
+                <div class="card-header" id="comment-header">Feature request comments</div>
                 <div class="card-body bg-white">
                     <div class="FeaureRequest">
                         <div class="row">
@@ -128,6 +129,37 @@
                             </div>
                         </div>
                     </div>
+                    <div class="commentsShow">
+                        <button id="backBtnComments">Back</button>
+                            <% if(featureRequests) { %>
+                                    <div>
+                                        <h5 class="commenttitle">
+                                            <%= featureRequests[0].title %>
+                                        </h5>
+                                    </div>
+                                    <div class="status">
+                                        <h7>Placeholder</h7>
+                                    </div>
+                                    <div>
+                                        <p class="commenttekst">
+                                        <%= featureRequests[0].description %>
+                                    </p>
+                                    </div>
+                                    
+                            <% } %>
+                            <div>
+                                <p class="commentsUnderTitel">Comments:</h3>
+                            </div>
+                            <div id="commentsDiv">
+
+                            </div>
+                            <div class="commentFormDiv">
+                                <form action="" id="commentForm">
+                                    <input type="text" name="comment" id="comment" placeholder="Write your comment here">
+                                    <input type="submit" value="submit" id="submit">
+                                </form>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -156,6 +188,76 @@
                 .catch(err => console.error(err));
             }
         })
+    });
+
+   
+
+    function toggleCommentsShow() {
+    let showFeatures = document.querySelector(".FeaureRequest");
+    let commentShow = document.querySelector(".commentsShow");
+    let featureHeader = document.querySelector(".card-header");
+    let commentHeader = document.querySelector("#comment-header");
+
+        if (showFeatures.style.display === 'none') {
+            showFeatures.style.display = 'block';
+            commentShow.style.display = 'none';
+            commentHeader.style.display = 'none';
+            featureHeader.style.display = 'block';
+        } else {
+            showFeatures.style.display = 'none';
+            commentShow.style.display = 'block';
+            commentHeader.style.display = 'block';
+            featureHeader.style.display = 'none';
+        }
+    };
+
+
+    const commentsBtn = document.querySelectorAll(".feature-request");
+
+    commentsBtn.forEach((x) => {
+        x.addEventListener('click',function (e) {
+            e.preventDefault();
+            toggleCommentsShow();
+
+        })
+    });
+
+    document.querySelector("#backBtnComments").addEventListener("click", (e) =>{
+    e.preventDefault();
+    toggleCommentsShow();
+
+    });
+
+    fetch("/comments")
+    .then((res)=> res.json())
+    .then((data)=>{
+    
+    let outerDiv = document.querySelector('#commentsDiv');
+
+    console.log(data.Comments.length);
+     
+    for (let i = 0; i < data.Comments.length; i++) {
+        let innerDiv = document.createElement("div");
+        outerDiv.appendChild(innerDiv);
+
+        let pTag = document.createElement("p");
+        innerDiv.appendChild(pTag);
+
+        let comments = JSON.stringify(data.Comments[i].comment);
+        let userName = JSON.stringify(data.userName[i]);
+
+        let newStrComments = comments.replace(/"/g,'');
+        let newStrUserName = userName.replace(/"/g,'');
+
+        /* appender dataen til html'en */
+        pTag.innerHTML += newStrComments + "<br>";
+        pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
+
+    };
+
     })
+    .catch((err)=>{
+        console.log("error occured", err)
+    });
 
 </script>
