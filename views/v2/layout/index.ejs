@@ -18,8 +18,10 @@
     </body>
     <% if (loginInfo) { %>
         <script>
-            const user = <%- loginInfo %>
-            localStorage.setItem("user", JSON.stringify(user));
+            const user = <%- loginInfo %>;
+            if (!localStorage.getItem("user")) {
+                localStorage.setItem("user", JSON.stringify(user));
+            }
         </script>
     <% } %>
 
