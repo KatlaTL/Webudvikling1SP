@@ -26,7 +26,7 @@
                                                             <h7>Placeholder</h7>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md 10">
+                                                            <div class="col-md 10 request-click">
                                                                 <p class="commenttekst">
                                                                     <%= featureRequests[i].description %>
                                                                 </p>
@@ -212,7 +212,7 @@
     };
 
 
-    const commentsBtn = document.querySelectorAll(".feature-request");
+    const commentsBtn = document.querySelectorAll(".request-click");
 
     commentsBtn.forEach((x) => {
         x.addEventListener('click',function (e) {
