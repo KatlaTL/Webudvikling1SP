@@ -12,7 +12,7 @@ exports.redirect = (req, res) => {
     const url = new URL("https://webdock.io/en/login");
 
     url.searchParams.append("companyID", "ucl_feedback_tool");
-    url.searchParams.append("redirect", localhost + path + pageParam);
+    url.searchParams.append("redirect", host + path + pageParam);
     return res.redirect(url);
     //For testing
     //return res.redirect('http://localhost:3000/login/sso/token?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io');
