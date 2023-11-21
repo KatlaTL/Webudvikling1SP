@@ -19,9 +19,11 @@
     <% if (loginInfo) { %>
         <script>
             const user = <%- loginInfo %>;
-            if (!localStorage.getItem("user")) {
+            if (user && Object.keys(user).length > 0) {
+                console.log("empty")
                 localStorage.setItem("user", JSON.stringify(user));
             }
+            
         </script>
     <% } %>
 
