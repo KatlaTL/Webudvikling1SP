@@ -77,7 +77,7 @@ exports.create = async (req, res) => {
       throw ("featureRequest not found");
     }
 
-    const emailSent = await EmailService.email({ id: featureRequest.id, title: featureRequest.title, description: featureRequest.description });
+    const emailSent = await EmailService.email({ id: featureRequest, title: "DETTE ER EN TEST", description: "DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST." });
     if (!emailSent) {
       throw ("email failed")
     }
