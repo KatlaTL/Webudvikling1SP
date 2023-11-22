@@ -77,7 +77,11 @@ exports.create = async (req, res) => {
       throw ("featureRequest not found");
     }
 
+<<<<<<< HEAD
     const emailSent = await EmailService.email({ id: featureRequest.id, title: featureRequest.title, description: featureRequest.description });
+=======
+    const emailSent = await EmailService.email({ id: featureRequest.id, title: featureRequest.title, description: featureRequest.description});
+>>>>>>> refactoring
     if (!emailSent) {
       throw ("email failed")
     }

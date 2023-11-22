@@ -10,7 +10,7 @@ exports.email = async (feature_request) => {
         const { id, title, description } = feature_request;
 
         const sender = "uclfeedback@webdock.io";
-        const recipients = "ballopjuske2208@gmail.com";// "admin@webdock.io";
+        const recipients = "balloupjuske2208@gmail.com";// "admin@webdock.io";
         const ccRecipients = (await getRecipients()).toString(); //get all user emails with email notification permission
 
         const headers = {
