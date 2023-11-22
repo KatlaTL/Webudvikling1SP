@@ -10,13 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       comment: {
+        allowNull: false,
         type: Sequelize.STRING(2000)
       },
       user_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          id: "id"
+        }
       },
       feature_request_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Feature_requests",
+          id: "id"
+        }
       },
       createdAt: {
         allowNull: false,

@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Upvote_has_user.init({
-    user_id: DataTypes.INTEGER,
-    upvote_id: DataTypes.INTEGER
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id"
+      }
+    },
+    upvote_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Upvotes",
+        key: "id"
+      }
+    }
   }, {
     sequelize,
     modelName: 'Upvote_has_user',

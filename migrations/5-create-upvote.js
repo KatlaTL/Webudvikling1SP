@@ -10,10 +10,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       amount: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       feature_request_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Feature_requests",
+          id: "id"
+        }
       },
       createdAt: {
         allowNull: false,

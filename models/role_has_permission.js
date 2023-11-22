@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Role_has_permission.init({
-    role_id: DataTypes.INTEGER,
-    permission_id: DataTypes.INTEGER
+    role_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Roles",
+        key: "id"
+      }
+    },
+    permission_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Permission",
+        key: "id"
+      }
+    }
   }, {
     sequelize,
     modelName: 'Role_has_permission',
