@@ -11,7 +11,8 @@ module.exports = {
       },
       amount: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       feature_request_id: {
         allowNull: false,

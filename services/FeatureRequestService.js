@@ -1,11 +1,29 @@
-const { Feature_request } = require("../models");
-const { Status } = require("../models");
-const { Category } = require("../models")
+const { Feature_request, Status, Comment, Category, Upvote } = require("../models");
+const { Sequelize } = require("sequelize");
 const axios = require("axios");
 
 exports.getAllRequests = async (transaction = null) => {
     try {
-        return await Feature_request.findAll({ Transaction: transaction });
+        return await Feature_request.findAll({
+            attributes:{
+                include: [
+                    [Sequelize.fn("COUNT", Sequelize.col("Comments.id")), "commentCount"],
+                    [Sequelize.col("Upvote.amount"), "upvotes"],
+                    [Sequelize.col("Status.status"), "status"]
+                ]
+            },
+            include: [{
+                model: Status,
+                attributes: []
+            }, {
+                model: Upvote,
+                attributes: []
+            }, {
+                model: Comment,
+                attributes: []
+            }],
+            group: ["Feature_request.id"]
+        }, { Transaction: transaction });
     } catch (err) {
         throw (err);
     }
