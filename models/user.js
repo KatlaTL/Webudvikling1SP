@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsToMany(models.Role, { through: models.User_has_role, foreignKey: "user_id" });
       this.belongsToMany(models.Notification, { through: models.User_has_notification, foreignKey: "user_id" });
-      this.belongsToMany(models.Upvote, { through: models.Upvote_has_user });
+      this.belongsToMany(models.Upvote, { through: models.Upvote_has_user, foreignKey: "user_id" });
       this.hasMany(models.Comment, { foreignKey: "user_id" });
       this.hasMany(models.Feature_request, { foreignKey: "user_id" });
     }
