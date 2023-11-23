@@ -19,7 +19,7 @@ module.exports = {
     {
       id: 1537979746,
       title: "Hamsters with tiny hats",
-      description: "some description",
+      description: "some description about hamsters with tiny hats",
       imageURL: null,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -31,7 +31,7 @@ module.exports = {
     {
       id: 1537979747,
       title: "Tiny boots on cute tiny fur balls aka hamsters",
-      description: "some description",
+      description: "some description about tiny boots on cute tiny fur balls",
       imageURL: null,
       createdAt: new Date(),
       updatedAt: new Date(),

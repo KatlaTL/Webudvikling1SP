@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Status, { foreignKey: "status_id" });
       this.belongsTo(models.Category, { foreignKey: "category_id" });
       this.belongsTo(models.User, { foreignKey: "user_id" });
-      this.belongsTo(models.Feature_request, { foreignKey: "feature_request_id" });
+      this.belongsTo(this, { foreignKey: "parent_feature_request_id" });
     }
   }
   Feature_request.init({

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Feature_request, { foreignKey: "feature_request_id" });
-      this.belongsTo(models.User), { foreignKey: "user_id" };
+      this.belongsTo(models.User, { foreignKey: "user_id" });
     }
   }
   Comment.init({
