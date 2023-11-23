@@ -15,7 +15,7 @@ exports.getUpvotes = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             status: 500,
-            message: "Invalid request"
+            message: "Request failed"
         });
     }
 };
@@ -49,7 +49,7 @@ exports.upvote = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             status: 500,
-            message: "Invalid request"
+            message: "Request failed"
         });
     }
 };
