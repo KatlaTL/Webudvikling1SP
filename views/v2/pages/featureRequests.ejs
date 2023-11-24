@@ -260,4 +260,29 @@
         console.log("error occured", err)
     });
 
+    let commentFormData = document.querySelector("#commentForm");
+    commentFormData.addEventListener("submit",  (e) => {
+        e.preventDefault();
+        if (comment.value == "") {
+            alert("Ensure you input a value in the field!");
+
+        } else {
+            alert("This form has been successfully submitted!");
+
+            let commentData = comment.value;
+
+            console.log(commentData);
+
+            let formData = new FormData(commentFormData);
+            
+            fetch("/comments/postcomments/posted", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`
+                }   
+            });
+        }
+    });
+
 </script>
