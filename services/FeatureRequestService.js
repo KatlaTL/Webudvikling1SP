@@ -5,7 +5,7 @@ const axios = require("axios");
 exports.getAllRequests = async (transaction = null) => {
     try {
         return await Feature_request.findAll({
-            attributes:{
+            attributes: {
                 include: [
                     [Sequelize.fn("COUNT", Sequelize.col("Comments.id")), "commentCount"],
                     [Sequelize.col("Upvote.amount"), "upvotes"],

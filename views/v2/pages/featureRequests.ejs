@@ -57,8 +57,6 @@
 <script>
     fetchWrapper.get("/featureRequests")
         .then(res => {
-            console.log(res.featureRequests)
-
             const requests = res.featureRequests;
             const requestsDiv = document.querySelector(".scroll-box-feature");
             let requestHtml = "";
@@ -133,7 +131,6 @@
     commentsBtn.forEach((x) => {
         x.addEventListener('click', function (e) {
             e.preventDefault();
-            console.log("click")
             toggleCommentsShow();
 
         })
