@@ -6,7 +6,7 @@ exports.comments = async (req, res) => {
   try{
     
     const Comments = await Comment.findAll({
-      where: { feature_request_id: 1035925280}
+      where: { feature_request_id:1537979745}
     });
 
     let userIds = [];
@@ -48,10 +48,9 @@ exports.postCommentForm = async (req, res) => {
 
 exports.postComments = async (req,res) => {
   try {
-    let user_id = req.user.id;
-    let comment =req.body.comment;
+    let comment =req.body.commentData;
     console.log(comment);
-    let commentPost = await Comment.create({ comment:comment, user_id:user_id });
+    let commentPost = await Comment.create({ comment:comment });
     return res.status(200).json({commentPost});
   } catch (e) {
     console.log(e);

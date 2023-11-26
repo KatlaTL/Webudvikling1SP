@@ -154,7 +154,7 @@
 
                             </div>
                             <div class="commentFormDiv">
-                                <form action="" id="commentForm">
+                                <form action="" id="commentForm" >
                                     <input type="text" name="comment" id="comment" placeholder="Write your comment here">
                                     <input type="submit" value="Submit" id="submit">
                                 </form>
@@ -234,8 +234,6 @@
     
     let outerDiv = document.querySelector('#commentsDiv');
 
-    console.log(data.Comments.length);
-     
     for (let i = 0; i < data.Comments.length; i++) {
         let innerDiv = document.createElement("div");
         outerDiv.appendChild(innerDiv);
@@ -255,6 +253,7 @@
 
     };
 
+
     })
     .catch((err)=>{
         console.log("error occured", err)
@@ -271,15 +270,14 @@
 
             let commentData = comment.value;
 
-            console.log(commentData);
+            let formData = { commentData };
 
-            let formData = new FormData(commentFormData);
-            
             fetch("/comments/postcomments/posted", {
                 method: "POST",
-                body: formData,
+                body: JSON.stringify(formData),
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`
+                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`,
+                    'Content-Type': 'application/json'
                 }   
             });
         }
