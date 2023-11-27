@@ -53,7 +53,7 @@ exports.adminAuth = async (req, res, next) => {
     }
 };
 
-const auth = async (headers) => {
+const auth = async (headers = null) => {
     try {
         if (!headers || !headers.authorization) {
             throw ("Missing authorization");
