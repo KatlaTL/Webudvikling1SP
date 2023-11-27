@@ -23,7 +23,6 @@ exports.single = async (req, res) => {
 
 exports.createForm = (req, res) => {
   return res.render('v2/pages/createFeatureRequest');
-  return res.render('pages/featureRequestCreate');
 };
 
 exports.create = async (req, res) => {

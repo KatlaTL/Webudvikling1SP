@@ -1,6 +1,4 @@
-const { Feature_request } = require("../../../models");
-const { Status } = require("../../../models");
-const { sequelize } = require("../../../models");
+const { Feature_request, Status, sequelize } = require("../../../models");
 
 exports.update = async (req, res) => {
     try {
