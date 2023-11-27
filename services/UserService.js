@@ -1,12 +1,12 @@
 
-const { User, sequelize } = require("../models");
+const { User, sequelize, Role } = require("../models");
 const { User_has_role } = require("../models");
 const { Op, Sequelize } = require("sequelize");
 
 exports.getUser = async (attributes = {}, transaction = null) => {
     try {
         return await User.findOne({
-            where: attributes 
+            where: attributes
         }, { Transaction: transaction });
     } catch (err) {
         throw (err);
@@ -35,27 +35,35 @@ exports.createUser = async (data, transaction = null) => {
     }
 };
 
-
 exports.getOrCreateUser = async (data, transaction = null) => {
+    let unManaged = false;
+    if (!transaction) {
+        transaction = await sequelize.transaction();
+        unManaged = true;
+    }
+
     try {
         const { id, avatarURL, email, name, role = 5 } = data;
-        const [user] = await User.findOrCreate({ //returns an array with the user object and a created boolean
+        const [user, created] = await User.findOrCreate({ //returns an array with the user object and a created boolean
             where: { id: id },
             defaults: {
                 avatarURL: avatarURL,
                 email: email,
                 name: name
             },
-            Transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object with where, default and transaction
+            transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object
         });
 
-        await User_has_role.create({
-            user_id: user.id,
-            role_id: role
-        }, { Transaction: transaction });
+        if (created) {
+            await user.addRole(role, {transaction: transaction});
+            //call await user.reload() to see the roles on the user object  
+        }
+
+        if (unManaged) await transaction.commit();
 
         return user;
     } catch (err) {
+        if (unManaged) await transaction.rollback();
         throw (err);
     }
 };

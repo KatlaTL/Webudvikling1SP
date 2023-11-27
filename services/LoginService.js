@@ -1,5 +1,6 @@
 const TokenService = require("../services/TokenService");
 const UserService = require("../services/UserService");
+const { sequelize } = require("../models");
 
 exports.login = async (ssoToken) => {
     try {
