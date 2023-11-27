@@ -20,17 +20,17 @@ exports.upvote = async (req, res) => {
         const result = await sequelize.transaction(async (transaction) => {
             const user = req.user;
             const feature_request_id = Number(req.params.requestId);
-            
+
             const upvote = await UpvoteService.getUpvote(feature_request_id, transaction);
 
             if (upvote.Users.length === 0) {
-                await upvote.increment("amount");
-                await upvote.addUser(user);
+                await UpvoteService.increment(upvote, transaction);
+                await UpvoteService.addUserUpvotes(upvote, user, transaction);
             } else {
-                await upvote.decrement("amount");
-                await upvote.removeUser(user);
+                await UpvoteService.decrement(upvote, transaction);
+                await UpvoteService.removeUserUpvotes(upvote, user, transaction);
             }
-            return await upvote.reload();
+            return await upvote.reload({ transaction, transaction });
         });
 
         return res.status(200).json(result);

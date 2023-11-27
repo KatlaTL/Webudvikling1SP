@@ -7,7 +7,7 @@ exports.getUser = async (attributes = {}, transaction = null) => {
     try {
         return await User.findOne({
             where: attributes
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -22,12 +22,9 @@ exports.createUser = async (data, transaction = null) => {
             avatarURL: avatarURL,
             email: email,
             name: name
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
 
-        await User_has_role.create({
-            user_id: user.id,
-            role_id: role
-        }, { Transaction: transaction });
+        await user.addRole(role, { transaction: transaction });
 
         return user;
     } catch (err) {
@@ -55,7 +52,7 @@ exports.getOrCreateUser = async (data, transaction = null) => {
         });
 
         if (created) {
-            await user.addRole(role, {transaction: transaction});
+            await user.addRole(role, { transaction: transaction });
             //call await user.reload() to see the roles on the user object  
         }
 
@@ -97,7 +94,7 @@ exports.getUsersByRole = async (role_id, transaction = null) => {
             where: {
                 role_id: role_id
             }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
 
         let userIds = [];
         for (let i = 0; i < usersByRole.length; i++) {
@@ -110,7 +107,7 @@ exports.getUsersByRole = async (role_id, transaction = null) => {
                     [Op.or]: userIds
                 }
             }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }

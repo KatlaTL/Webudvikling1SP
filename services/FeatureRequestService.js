@@ -23,7 +23,7 @@ exports.getAllRequests = async (transaction = null) => {
                 attributes: []
             }],
             group: ["Feature_request.id"]
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -31,7 +31,7 @@ exports.getAllRequests = async (transaction = null) => {
 
 exports.createRequest = async (data, transaction = null) => {
     try {
-        return await Feature_request.create(data, { Transaction: transaction })
+        return await Feature_request.create(data, { transaction: transaction })
     } catch (err) {
         throw (err);
     }
@@ -43,7 +43,7 @@ exports.getCategoryByName = async (category_name, transaction = null) => {
             where: {
                 category: category_name
             }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -51,7 +51,7 @@ exports.getCategoryByName = async (category_name, transaction = null) => {
 
 exports.getAllCategories = async (transaction = null) => {
     try {
-        return await Category.findAll({ Transaction: transaction });
+        return await Category.findAll({ transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -61,7 +61,7 @@ exports.getStatusByName = async (status_name, transaction = null) => {
     try {
         return await Status.findOne({
             where: { status: status_name }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }

@@ -5,7 +5,7 @@ exports.getAllRoles = async (transaction = null) => {
     try {
         const roles = await Role.findAll({
             attributes: ["id", "role", "description"]
-        },  { Transaction: transaction });
+        },  { transaction: transaction });
         
         let userRoles = {};
         for (let i = 0; i < roles.length; i++) {
