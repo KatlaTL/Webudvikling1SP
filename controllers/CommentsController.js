@@ -28,7 +28,6 @@ exports.comments = async (req, res) => {
 
       if( userIdsUsers[i] == userIds[i]){
         userName.push(Users[i].name);
-        console.log(userName[i]);
       };
     }
 
