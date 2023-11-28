@@ -173,18 +173,18 @@
         let innerDiv = document.createElement("div");
         outerDiv.appendChild(innerDiv);
 
-                let pTag = document.createElement("p");
-                innerDiv.appendChild(pTag);
+            let pTag = document.createElement("p");
+            innerDiv.appendChild(pTag);
 
-                let comments = JSON.stringify(data.Comments[i].comment);
-                let userName = JSON.stringify(data.userName[i]);
+            let comments = JSON.stringify(data.Comments[i].comment);
+            let userName = JSON.stringify(data.userName[i]);
 
-                let newStrComments = comments.replace(/"/g, '');
-                let newStrUserName = userName.replace(/"/g, '');
+            let newStrComments = comments.replace(/"/g, '');
+            let newStrUserName = userName.replace(/"/g, '');
 
-                /* appender dataen til html'en */
-                pTag.innerHTML += newStrComments + "<br>";
-                pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
+            /* appender dataen til html'en */
+            pTag.innerHTML += newStrComments + "<br>";
+            pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
 
     };
 
