@@ -1,13 +1,25 @@
 const { Comment } = require('../models');
 const { User } = require('../models');
+const { Feature_request } = require('../models');
 
 
 exports.comments = async (req, res) => {
   try{
+
+    
+    const FeatureRequests = await Feature_request.findAll();
+    
+    let Feature_request_id = [];
+    for(let i = 0; i < FeatureRequests.length; i++) {
+      Feature_request_id.push(FeatureRequests[i].id);  
+    }
+    console.log(Feature_request_id);
     
     const Comments = await Comment.findAll({
-      where: { feature_request_id:1537979745}
+      where: { feature_request_id: Feature_request_id}
     });
+
+    console.log(Comments);
 
     let userIds = [];
     for(let i = 0; i < Comments.length; i++) {
@@ -32,7 +44,7 @@ exports.comments = async (req, res) => {
     }
 
 
-    return res.status(200).json({Comments, userName});
+    return res.status(200).json({Comments, userName, Feature_request_id});
   } catch(e) {
     console.log(e);
   }
