@@ -4,8 +4,8 @@ const UserService = require("../services/UserService");
 //TO DO refactor redirect function, make the redirect url more dynamic
 exports.redirect = (req, res) => {
     const { page } = req.query;
-    const host = "http://webdockproje.vps.webdock.cloud"; //use for production
-    const localhost = "http://127.0.0.1:3000" //use for development
+    const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud"; //use for production
+    //const localhost = "http://127.0.0.1:3000" //use for development
     const path = "/"; //"/login/sso/token";
     const pageParam = page ? `?page=${page}` : "";
 
