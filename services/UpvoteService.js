@@ -4,7 +4,6 @@ const { Op } = require("sequelize");
 exports.getUpvote = async (request_id, transaction = null) => {
     try {
         return await Upvote.findOne({
-            include: User,
             where: { feature_request_id: request_id }
         }, { transaction: transaction });
     } catch (err) {
