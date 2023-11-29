@@ -5,9 +5,24 @@ const { Feature_request } = require('../models');
 
 exports.comments = async (req, res) => {
   try{
+   Comments = await Comment.findAll({
+      include: [User,
+      Feature_request]
+     /*  include: [{
+        model: Feature_request,
+        as: 'parent_feature_request_id',
+        where: {parent_feature_request_id: 'feature_request_id' },
+        include: [{
+          model: User,
+          where: {
+            id: "user_id"
+          },
+          required: false
+        }]
+      }] */
+    });
 
-    
-    const FeatureRequests = await Feature_request.findAll();
+  /*   const FeatureRequests = await Feature_request.findAll();
     
     let Feature_request_id = [];
     for(let i = 0; i < FeatureRequests.length; i++) {
@@ -42,9 +57,9 @@ exports.comments = async (req, res) => {
         userName.push(Users[i].name);
       };
     }
+ */
 
-
-    return res.status(200).json({Comments, userName, Feature_request_id});
+    return res.status(200).json({Comments});
   } catch(e) {
     console.log(e);
   }
