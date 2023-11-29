@@ -54,9 +54,9 @@
 </div>
 
 <script>
-    fetch("/featureRequests")
-    .then(([data]) => {
-        const requests = data.featureRequests;
+    fetchWrapper.get("/featureRequests")
+    .then((res) => {
+        const requests = res.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
 
