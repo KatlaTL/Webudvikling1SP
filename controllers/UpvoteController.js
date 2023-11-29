@@ -22,7 +22,7 @@ exports.upvote = async (req, res) => {
             const feature_request_id = Number(req.params.requestId);
 
             const upvote = await UpvoteService.getUpvote(feature_request_id, user.id, transaction);
-            const upvoteHasUser = await upvote.hasUser(user, transaction); 
+            const upvoteHasUser = await UpvoteService.upvoteHasUser(upvote, user, transaction);
 
             if (!upvoteHasUser) {
                 await UpvoteService.increment(upvote, transaction);

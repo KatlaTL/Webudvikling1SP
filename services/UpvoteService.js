@@ -1,3 +1,4 @@
+const e = require("cors");
 const { Upvote, Upvote_has_user, User } = require("../models");
 const { Op } = require("sequelize");
 
@@ -84,3 +85,11 @@ exports.removeUserUpvotes = async (upvote, user, transaction = null) => {
         throw (err);
     }
 };
+
+exports.upvoteHasUser = async (upvote, user, transaction = null) => {
+    try {
+        return await upvote.hasUser(user, { transaction: transaction }); 
+    } catch (err) {
+        throw (err);
+    }
+}
