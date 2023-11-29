@@ -5,9 +5,13 @@ const { Feature_request } = require('../models');
 
 exports.comments = async (req, res) => {
   try{
-   Comments = await Comment.findAll({
-      include: [User,
-      Feature_request]
+
+  let featureRequestID = 1537979745;
+
+  const Comments = await Comment.findAll({
+    where: {feature_request_id: featureRequestID},
+    include: [User,
+    Feature_request]
      /*  include: [{
         model: Feature_request,
         as: 'parent_feature_request_id',

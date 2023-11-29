@@ -54,12 +54,9 @@
 </div>
 
 <script>
-    const feature = fetch('/featureRequests').then(response => response.json());
-    const comment = fetch('/comments').then(response => response.json())
-    
-    Promise.all([feature, comment])
-    .then(([data1,data2]) => {
-        const requests = data1.featureRequests;
+    fetch("/featureRequests")
+    .then(([data]) => {
+        const requests = data.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
 
