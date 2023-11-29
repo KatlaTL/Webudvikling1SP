@@ -1,11 +1,4 @@
-const fetchWrapper = {
-    get,
-    post,
-    put,
-    delete: _delete
-};
-
-function get(url, options = {}) {
+const get = (url, options = {}) => {
     const requestOptions = {
         method: 'GET',
         ...options
@@ -13,7 +6,7 @@ function get(url, options = {}) {
     return fetch(url, requestOptions).then(handleResponse);
 }
 
-function post(url, options = {}) {
+const post = (url, options = {}) => {
     const body = options.body || {};
     const headers = options.headers || {};
     const requestOptions = {
@@ -27,7 +20,7 @@ function post(url, options = {}) {
     return fetch(url, requestOptions).then(handleResponse);
 }
 
-function put(url, options = {}) {
+const put = (url, options = {}) => {
     const body = options.body || {};
     const headers = options.headers || {};
     const requestOptions = {
@@ -42,7 +35,7 @@ function put(url, options = {}) {
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(url, options = {}) {
+const _delete = (url, options = {}) => {
     const requestOptions = {
         method: 'DELETE',
         ...options
@@ -51,12 +44,16 @@ function _delete(url, options = {}) {
 }
 
 // helper function
-function handleResponse(response) {
-    return response.json().then(data => {   
-        if (!response.ok) {
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-        return data;
-    });
+const handleResponse = (response) => {
+    if (!response.ok) {
+        return Promise.reject(`${response.url}: ${response.status} ${response.statusText}`);
+    }
+    return response.json().catch(err => Promise.reject(err.message));
 }
+
+const fetchWrapper = {
+    get,
+    post,
+    put,
+    delete: _delete
+};

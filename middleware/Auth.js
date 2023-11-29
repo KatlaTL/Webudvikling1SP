@@ -6,7 +6,7 @@ const { sequelize } = require("../models");
 
 exports.userAuth = async (req, res, next) => {
     try {
-        req.user = await auth(req.headers);
+        req.user = await auth(req);
         next();
     } catch (err) {
         console.error(err);
@@ -19,7 +19,7 @@ exports.userAuth = async (req, res, next) => {
 
 exports.adminAuth = async (req, res, next) => {
     try {
-        const user = await auth(req.headers);
+        const user = await auth(req);
 
         const cachedRoles = cache.get("userRoles");
         let userRoles = {};
@@ -53,8 +53,10 @@ exports.adminAuth = async (req, res, next) => {
     }
 };
 
-const auth = async (headers = null) => {
+const auth = async (req) => {
     try {
+        const headers = req.headers;
+
         if (!headers || !headers.authorization) {
             throw ("Missing authorization");
         }
@@ -67,6 +69,12 @@ const auth = async (headers = null) => {
 
         if (!token) {
             throw ("Missing token");
+        }
+
+        const { authorization } = req.cookies;
+
+        if (authorization != token) {
+            throw ("Authorization tokens are not a match")
         }
 
         const decoded = TokenService.verifyToken(token);

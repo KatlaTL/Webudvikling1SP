@@ -1,7 +1,5 @@
 const FeatureRequestService = require("../services/FeatureRequestService");
-const UpvoteService = require("../services/UpvoteService");
-const LoginService = require("../services/LoginService");
-const CommentService = require("../services/CommentService");
+const TokenService = require("../services/TokenService");
 const { sequelize } = require("../models");
 const fs = require("fs/promises");
 
@@ -9,12 +7,22 @@ const fs = require("fs/promises");
 exports.index = async (req, res) => {
     //res.render('../views/pages/index');
 
-    const { page, ssoToken } = req.query;
-    
-    let loginInfo = {};
+    const { page } = req.query;
+    const { authorization } = req.cookies;
+    let loginInfo;
 
-    if (ssoToken) {
-        loginInfo = await LoginService.login(ssoToken);
+    if (authorization) {
+        const decoded = TokenService.verifyToken(authorization);
+        const { jwtError, decodedToken } = decoded;
+
+        if (!jwtError) {
+            const { user_id, user_name } = decodedToken
+            loginInfo = {
+                user_id,
+                user_name,
+                authorization
+            }
+        }
     }
 
     let mainPage = "featureRequests";
@@ -37,6 +45,6 @@ exports.index = async (req, res) => {
         mainPage,
         pageExists,
         featureRequests,
-        loginInfo: JSON.stringify(loginInfo)
+        ...(loginInfo && {loginInfo: JSON.stringify(loginInfo)})
     });
 };
