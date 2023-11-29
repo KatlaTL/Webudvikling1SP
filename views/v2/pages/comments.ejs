@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <div class="box box-left border card text-white mb-3">
+                <div class="card-header">Feature requests</div>
+                <div class="card-header" id="comment-header">Feature request comments</div>
+                <div class="card-body bg-white">
+                    <div class="FeaureRequest">
+                        <div class="row">
+                            <div id="requestcomment" class="section with-scroll">
+                                <div class="scroll-box-feature">
+                                    <!-- Feature Requests html will go here once the data has been fetched from the server -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commentsShow">
+                        <button id="backBtnComments">Back</button>
+                        <% if(featureRequests) { %>
+                            <div>
+                                <h5 class="commenttitle">
+                                    <%= featureRequests[0].title %>
+                                </h5>
+                            </div>
+                            <div class="status">
+                                <h7>Placeholder</h7>
+                            </div>
+                            <div>
+                                <p class="commenttekst">
+                                    <%= featureRequests[0].description %>
+                                </p>
+                            </div>
+
+                            <% } %>
+                                <div>
+                                    <p class="commentsUnderTitel">Comments:</h3>
+                                </div>
+                                <div id="commentsDiv">
+
+                            </div>
+                            <div class="commentFormDiv">
+                                <form action="" id="commentForm">
+                                    <input type="text" name="comment" id="comment" placeholder="Write your comment here">
+                                    <input type="submit" value="Submit" id="submit">
+                                </form>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!-- Including the roadmap -->
+        <%- include("../partials/roadmap.ejs") %>
+    </div>
+</div>
