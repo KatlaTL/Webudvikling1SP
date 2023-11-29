@@ -162,14 +162,16 @@
 
     })
 
+    const request1 = fetch('/featureRequests').then(response => response.json());
+    const request2 = fetch('/comments').then(response => response.json());
 
-    fetch("/comments")
-    .then((res)=> res.json())
-    .then((data)=>{
+
+    Promise.all([request1,request2])
+    .then(([request1,request2])=>{
     
     const outerDiv = document.querySelector('#commentsDiv');
 
-    const comments = data.Comments;
+    const comments = request2.Comments;
     console.log(comments);
 
     for (let i = 0; i < comments.length; i++) {
@@ -179,8 +181,8 @@
         let pTag = document.createElement("p");
         innerDiv.appendChild(pTag);
 
-        let comments = JSON.stringify(data.Comments[i].comment);
-        let userName = JSON.stringify(data.Comments[i].User.name);
+        let comments = JSON.stringify(request2.Comments[i].comment);
+        let userName = JSON.stringify(request2.Comments[i].User.name);
 
         let newStrComments = comments.replace(/"/g, '');
         let newStrUserName = userName.replace(/"/g, '');
@@ -190,17 +192,17 @@
         pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
     };
 
-    })
-    .then(()=> {
-        const featureRequestCheck = document.querySelectorAll(".request-click");
+    const featureRequestCheck = document.querySelectorAll(".request-click");
 
-        featureRequestCheck.forEach((x) => {
-            x.addEventListener('click', function (e) {
-                e.preventDefault();
-                console.log("hej");
-            })
-        });
+    const featureId = request1.featureRequests;
+    console.log(featureId);
 
+    featureRequestCheck.forEach((x) => {
+        x.addEventListener('click', function (e) {
+            e.preventDefault();
+            console.log("hej");
+        })
+    });
     })
     .catch((err) => {
         console.log("error occured", err)
