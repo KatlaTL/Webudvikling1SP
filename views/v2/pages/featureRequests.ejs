@@ -170,6 +170,7 @@
     const outerDiv = document.querySelector('#commentsDiv');
 
     const comments = data.Comments;
+    console.log(comments);
 
     for (let i = 0; i < comments.length; i++) {
         let innerDiv = document.createElement("div");
@@ -179,7 +180,7 @@
         innerDiv.appendChild(pTag);
 
         let comments = JSON.stringify(data.Comments[i].comment);
-        let userName = JSON.stringify(data.userName[i]);
+        let userName = JSON.stringify(data.Comments[i].User.name);
 
         let newStrComments = comments.replace(/"/g, '');
         let newStrUserName = userName.replace(/"/g, '');
@@ -188,6 +189,17 @@
         pTag.innerHTML += newStrComments + "<br>";
         pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
     };
+
+    })
+    .then(()=> {
+        const featureRequestCheck = document.querySelectorAll(".request-click");
+
+        featureRequestCheck.forEach((x) => {
+            x.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log("hej");
+            })
+        });
 
     })
     .catch((err) => {
@@ -217,5 +229,5 @@
             });
         }
     });
-
+    
 </script>

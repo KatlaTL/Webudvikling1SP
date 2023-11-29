@@ -12,7 +12,7 @@ exports.comments = async (req, res) => {
     where: {feature_request_id: featureRequestID},
     include: [User,
     Feature_request]
-     /*  include: [{
+    /*   include: [{
         model: Feature_request,
         as: 'parent_feature_request_id',
         where: {parent_feature_request_id: 'feature_request_id' },
@@ -26,7 +26,7 @@ exports.comments = async (req, res) => {
       }] */
     });
 
-  /*   const FeatureRequests = await Feature_request.findAll();
+/*     const FeatureRequests = await Feature_request.findAll();
     
     let Feature_request_id = [];
     for(let i = 0; i < FeatureRequests.length; i++) {
