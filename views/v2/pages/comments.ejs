@@ -7,38 +7,55 @@
     <script src="scripts/fetchWrapper.js"></script>
 </head>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 mb-3">
-            <div class="box box-left border card text-white mb-3">
-                <div class="card-header">Feature requests</div>
-                <div class="card-header" id="comment-header">Feature request comments</div>
-                <div class="card-body bg-white">
-                    <div class="FeaureRequest">
-                        <div class="row">
-                            <div id="requestcomment" class="section with-scroll">
-                                <div class="scroll-box-feature">
-                                    <!-- Feature Requests html will go here once the data has been fetched from the server -->
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://webdock.io/static/common/images/webdock-logo-hvid.svg" height="34" class="d-inline-block align-top" alt="Logo">
+            </a>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="login" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="signin" href="#">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <div class="box box-left border card text-white mb-3">
+                    <div class="card-header">Feature requests</div>
+                    <div class="card-body bg-white">
+                        <div class="FeaureRequest">
+                            <div class="row">
+                                <div id="requestcomment" class="section with-scroll">
+                                    <div class="scroll-box-feature">
+                                        <!-- Feature Requests html will go here once the data has been fetched from the server -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="commentsShow">
-                        <div class="commentFormDiv">
-                            <form action="" id="commentForm">
-                                <input type="text" name="comment" id="comment" placeholder="Write your comment here">
-                                <input type="submit" value="Submit" id="submit">
-                            </form>
+                        <button id="backBtnComments">Back</button>
+                        <div class="commentsShow">
+                            <div class="commentFormDiv">
+                                <form action="" id="commentForm">
+                                    <input type="text" name="comment" id="comment" placeholder="Write your comment here">
+                                    <input type="submit" value="Submit" id="submit">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Including the roadmap -->
+            <%- include("../partials/roadmap.ejs") %>
         </div>
-        <!-- Including the roadmap -->
-        <%- include("../partials/roadmap.ejs") %>
     </div>
-</div>
-
+</body>
 <script>
     fetchWrapper.get("/featureRequests")
     .then((res) => {
@@ -87,39 +104,10 @@
 
         requestsDiv.innerHTML = requestHtml;
 
-        const featureRequest = document.querySelectorAll(".request-click");
-
-        featureRequest.forEach((x) => {
-            x.addEventListener('click', function (e) {
-                e.preventDefault();
-                toggleCommentsShow();
-
-            })
-        });
-
-        function toggleCommentsShow() {
-            let showFeatures = document.querySelector(".FeaureRequest");
-            let commentShow = document.querySelector(".commentsShow");
-            let featureHeader = document.querySelector(".card-header");
-            let commentHeader = document.querySelector("#comment-header");
-
-            if (showFeatures.style.display === 'none') {
-                showFeatures.style.display = 'block';
-                commentShow.style.display = 'none';
-                commentHeader.style.display = 'none';
-                featureHeader.style.display = 'block';
-            } else {
-                showFeatures.style.display = 'none';
-                commentShow.style.display = 'block';
-                commentHeader.style.display = 'block';
-                featureHeader.style.display = 'none';
-            }
-        };
-
 
         document.querySelector("#backBtnComments").addEventListener("click", (e) => {
             e.preventDefault();
-            toggleCommentsShow();
+            window.location.assign("/");
 
         });
 

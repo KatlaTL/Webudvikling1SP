@@ -215,15 +215,10 @@ h2 {
   margin: 20;
 }
 
-
 .commentsShow {
   color: black;
-  display: none;
 }
 
-#comment-header {
-  display: none;
-}
 
 #commentsDiv {
   background-color: #cccccc33;
