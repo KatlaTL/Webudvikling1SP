@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 mb-3">
@@ -14,37 +16,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="commentsShow">
-                        <button id="backBtnComments">Back</button>
-                        <% if(featureRequests) { %>
-                            <div>
-                                <h5 class="commenttitle">
-                                    <%= featureRequests[0].title %>
-                                </h5>
-                            </div>
-                            <div class="status">
-                                <h7>Placeholder</h7>
-                            </div>
-                            <div>
-                                <p class="commenttekst">
-                                    <%= featureRequests[0].description %>
-                                </p>
-                            </div>
-
-                            <% } %>
-                                <div>
-                                    <p class="commentsUnderTitel">Comments:</h3>
-                                </div>
-                                <div id="commentsDiv">
-
-                            </div>
-                            <div class="commentFormDiv">
-                                <form action="" id="commentForm">
-                                    <input type="text" name="comment" id="comment" placeholder="Write your comment here">
-                                    <input type="submit" value="Submit" id="submit">
-                                </form>
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>
@@ -106,37 +77,10 @@
         featureRequest.forEach((x) => {
             x.addEventListener('click', function (e) {
                 e.preventDefault();
-                toggleCommentsShow();
+                window.location.assign("/comments/showcomments");
 
             })
         });
-
-        function toggleCommentsShow() {
-            let showFeatures = document.querySelector(".FeaureRequest");
-            let commentShow = document.querySelector(".commentsShow");
-            let featureHeader = document.querySelector(".card-header");
-            let commentHeader = document.querySelector("#comment-header");
-
-            if (showFeatures.style.display === 'none') {
-                showFeatures.style.display = 'block';
-                commentShow.style.display = 'none';
-                commentHeader.style.display = 'none';
-                featureHeader.style.display = 'block';
-            } else {
-                showFeatures.style.display = 'none';
-                commentShow.style.display = 'block';
-                commentHeader.style.display = 'block';
-                featureHeader.style.display = 'none';
-            }
-        };
-
-
-        document.querySelector("#backBtnComments").addEventListener("click", (e) => {
-            e.preventDefault();
-            toggleCommentsShow();
-
-        });
-
         
     })
     .then(() => {
@@ -161,75 +105,5 @@
         });
 
     })
-
-    const request1 = fetch('/featureRequests').then(response => response.json());
-    const request2 = fetch('/comments').then(response => response.json());
-
-
-    Promise.all([request1,request2])
-    .then(([request1,request2])=>{
-    
-    const outerDiv = document.querySelector('#commentsDiv');
-
-    const comments = request2.Comments;
-    console.log(comments);
-
-    for (let i = 0; i < comments.length; i++) {
-        let innerDiv = document.createElement("div");
-        outerDiv.appendChild(innerDiv);
-
-        let pTag = document.createElement("p");
-        innerDiv.appendChild(pTag);
-
-        let comments = JSON.stringify(request2.Comments[i].comment);
-        let userName = JSON.stringify(request2.Comments[i].User.name);
-
-        let newStrComments = comments.replace(/"/g, '');
-        let newStrUserName = userName.replace(/"/g, '');
-
-        /* appender dataen til html'en */
-        pTag.innerHTML += newStrComments + "<br>";
-        pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
-    };
-
-    const featureRequestCheck = document.querySelectorAll(".request-click");
-
-    const featureId = request1.featureRequests;
-    console.log(featureId);
-
-    featureRequestCheck.forEach((x) => {
-        x.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("hej");
-        })
-    });
-    })
-    .catch((err) => {
-        console.log("error occured", err)
-    });
-
-    let commentFormData = document.querySelector("#commentForm");
-    commentFormData.addEventListener("submit",  (e) => {
-        e.preventDefault();
-        if (comment.value == "") {
-            alert("Ensure you input a value in the field!");
-
-        } else {
-            alert("This form has been successfully submitted!");
-
-            let commentData = comment.value;
-
-            let formData = { commentData };
-
-            fetch("/comments/postcomments/posted", {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`,
-                    'Content-Type': 'application/json'
-                }   
-            });
-        }
-    });
     
 </script>

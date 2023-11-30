@@ -36,7 +36,7 @@ module.exports = () => {
     router.get('/SamplePage', SamplePageController.render);
 
     router.get('/comments', CommentsController.comments);
-    router.get('/comments/postcomments', CommentsController.postCommentForm);
+    router.get('/comments/showcomments', CommentsController.showComment);
     router.post('/comments/postcomments/posted', CommentsController.postComments);
 
     return router;

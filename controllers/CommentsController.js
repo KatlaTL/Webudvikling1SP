@@ -69,12 +69,9 @@ exports.comments = async (req, res) => {
   }
 };
 
-
-
-exports.postCommentForm = async (req, res) => {
-  res.render('comments');
+exports.showComment = async (req, res) => {
+  res.render('v2/pages/comments');
 };
-
 
 exports.postComments = async (req,res) => {
   try {
