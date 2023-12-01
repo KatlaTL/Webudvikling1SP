@@ -74,11 +74,15 @@
         const featureRequest = document.querySelectorAll(".request-click");
 
         featureRequest.forEach((x) => {
-            x.addEventListener('click', function (e) {
+            x.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.location.assign("/showcomments");
+                const request = x.closest(".feature-request");
+                const requestId = request.dataset.requestid;
+                console.log(requestId);
 
-            })
+                if (requestId) {
+                    window.location.assign(`/showcomments/${requestId}` );
+            }})
         });
         
     })
@@ -90,7 +94,7 @@
                 e.preventDefault();
                 const request = cta.closest(".feature-request");
                 const requestId = request.dataset.requestid;
-
+                
                 if (requestId) {
                     fetchWrapper.put(`/featureRequests/${requestId}/upvotes`, {
                         headers: {
