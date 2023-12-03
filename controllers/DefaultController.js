@@ -5,7 +5,6 @@ const fs = require("fs/promises");
 
 
 exports.index = async (req, res) => {
-    const { page } = req.query;
     const { authorization } = req.cookies;
     let loginInfo;
 
@@ -21,21 +20,16 @@ exports.index = async (req, res) => {
             }
         }
     }
-
-    let mainPage = "featureRequests";
-    let pageExists = true;
-    if (page) {
-        mainPage = page.split("?")[0]; //hack to get around webdock not allowing to add additional query params to redirect url
-        try {
-            await fs.access("views/pages/" + mainPage + ".ejs"); //check if ejs file exists
-        } catch (err) {
-            pageExists = false;
-        }
+    
+    let pageUrl = req.originalUrl.split("/")[1];
+    try {
+        await fs.access("views/pages/" + pageUrl + ".ejs"); //check if ejs file exists
+    } catch (err) {
+        pageUrl = "featureRequests";
     }
     
-    res.render('../views/layout/index', { 
-        mainPage,
-        pageExists,
+    res.render('../views/layout/index', {
+        pageUrl,
         ...(loginInfo && {loginInfo: JSON.stringify(loginInfo)})
     });
 };

@@ -13,6 +13,7 @@ const router = express.Router();
 module.exports = () => {
 
     router.get('/', Default.index);
+    router.get('/createFeatureRequest', Default.index);
     
     router.get('/featureRequests', FeatureRequests.getAll);
     router.get('/featureRequests/create', FeatureRequests.createForm);
@@ -31,11 +32,11 @@ module.exports = () => {
 
     router.get('/login/sso/redirect', Login.redirect);
     router.get('/login/sso/token', Login.login);
-    router.get('/SamplePage', SamplePageController.render);
 
     router.get('/comments', CommentsController.comments);
     router.get('/comments/postcomments', CommentsController.postCommentForm);
     router.post('/comments/postcomments/posted', CommentsController.postComments);
+    
 
     return router;
 };
