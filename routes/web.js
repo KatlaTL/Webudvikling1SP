@@ -7,7 +7,6 @@ const Login = require("../controllers/LoginController");
 const { userAuth, adminAuth } = require("../middleware/Auth");
 const SamplePageController = require('../controllers/SamplePageController');
 const CommentsController = require('../controllers/CommentsController');
-const CommentController = require('../controllers/CommentController');
 
 const router = express.Router();
 
@@ -19,7 +18,6 @@ module.exports = () => {
     router.get('/featureRequests/create', FeatureRequests.createForm);
     router.post('/featureRequests/create', userAuth, FeatureRequests.create);
     router.get('/featureRequests/:requestId', FeatureRequests.single);
-    router.get('/featureRequest/requestComments', CommentController.index);
  
     router.get('/categories', FeatureRequests.getAllCategories);
 
