@@ -18,6 +18,10 @@ app.set('view engine', 'ejs');
 app.use("/", webRoutes());
 app.use("/api", apiRoutes());
 
+app.get('*', (req, res) => {
+    res.status(404).send("404 - Page not found");
+})
+
 app.listen(port, () => console.log(`server running on port: ${port}`));
 
 
