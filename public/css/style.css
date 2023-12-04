@@ -186,6 +186,7 @@ a {
 
 .section {
   padding: 20px;
+  overflow-x: hidden;
 }
 
 h2 {
@@ -226,6 +227,7 @@ h2 {
   overflow-x: hidden;
   overflow-y: auto;
   padding: 15px;
+  color:black;
 }
 
 #commentsDiv div {
@@ -244,6 +246,7 @@ h2 {
 
 .feature-request{
   cursor: pointer;
+  overflow-x: hidden;
 }
 
 .commentFormDiv {

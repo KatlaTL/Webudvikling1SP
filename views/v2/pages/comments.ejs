@@ -4,7 +4,7 @@
     <title></title>
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="scripts/fetchWrapper.js"></script>
+   <!--  <script src="scripts/fetchWrapper.js"></script> -->
 </head>
 
 <body>
@@ -28,9 +28,10 @@
         <div class="row">
             <div class="col-md-8 mb-3">
                 <div class="box box-left border card text-white mb-3">
-                    <div class="card-header">Feature requests</div>
+                    <div class="card-header">Feature requests comments</div>
                     <div class="card-body bg-white">
                         <div class="FeaureRequest">
+                            <button id="backBtnComments">Back</button>
                             <div class="row">
                                 <div id="requestcomment" class="section with-scroll">
                                     <div class="scroll-box-feature">
@@ -39,7 +40,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button id="backBtnComments">Back</button>
+                        <div id="commentsDiv">
+
+                        </div>
                         <div class="commentsShow">
                             <div class="commentFormDiv">
                                 <form action="" id="commentForm">
@@ -56,16 +59,63 @@
         </div>
     </div>
 </body>
+
 <script>
-    fetchWrapper.get("/featureRequests")
-    .then((res) => {
-        const requests = res.featureRequests;
+
+    const request1 = fetch('/featureRequests').then(response => response.json());
+    const request2 = fetch('/comments').then(response => response.json());
+
+    Promise.all([request1,request2])
+    
+    .then(([request1,request2])=>{
+        let urlId = window.location.href;
+        let urlIdSplitted = urlId.split("/");
+        const userIdUrl = urlIdSplitted[4];
+        console.log(userIdUrl);
+
+        const outerDiv = document.querySelector('#commentsDiv');
+
+        const comments = request2.Comments;
+        console.log(comments.length);
+ 
+
+        for (let i = 0; i < comments.length; i++) {
+            let innerDiv = document.createElement("div");
+            outerDiv.appendChild(innerDiv);
+
+            let pTag = document.createElement("p");
+            innerDiv.appendChild(pTag);
+
+            let comments = JSON.stringify(request2.Comments[i].comment);
+            let userName = JSON.stringify(request2.Comments[i].User.name);
+            let featureRequestId = JSON.stringify(request2.Comments[i].feature_request_id);
+            console.log(featureRequestId[i]);
+
+            let newStrComments = comments.replace(/"/g, '');
+            let newStrUserName = userName.replace(/"/g, '');
+
+            if(userIdUrl === featureRequestId){
+                console.log(featureRequestId);
+            
+            /* appender dataen til html'en */
+            pTag.innerHTML += newStrComments + "<br>";
+            pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
+            }
+        };
+    
+        const requests = request1.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
-
+        
+        
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);
             const date = new Date(parseDate);
+            /* console.log(userIdUrl); */
+
+            if(userIdUrl == requests[i].id) {
+             /* console.log(requests[i].id); */
+            
             requestHtml += `
                 <div class="feature-request" data-requestid=${requests[i].id}>
                     <div>
@@ -100,83 +150,11 @@
                         </div>
                     </div>
                 </div>`
+            }
         }
 
-        requestsDiv.innerHTML = requestHtml;
+        requestsDiv.innerHTML = requestHtml;  
 
-
-        document.querySelector("#backBtnComments").addEventListener("click", (e) => {
-            e.preventDefault();
-            window.location.assign("/");
-
-        });
-
-        
-    })
-    .then(() => {
-        const upvoteCTA = document.querySelectorAll(".upvote-cta");
-
-        upvoteCTA.forEach((cta) => {
-            cta.addEventListener("click", (e) => {
-                e.preventDefault();
-                const request = cta.closest(".feature-request");
-                const requestId = request.dataset.requestid;
-
-                if (requestId) {
-                    fetchWrapper.put(`/featureRequests/${requestId}/upvotes`, {
-                        headers: {
-                            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
-                        }
-                    })
-                        .then(data => cta.querySelector("p").innerHTML = data.amount)
-                        .catch(err => console.error(err));
-                }
-            })
-        });
-
-    })
-
-    const request1 = fetch('/featureRequests').then(response => response.json());
-    const request2 = fetch('/comments').then(response => response.json());
-
-
-    Promise.all([request1,request2])
-    .then(([request1,request2])=>{
-    
-    const outerDiv = document.querySelector('#commentsDiv');
-
-    const comments = request2.Comments;
-    console.log(comments);
-
-    for (let i = 0; i < comments.length; i++) {
-        let innerDiv = document.createElement("div");
-        outerDiv.appendChild(innerDiv);
-
-        let pTag = document.createElement("p");
-        innerDiv.appendChild(pTag);
-
-        let comments = JSON.stringify(request2.Comments[i].comment);
-        let userName = JSON.stringify(request2.Comments[i].User.name);
-
-        let newStrComments = comments.replace(/"/g, '');
-        let newStrUserName = userName.replace(/"/g, '');
-
-        /* appender dataen til html'en */
-        pTag.innerHTML += newStrComments + "<br>";
-        pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
-    };
-
-    const featureRequestCheck = document.querySelectorAll(".request-click");
-
-    const featureId = request1.featureRequests;
-    console.log(featureId);
-
-    featureRequestCheck.forEach((x) => {
-        x.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("hej");
-        })
-    });
     })
     .catch((err) => {
         console.log("error occured", err)
@@ -204,6 +182,12 @@
                 }   
             });
         }
+    });
+
+    document.querySelector("#backBtnComments").addEventListener("click", (e) => {
+        e.preventDefault();
+        window.location.assign("/");
+
     });
     
 </script>
