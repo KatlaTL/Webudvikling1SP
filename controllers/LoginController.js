@@ -2,26 +2,35 @@ const TokenService = require("../services/TokenService");
 const UserService = require("../services/UserService");
 const { serialize } = require("cookie");
 
-//TO DO refactor redirect function, make the redirect url more dynamic
 exports.redirect = (req, res) => {
-    const { page } = req.query;
-    const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud"; //use for production
+    const { page, ...rest } = req.query;
+
+    const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud";
     const path = "/login/sso/token";
-    const pageParam = page ? `?page=${page}` : "";
+
+    const returnURL = new URL(host + path);
+    returnURL.searchParams.append("page", page);
+    
+    for (const [key, value] of Object.entries(rest)) {
+        returnURL.searchParams.append(key, value);
+    }
 
     const url = new URL("https://webdock.io/en/login");
 
     url.searchParams.append("companyID", "ucl_feedback_tool");
-    url.searchParams.append("redirect", host + path + pageParam);
+    url.searchParams.append("redirect", encodeURI(returnURL));
 
     return res.redirect(url);
-    //For testing
-    //return res.redirect('http://localhost:3000/login/sso/token?companyID=ucl_feedback_tool&ssoToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdmF0YXJVUkwiOiIiLCJlbWFpbCI6ImFua3IzODczMEBlZHUudWNsLmRrIiwiaWQiOjIyNDg2LCJuYW1lIjoiQW5kZXJzIEtyb2doIn0.d87KXlK-bGFvqiK-jRcb2Pa5synhSlDm0wJNxg_-xGY&redirect=https%3A%2F%2Ffeedback.webdock.io');
 };
 
 exports.login = async (req, res) => {
     try {
-        const { ssoToken } = req.query;
+        let replaceIndex = 0;
+        const originalUrl = decodeURIComponent(req.originalUrl).replace(/\?/g, (match) => ++replaceIndex === 2 ? "&" : match); //hack to work around Webdock not properly attaching queryparams
+        const fixedUrl = new URLSearchParams(originalUrl.split("?")[1]);
+
+        const page = fixedUrl.get("page") || "";
+        const ssoToken = fixedUrl.get("ssoToken");
 
         const decoded = TokenService.verifyToken(ssoToken);
         const { jwtError, decodedToken } = decoded;
@@ -47,15 +56,17 @@ exports.login = async (req, res) => {
             path: "/"
         }));
         
-        res.redirect(new URL(process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud"));
+        const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud";
+        const url = new URL(`${host}/${page}`);
 
-        /* res.status(201).json({
-            messsage: "User was successfully logged in",
-            user: id,
-            userName: name,
-            jwt: token
-        }); */
-
+        const blacklistedParams = ["page", "companyID", "ssoToken", "redirect"];
+        fixedUrl.forEach((value, key) => {
+            if (!blacklistedParams.includes(key)) {
+                url.searchParams.append(key, value);
+            }
+        });
+        
+        res.redirect(url);
     } catch (err) {
         return res.sendStatus(500);
     }
