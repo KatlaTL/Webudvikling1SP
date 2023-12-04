@@ -68,7 +68,7 @@ exports.comments = async (req, res) => {
 };
 
 exports.showComment = async (req, res) => {
-  res.render('v2/pages/comments');
+  res.render('pages/comments');
 };
 
 exports.postComments = async (req,res) => {
