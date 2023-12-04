@@ -14,6 +14,7 @@ module.exports = () => {
 
     router.get('/', Default.index);
     router.get('/createFeatureRequest', Default.index);
+    router.get('/comments/:requestId', Default.index);
     
     router.get('/featureRequests', FeatureRequests.getAll);
     router.get('/featureRequests/create', FeatureRequests.createForm);
@@ -27,14 +28,12 @@ module.exports = () => {
     router.get('/featureRequests/:requestId/upvotes', Upvote.getUpvotes);
     router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
 
-
     router.get('/status', (req,res) => res.sendStatus(200))
 
     router.get('/login/sso/redirect', Login.redirect);
     router.get('/login/sso/token', Login.login);
 
     router.get('/comments', CommentsController.comments);
-    router.get('/showcomments/:requestId', CommentsController.showComment);
     router.post('/comments/postcomments/posted', CommentsController.postComments);
     
 
