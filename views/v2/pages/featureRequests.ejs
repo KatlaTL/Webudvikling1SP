@@ -1,9 +1,10 @@
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 mb-3">
             <div class="box box-left border card text-white mb-3">
                 <div class="card-header">Feature requests</div>
-                <div class="card-header" id="comment-header">Feature request comments</div>
                 <div class="card-body bg-white">
                     <div class="FeaureRequest">
                         <div class="row">
@@ -14,37 +15,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="commentsShow">
-                        <button id="backBtnComments">Back</button>
-                        <% if(featureRequests) { %>
-                            <div>
-                                <h5 class="commenttitle">
-                                    <%= featureRequests[0].title %>
-                                </h5>
-                            </div>
-                            <div class="status">
-                                <h7>Placeholder</h7>
-                            </div>
-                            <div>
-                                <p class="commenttekst">
-                                    <%= featureRequests[0].description %>
-                                </p>
-                            </div>
-
-                            <% } %>
-                                <div>
-                                    <p class="commentsUnderTitel">Comments:</h3>
-                                </div>
-                                <div id="commentsDiv">
-
-                            </div>
-                            <div class="commentFormDiv">
-                                <form action="" id="commentForm">
-                                    <input type="text" name="comment" id="comment" placeholder="Write your comment here">
-                                    <input type="submit" value="Submit" id="submit">
-                                </form>
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>
@@ -104,39 +74,16 @@
         const featureRequest = document.querySelectorAll(".request-click");
 
         featureRequest.forEach((x) => {
-            x.addEventListener('click', function (e) {
+            x.addEventListener('click', (e) => {
                 e.preventDefault();
-                toggleCommentsShow();
+                const request = x.closest(".feature-request");
+                const requestId = request.dataset.requestid;
+                console.log(requestId);
 
-            })
+                if (requestId) {
+                    window.location.assign(`/showcomments/${requestId}` );
+            }})
         });
-
-        function toggleCommentsShow() {
-            let showFeatures = document.querySelector(".FeaureRequest");
-            let commentShow = document.querySelector(".commentsShow");
-            let featureHeader = document.querySelector(".card-header");
-            let commentHeader = document.querySelector("#comment-header");
-
-            if (showFeatures.style.display === 'none') {
-                showFeatures.style.display = 'block';
-                commentShow.style.display = 'none';
-                commentHeader.style.display = 'none';
-                featureHeader.style.display = 'block';
-            } else {
-                showFeatures.style.display = 'none';
-                commentShow.style.display = 'block';
-                commentHeader.style.display = 'block';
-                featureHeader.style.display = 'none';
-            }
-        };
-
-
-        document.querySelector("#backBtnComments").addEventListener("click", (e) => {
-            e.preventDefault();
-            toggleCommentsShow();
-
-        });
-
         
     })
     .then(() => {
@@ -147,7 +94,7 @@
                 e.preventDefault();
                 const request = cta.closest(".feature-request");
                 const requestId = request.dataset.requestid;
-
+                
                 if (requestId) {
                     fetchWrapper.put(`/featureRequests/${requestId}/upvotes`, {
                         headers: {
@@ -161,73 +108,5 @@
         });
 
     })
-
-
-    fetch("/comments")
-    .then((res)=> res.json())
-    .then((data)=>{
-    
-    const outerDiv = document.querySelector('#commentsDiv');
-
-    const comments = data.Comments;
-    console.log(comments);
-
-    for (let i = 0; i < comments.length; i++) {
-        let innerDiv = document.createElement("div");
-        outerDiv.appendChild(innerDiv);
-
-        let pTag = document.createElement("p");
-        innerDiv.appendChild(pTag);
-
-        let comments = JSON.stringify(data.Comments[i].comment);
-        let userName = JSON.stringify(data.Comments[i].User.name);
-
-        let newStrComments = comments.replace(/"/g, '');
-        let newStrUserName = userName.replace(/"/g, '');
-
-        /* appender dataen til html'en */
-        pTag.innerHTML += newStrComments + "<br>";
-        pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
-    };
-
-    })
-    .then(()=> {
-        const featureRequestCheck = document.querySelectorAll(".request-click");
-
-        featureRequestCheck.forEach((x) => {
-            x.addEventListener('click', function (e) {
-                e.preventDefault();
-                console.log("hej");
-            })
-        });
-
-    })
-    .catch((err) => {
-        console.log("error occured", err)
-    });
-
-    let commentFormData = document.querySelector("#commentForm");
-    commentFormData.addEventListener("submit",  (e) => {
-        e.preventDefault();
-        if (comment.value == "") {
-            alert("Ensure you input a value in the field!");
-
-        } else {
-            alert("This form has been successfully submitted!");
-
-            let commentData = comment.value;
-
-            let formData = { commentData };
-
-            fetch("/comments/postcomments/posted", {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`,
-                    'Content-Type': 'application/json'
-                }   
-            });
-        }
-    });
     
 </script>

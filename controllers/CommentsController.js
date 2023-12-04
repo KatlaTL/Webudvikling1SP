@@ -6,10 +6,8 @@ const { Feature_request } = require('../models');
 exports.comments = async (req, res) => {
   try{
 
-  let featureRequestID = 1537979745;
 
   const Comments = await Comment.findAll({
-    where: {feature_request_id: featureRequestID},
     include: [User,
     Feature_request]
     /*   include: [{
@@ -69,12 +67,9 @@ exports.comments = async (req, res) => {
   }
 };
 
-
-
-exports.postCommentForm = async (req, res) => {
-  res.render('comments');
+exports.showComment = async (req, res) => {
+  res.render('v2/pages/comments');
 };
-
 
 exports.postComments = async (req,res) => {
   try {
