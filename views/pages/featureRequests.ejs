@@ -100,7 +100,7 @@
                         }
                     })
                         .then(data => cta.querySelector("p").innerHTML = data.amount)
-                        .catch(err => console.error(err));
+                        .catch(err => window.location.href = redirectUrl());
                 }
             })
         });

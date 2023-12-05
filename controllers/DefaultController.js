@@ -1,8 +1,5 @@
-const FeatureRequestService = require("../services/FeatureRequestService");
 const TokenService = require("../services/TokenService");
-const { sequelize } = require("../models");
 const fs = require("fs/promises");
-
 
 exports.index = async (req, res) => {
     const { authorization } = req.cookies;

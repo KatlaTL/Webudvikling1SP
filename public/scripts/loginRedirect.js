@@ -1,6 +1,6 @@
 const redirectUrl = () => {
     const redirectURL = new URL("/login/sso/redirect", document.baseURI);
-    const pathName = window.location.pathname.split("/")[1];
+    const pathName = window.location.pathname.split("/").slice(1).join("/");
     
     redirectURL.searchParams.append("page", pathName); //set the pathname as a query param
     
