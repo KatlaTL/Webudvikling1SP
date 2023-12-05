@@ -6,8 +6,8 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" id="login" href="#">Login</a>
-                <a class="nav-link" id="logout" href="#">Logout</a>
+                <a class="nav-link" style="display: block;" id="login" href="#">Login</a>
+                <a class="nav-link" style="display: none;" id="logout" href="#">Logout</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="signin" href="#">Sign Up</a>
@@ -18,42 +18,38 @@
 <script>
     const toggleDisplay = (btn) => {
         if (Array.isArray(btn)) {
-            console.log("here?")
             for (let i = 0; i < btn.length; i++) {
-                console.log(btn[i].style.display)
-                btn[i].style.display = btn[i].style.display === "none" ? "block" : "none";
+                let display = btn[i].style.display;
+                btn[i].style.display = (display === "none") || (display.length === 0) ? "block" : "none";
             }
         } else {
-            btn.style.display = btn.style.display === "none" ? "block" : "none";
+            let display = btn.style.display;
+            btn.style.display = (display === "none") || (display.length === 0) ? "block" : "none";
         }
     }
-    
-    const loggedInUser = localStorage.getItem("user");
-    const loginBtn = document.querySelector("#login");
-    const logoutBtn = document.querySelector("#logout");
 
-    if (loggedInUser) {
-        loginBtn.style.display = "none";
-        logoutBtn.style.display = "block";
+    document.addEventListener("DOMContentLoaded", () => {
+        const loggedInUser = localStorage.getItem("user");
+        const loginBtn = document.querySelector("#login");
+        const logoutBtn = document.querySelector("#logout");
+
+        if (loggedInUser) {         
+            toggleDisplay([loginBtn, logoutBtn]);
+        }
 
         logoutBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("user");
-
-            toggleDisplay([loginBtn, logoutBtn]);
-
+            e.preventDefault();           
             fetchWrapper.get("/logout")
-                .catch(err => console.log(err));
+                .then(() => {
+                        localStorage.removeItem("user");
+                        toggleDisplay([loginBtn, logoutBtn]);
+                    })
+                .catch(err => console.error(err));
         });
-    } else { 
-        loginBtn.style.display = "block";
-        logoutBtn.style.display = "none";
 
         loginBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            toggleDisplay([loginBtn, logoutBtn]);
-            
+            e.preventDefault();            
             window.location.href = redirectUrl();
         });
-    }
+    })
 </script>
