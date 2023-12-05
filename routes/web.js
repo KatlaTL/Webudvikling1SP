@@ -32,6 +32,7 @@ module.exports = () => {
 
     router.get('/login/sso/redirect', Login.redirect);
     router.get('/login/sso/token', Login.login);
+    //router.get('/logout', Login.logout);
 
     router.get('/comments', CommentsController.comments);
     router.post('/comments/postcomments/posted', CommentsController.postComments);

@@ -33,7 +33,7 @@ margin-bottom: 25px;
   border-radius: 4px
 } 
 
-#login {
+#login, #logout {
   line-height: 43px !important;
   padding: 0 34px;
   color: #fff;
@@ -42,7 +42,7 @@ margin-bottom: 25px;
   border-radius: 4px
 }
 
-#login:hover {
+#login:hover, #logout:hover {
   background: #fff;
   color: #01a1a1
 }
