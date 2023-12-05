@@ -5,9 +5,9 @@ const { Feature_request } = require('../models');
 
 exports.comments = async (req, res) => {
   try{
-  const Comments = await Comment.findAll({
-    include: [User,
-    Feature_request]
+    const Comments = await Comment.findAll({
+      include: [User,
+      Feature_request]
     });
 
     return res.status(200).json({Comments});
