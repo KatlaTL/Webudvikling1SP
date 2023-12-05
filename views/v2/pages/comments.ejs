@@ -65,18 +65,17 @@
     const request1 = fetch('/featureRequests').then(response => response.json());
     const request2 = fetch('/comments').then(response => response.json());
 
+    let urlId = window.location.href;
+    let urlIdSplitted = urlId.split("/");
+    const userIdUrl = urlIdSplitted[4];
+
     Promise.all([request1,request2])
-    
     .then(([request1,request2])=>{
-        let urlId = window.location.href;
-        let urlIdSplitted = urlId.split("/");
-        const userIdUrl = urlIdSplitted[4];
-        console.log(userIdUrl);
 
         const outerDiv = document.querySelector('#commentsDiv');
 
         const comments = request2.Comments;
-        console.log(comments.length);
+        /* console.log(comments.length) */;
  
 
         for (let i = 0; i < comments.length; i++) {
@@ -89,13 +88,13 @@
             let comments = JSON.stringify(request2.Comments[i].comment);
             let userName = JSON.stringify(request2.Comments[i].User.name);
             let featureRequestId = JSON.stringify(request2.Comments[i].feature_request_id);
-            console.log(featureRequestId[i]);
+            /* console.log(featureRequestId[i]); */
 
             let newStrComments = comments.replace(/"/g, '');
             let newStrUserName = userName.replace(/"/g, '');
 
             if(userIdUrl === featureRequestId){
-                console.log(featureRequestId);
+                /* console.log(featureRequestId); */
             
             /* appender dataen til html'en */
             pTag.innerHTML += newStrComments + "<br>";
@@ -170,8 +169,12 @@
             alert("This form has been successfully submitted!");
 
             let commentData = comment.value;
+            let feature_request_id = userIdUrl;
+            console.log(feature_request_id);
 
-            let formData = { commentData };
+            let formData = { commentData, feature_request_id};
+
+            console.log(formData);
 
             fetch("/comments/postcomments/posted", {
                 method: "POST",
