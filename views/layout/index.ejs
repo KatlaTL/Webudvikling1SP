@@ -5,12 +5,16 @@
 
     <body>
         <%- include("../partials/navbar.ejs") %>
-        
+
+        <%- include("../partials/components/filter.ejs") %>
         <%- include("../partials/components/createRequestCTA.ejs") %>
+        <%- include("../partials/components/search.ejs") %>
+
+       
 
         <div id="main-content">
-            <% if (pageExists && mainPage) { %>
-                <%- include("../pages/" + mainPage + ".ejs") %>
+            <% if (pageUrl) { %>
+                <%- include("../pages/" + pageUrl + ".ejs") %>
             <% } %>
         </div>
 
