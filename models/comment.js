@@ -10,13 +10,26 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Feature_request, { foreignKey: "feature_request_id" });
+      this.belongsTo(models.User, { foreignKey: "user_id" });
     }
   }
   Comment.init({
     comment: DataTypes.STRING(2000),
-    user_id: DataTypes.INTEGER,
-    feature_request_id: DataTypes.INTEGER
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id"
+      }
+    },
+    feature_request_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Feature_requests",
+        key: "id"
+      }
+    }
   }, {
     sequelize,
     modelName: 'Comment',

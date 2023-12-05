@@ -2,18 +2,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Upvote_has_users', {
+    await queryInterface.createTable('Upvotes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER
+      amount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
-      upvote_id: {
-        type: Sequelize.INTEGER
+      feature_request_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Feature_requests",
+          id: "id"
+        }
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Upvote_has_users');
+    await queryInterface.dropTable('Upvotes');
   }
 };

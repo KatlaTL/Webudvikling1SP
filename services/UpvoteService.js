@@ -1,11 +1,12 @@
-const { Upvote } = require("../models");
-const { Upvote_has_user } = require("../models");
+const e = require("cors");
+const { Upvote, Upvote_has_user, User } = require("../models");
+const { Op } = require("sequelize");
 
 exports.getUpvote = async (request_id, transaction = null) => {
     try {
         return await Upvote.findOne({
             where: { feature_request_id: request_id }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -16,7 +17,7 @@ exports.createUpvote = async (request_id, amount = 0, transaction = null) => {
         return await Upvote.create({
             amount: amount,
             feature_request_id: request_id
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -29,66 +30,66 @@ exports.getOrCreateUpvote = async (request_id, amount = 0, transaction = null) =
             defaults: {
                 amount: amount
             },
-            Transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object with where, default and transaction
+            transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object with where, default and transaction
         });
     } catch (err) {
         throw (err);
     }
 };
 
-exports.increment = async (request_id, transaction = null) => {
+exports.increment = async (upvote, transaction = null) => {
     try {
-        await Upvote.increment("amount", {
-            where: { feature_request_id: request_id }
-        }, { Transaction: transaction })
+        await upvote.increment("amount", { transaction: transaction });
     } catch (err) {
         throw (err);
     }
 };
 
-exports.decrement = async (request_id, transaction = null) => {
+exports.decrement = async (upvote, transaction = null) => {
     try {
-        await Upvote.decrement("amount", {
-            where: { feature_request_id: request_id }
-        }, { Transaction: transaction })
+        await upvote.decrement("amount", { transaction: transaction });
     } catch (err) {
         throw (err);
     }
 };
 
-exports.getUserUpvotes = async (user_id, upvote_id, transaction = null) => {
+exports.getUserUpvotes = async (feature_request_id, user_id, transaction = null) => {
     try {
         return await Upvote_has_user.findOne({
+            include: {
+                model: Upvote,
+                where: { feature_request_id: feature_request_id }
+            },
             where: {
                 user_id: user_id,
-                upvote_id: upvote_id
+                upvote_id: { [Op.col]: "Upvote.id" }
             }
-        }, { Transaction: transaction })
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
 };
 
-exports.createUserUpvotes = async (user_id, upvote_id, transaction = null) => {
+exports.addUserUpvotes = async (upvote, user, transaction = null) => {
     try {
-        return await Upvote_has_user.create({
-            user_id: user_id,
-            upvote_id: upvote_id
-        }, { Transaction: transaction });
+        await upvote.addUser(user, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
 };
 
-exports.destroyUserUpvotes = async (user_id, upvote_id, transaction = null) => {
+exports.removeUserUpvotes = async (upvote, user, transaction = null) => {
     try {
-        await Upvote_has_user.destroy({
-            where: {
-                user_id: user_id,
-                upvote_id: upvote_id
-            }
-        }, { Transaction: transaction });
+        await upvote.removeUser(user, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
 };
+
+exports.upvoteHasUser = async (upvote, user, transaction = null) => {
+    try {
+        return await upvote.hasUser(user, { transaction: transaction }); 
+    } catch (err) {
+        throw (err);
+    }
+}

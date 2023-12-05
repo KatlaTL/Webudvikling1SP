@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Categories', [,
+    return queryInterface.bulkInsert('Categories', [
       {
         category:'Dashboard Feartures',
         createdAt: new Date(),

@@ -242,20 +242,15 @@ h2 {
   margin: 20;
 }
 
-  .scroll-container {
+.scroll-container {
     overflow: hidden;
 }
 
 
-
 .commentsShow {
   color: black;
-  display: none;
 }
 
-#comment-header {
-  display: none;
-}
 
 #commentsDiv {
   background-color: #cccccc33;
@@ -263,6 +258,7 @@ h2 {
   overflow-x: hidden;
   overflow-y: auto;
   padding: 15px;
+  color:black;
 }
 
 #commentsDiv div {
@@ -281,6 +277,7 @@ h2 {
 
 .feature-request{
   cursor: pointer;
+  overflow-x: hidden;
 }
 
 .commentFormDiv {

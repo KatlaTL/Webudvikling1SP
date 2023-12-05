@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User_has_notification.init({
-    user_id: DataTypes.INTEGER,
-    notification_id: DataTypes.INTEGER
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id"
+      }
+    },
+    notification_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Notifications",
+        key: "id"
+      }
+    }
   }, {
     sequelize,
     modelName: 'User_has_notification',

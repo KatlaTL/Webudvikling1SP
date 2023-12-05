@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasOne(models.Upvote, { foreignKey: "feature_request_id" });
+      this.hasMany(models.Comment, { foreignKey: "feature_request_id" });
+      this.belongsTo(models.Status, { foreignKey: "status_id" });
+      this.belongsTo(models.Category, { foreignKey: "category_id" });
+      this.belongsTo(models.User, { foreignKey: "user_id" });
+      this.belongsTo(this, { foreignKey: "parent_feature_request_id" });
     }
   }
   Feature_request.init({
@@ -20,17 +25,35 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.STRING(100),
     description: DataTypes.STRING,
-    imageURL: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
+    imageURL: DataTypes.STRING(255),
     parent_feature_request_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      references: {
+        model: "Feature_requests",
+        key: "id"
+      }
     },
-    status_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER,
-    category_id: DataTypes.STRING
+    status_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Statuses",
+        key: "id"
+      }
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id"
+      }
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Categories",
+        key: "id"
+      }
+    }
   }, {
     sequelize,
     modelName: 'Feature_request',

@@ -1,11 +1,29 @@
-const { Feature_request } = require("../models");
-const { Status } = require("../models");
-const { Category } = require("../models")
+const { Feature_request, Status, Comment, Category, Upvote } = require("../models");
+const { Sequelize } = require("sequelize");
 const axios = require("axios");
 
 exports.getAllRequests = async (transaction = null) => {
     try {
-        return await Feature_request.findAll({ Transaction: transaction });
+        return await Feature_request.findAll({
+            attributes: {
+                include: [
+                    [Sequelize.fn("COUNT", Sequelize.col("Comments.id")), "commentCount"],
+                    [Sequelize.col("Upvote.amount"), "upvotes"],
+                    [Sequelize.col("Status.status"), "status"]
+                ]
+            },
+            include: [{
+                model: Status,
+                attributes: []
+            }, {
+                model: Upvote,
+                attributes: []
+            }, {
+                model: Comment,
+                attributes: []
+            }],
+            group: ["Feature_request.id"]
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -13,7 +31,7 @@ exports.getAllRequests = async (transaction = null) => {
 
 exports.createRequest = async (data, transaction = null) => {
     try {
-        return await Feature_request.create(data, { Transaction: transaction })
+        return await Feature_request.create(data, { transaction: transaction })
     } catch (err) {
         throw (err);
     }
@@ -25,7 +43,7 @@ exports.getCategoryByName = async (category_name, transaction = null) => {
             where: {
                 category: category_name
             }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -33,7 +51,7 @@ exports.getCategoryByName = async (category_name, transaction = null) => {
 
 exports.getAllCategories = async (transaction = null) => {
     try {
-        return await Category.findAll({ Transaction: transaction });
+        return await Category.findAll({ transaction: transaction });
     } catch (err) {
         throw (err);
     }
@@ -43,7 +61,7 @@ exports.getStatusByName = async (status_name, transaction = null) => {
     try {
         return await Status.findOne({
             where: { status: status_name }
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }

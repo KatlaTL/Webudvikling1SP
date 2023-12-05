@@ -5,7 +5,7 @@ const { sequelize } = require("../models");
 ///TO DO update for feature request
 exports.getAll = async (req, res) => {
   try {
-    const requests = await Feature_request.findAll();
+    const requests = await FeatureRequestService.getAllRequests();
     return res.status(200).json({ featureRequests: requests });
   } catch (e) {
     return res.sendStatus(500);
@@ -23,7 +23,6 @@ exports.single = async (req, res) => {
 
 exports.createForm = (req, res) => {
   return res.render('v2/pages/createFeatureRequest');
-  return res.render('pages/featureRequestCreate');
 };
 
 exports.create = async (req, res) => {

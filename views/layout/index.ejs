@@ -13,21 +13,20 @@
        
 
         <div id="main-content">
-            <% if (pageExists && mainPage) { %>
-                <%- include("../pages/" + mainPage + ".ejs") %>
+            <% if (pageUrl) { %>
+                <%- include("../pages/" + pageUrl + ".ejs") %>
             <% } %>
         </div>
 
         <%- include("../partials/footer.ejs") %>
     </body>
-    <% if (loginInfo) { %>
+
+    <% if (locals.loginInfo) { %>
         <script>
             const user = <%- loginInfo %>;
             if (user && Object.keys(user).length > 0) {
-                console.log("empty")
                 localStorage.setItem("user", JSON.stringify(user));
-            }
-            
+            }           
         </script>
     <% } %>
 

@@ -9,25 +9,48 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       description: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       imageURL: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       parent_feature_request_id: {
-        type: Sequelize.INTEGER
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Feature_requests",
+          id: "id"
+        }
       },
       status_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Statuses",
+          id: "id"
+        }
       },
       user_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          id: "id"
+        }
       },
       category_id: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
+          id: "id"
+        }
       },
       createdAt: {
         allowNull: false,
