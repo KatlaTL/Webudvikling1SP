@@ -48,7 +48,6 @@
         const outerDiv = document.querySelector('#commentsDiv');
 
         const comments = request2.Comments;
-        /* console.log(comments.length) */;
  
 
         for (let i = 0; i < comments.length; i++) {
@@ -61,13 +60,11 @@
             let comments = JSON.stringify(request2.Comments[i].comment);
             let userName = JSON.stringify(request2.Comments[i].User.name);
             let featureRequestId = JSON.stringify(request2.Comments[i].feature_request_id);
-            /* console.log(featureRequestId[i]); */
 
             let newStrComments = comments.replace(/"/g, '');
             let newStrUserName = userName.replace(/"/g, '');
 
             if(userIdUrl === featureRequestId){
-                /* console.log(featureRequestId); */
             
             /* appender dataen til html'en */
             pTag.innerHTML += newStrComments + "<br>";
@@ -83,10 +80,8 @@
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);
             const date = new Date(parseDate);
-            /* console.log(userIdUrl); */
 
             if(userIdUrl == requests[i].id) {
-             /* console.log(requests[i].id); */
             
             requestHtml += `
                 <div class="feature-request" data-requestid=${requests[i].id}>
