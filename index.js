@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
