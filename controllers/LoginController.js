@@ -75,21 +75,16 @@ exports.login = async (req, res) => {
 exports.logout = (req, res) => {
     const { authorization } = req.cookies;
 
-    if(!authorization) {
-        res.status(401).json({
-            status: 401,
-            message: "Not authorized"
-        });
-    }
-    
-    //clear the cookie by creating a new cookie with the exact same settings, but setting maxAge to somewhere in the past
-    res.setHeader("Set-Cookie", serialize("authorization", null, {
-        httpOnly: true, 
-        maxAge: 0,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: "lax",
-        path: "/"
-    }));
+    if(authorization) {
+        //clear the cookie by creating a new cookie with the exact same settings, but setting maxAge to somewhere in the past
+        res.setHeader("Set-Cookie", serialize("authorization", null, {
+            httpOnly: true, 
+            maxAge: 0,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: "lax",
+            path: "/"
+        }));
+    }    
 
     res.status(200).json({
         status: 200,
