@@ -143,9 +143,11 @@
 
             let commentData = comment.value;
             let feature_request_id = userIdUrl;
+            let userId = localStorage.getItem("user");
             console.log(feature_request_id);
+            console.log(userId);
 
-            let formData = { commentData, feature_request_id};
+            let formData = { commentData, feature_request_id, userId};
 
             console.log(formData);
 
