@@ -61,7 +61,7 @@
 
         fetchWrapper.post("/featureRequests/create", {
             headers: {
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).jwt}`
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`
             },
             body: {
                 category: { 

@@ -72,7 +72,7 @@ const auth = async (req) => {
         }
 
         const { authorization } = req.cookies;
-
+        
         if (authorization != token) {
             throw ("Authorization tokens are not a match")
         }
