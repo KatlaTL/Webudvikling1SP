@@ -31,8 +31,8 @@ module.exports = () => {
     router.get('/status', (req,res) => res.sendStatus(200))
 
     router.get('/login/sso/redirect', Login.redirect);
-    router.get('/login/sso/token', Login.login);
-    router.get('/logout', Login.logout);
+    router.get('/login/sso/token', Login.login); //Should ideally be a POST route, as we create a user in our DB, but Webdock redirect only works with a GET route
+    router.put('/logout', Login.logout);
 
     router.get('/comments', CommentsController.comments);
 

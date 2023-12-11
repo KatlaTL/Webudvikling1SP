@@ -39,7 +39,7 @@
 
         logoutBtn.addEventListener("click", (e) => {
             e.preventDefault();           
-            fetchWrapper.get("/logout")
+            fetchWrapper.put("/logout")
                 .then(() => {
                         localStorage.removeItem("user");
                         toggleDisplay([loginBtn, logoutBtn]);

@@ -74,7 +74,7 @@ exports.getUserRoles = async (user_id, transaction = null) => {
             attributes: [
                 [Sequelize.fn("DISTINCT", sequelize.col("role_id")), "role_id"]
             ]
-        }, { Transaction: transaction });
+        }, { transaction: transaction });
 
         let userRoles = [];
         for (let i = 0; i < roles.length; i++) {
