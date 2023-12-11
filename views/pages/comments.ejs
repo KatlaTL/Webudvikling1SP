@@ -48,7 +48,6 @@
         const outerDiv = document.querySelector('#commentsDiv');
 
         const comments = request2.Comments;
- 
 
         for (let i = 0; i < comments.length; i++) {
             let innerDiv = document.createElement("div");
@@ -138,7 +137,12 @@
 
             let commentData = comment.value;
             let feature_request_id = userIdUrl;
-            let userId = localStorage.getItem("user");
+            let userIdToSplit = localStorage.getItem("user");
+            
+            let userStringSplit = userIdToSplit.split(",")[0];
+            let userId = userStringSplit.split(":")[1];
+
+            console.log(commentData);
             console.log(feature_request_id);
             console.log(userId);
 
