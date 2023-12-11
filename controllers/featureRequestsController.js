@@ -1,5 +1,7 @@
 const EmailService = require("../services/EmailService");
 const FeatureRequestService = require("../services/FeatureRequestService");
+const StatusService = require("../services/StatusService");
+const UpvoteService = require("../services/UpvoteService");
 const { sequelize } = require("../models");
 
 ///TO DO update for feature request
@@ -53,7 +55,7 @@ exports.create = async (req, res) => {
     }
 
     const featureRequest = await sequelize.transaction(async (transaction) => {
-      const status = await FeatureRequestService.getStatusByName("Under Review", transaction);  //Under Review is the default status
+      const status = await StatusService.getStatusByName("Under Review", transaction);  //Under Review is the default status
 
       if (!status || !status.id) {
         throw ("status not found");
@@ -61,14 +63,18 @@ exports.create = async (req, res) => {
 
       const requestData = {
         id: response.data.id,
-        status: status.id,
+        status_id: status.id,
         user_id: userId,
         category_id: category.id,
         title: title,
         description: details
       }
-  
-      return await FeatureRequestService.createRequest(requestData, transaction);
+
+      const request = await FeatureRequestService.createRequest(requestData, transaction);
+
+      await UpvoteService.createUpvote(request, transaction);
+
+      return request;
     });
 
 
@@ -85,7 +91,6 @@ exports.create = async (req, res) => {
       message: `Feature request created with ID: ${featureRequest.id}`
     });
   } catch (err) {
-    console.log(err)
     return res.status(500).json({
       status: 500,
       message: 'The request failed'

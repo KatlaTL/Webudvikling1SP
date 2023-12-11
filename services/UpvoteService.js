@@ -12,12 +12,12 @@ exports.getUpvote = async (request_id, transaction = null) => {
     }
 };
 
-exports.createUpvote = async (request_id, amount = 0, transaction = null) => {
+exports.createUpvote = async (request, transaction = null) => {
     try {
-        return await Upvote.create({
-            amount: amount,
-            feature_request_id: request_id
-        }, { transaction: transaction });
+        await request.createUpvote({
+            amount: 0,
+            feature_request_id: request.id
+        }, { transaction: transaction })
     } catch (err) {
         throw (err);
     }
@@ -88,7 +88,7 @@ exports.removeUserUpvotes = async (upvote, user, transaction = null) => {
 
 exports.upvoteHasUser = async (upvote, user, transaction = null) => {
     try {
-        return await upvote.hasUser(user, { transaction: transaction }); 
+        return await upvote.hasUser(user, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
