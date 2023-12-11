@@ -1,7 +1,7 @@
 const express = require("express");
 
 const Default = require("../controllers/DefaultController")
-const FeatureRequests = require('../controllers/featureRequestsController');
+const FeatureRequest = require('../controllers/FeatureRequestController');
 const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 const { userAuth, adminAuth } = require("../middleware/Auth");
@@ -16,14 +16,14 @@ module.exports = () => {
     router.get('/createFeatureRequest', Default.index);
     router.get('/comments/:requestId', Default.index);
     
-    router.get('/featureRequests', FeatureRequests.getAll);
-    router.get('/featureRequests/create', FeatureRequests.createForm);
-    router.post('/featureRequests/create', userAuth, FeatureRequests.create);
-    router.get('/featureRequests/:requestId', FeatureRequests.single);
+    router.get('/featureRequests', FeatureRequest.getAll);
+    router.get('/featureRequests/create', FeatureRequest.createForm);
+    router.post('/featureRequests/create', userAuth, FeatureRequest.create);
+    router.get('/featureRequests/:requestId', FeatureRequest.single);
  
-    router.get('/categories', FeatureRequests.getAllCategories);
+    router.get('/categories', FeatureRequest.getAllCategories);
 
-    router.get('/emailtest', FeatureRequests.email)
+    router.get('/emailtest', FeatureRequest.email)
 
     router.get('/featureRequests/:requestId/upvotes', Upvote.getUpvotes);
     router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
