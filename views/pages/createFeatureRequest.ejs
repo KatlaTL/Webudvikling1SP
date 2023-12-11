@@ -6,7 +6,6 @@
                 <div class="card-body bg-white">
 
                     <h4 class="card card-header">New feature request</h2>
-                        <!-- action="/featureRequests/create" method="post" -->
                         <form id="createForm">
                             <div class="form-group">
                                 <label for="category">Category</label>
@@ -38,7 +37,7 @@
 </div>
 
 <script>
-    fetchWrapper.get("categories")
+    fetchWrapper.get("/categories")
         .then(data => {
             const selectList = document.querySelector(".form-control");
             for (let i = 0; i < data.categories.length; i++) {

@@ -2,9 +2,10 @@ const EmailService = require("../services/EmailService");
 const FeatureRequestService = require("../services/FeatureRequestService");
 const StatusService = require("../services/StatusService");
 const UpvoteService = require("../services/UpvoteService");
+const CategoryService = require("../services/CategoryService");
+const { axiosPost } = require("../libs/axios");
 const { sequelize } = require("../models");
 
-///TO DO update for feature request
 exports.getAll = async (req, res) => {
   try {
     const requests = await FeatureRequestService.getAllRequests();
@@ -12,19 +13,6 @@ exports.getAll = async (req, res) => {
   } catch (e) {
     return res.sendStatus(500);
   }
-};
-
-exports.single = async (req, res) => {
-  try {
-    const request = await Feature_request.findOne({ where: { id: Number(req.params.requestId) } });
-    return res.status(200).json(request);
-  } catch (err) {
-    return res.sendStatus(500);
-  }
-};
-
-exports.createForm = (req, res) => {
-  return res.render('v2/pages/createFeatureRequest');
 };
 
 exports.create = async (req, res) => {
@@ -46,7 +34,7 @@ exports.create = async (req, res) => {
       category: category.category
     };
 
-    const response = await FeatureRequestService.axiosPost(webdockRequestData);
+    const response = await axiosPost("https://webdock.io/en/platform_data/feature_requests/new", webdockRequestData);
     if (response.status != 200) {
       return res.status(response.status).json({
         status: response.status,
@@ -100,23 +88,13 @@ exports.create = async (req, res) => {
 
 exports.getAllCategories = async (req, res) => {
   try {
-    const categories = await FeatureRequestService.getAllCategories();
+    const categories = await CategoryService.getAllCategories();
     res.status(200).json({
       status: 200,
       categories: categories
     })
   } catch (err) {
     res.sendStatus(500);
-  }
-}
-
-//TODO move functionallity into create() function
-exports.email = async (req, res) => {
-  try {
-    await EmailService.email({ id: 123, title: "DETTE ER EN TEST", description: "DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST. DETTE ER EN TEST." });
-    res.status(200).json("Email sent");
-  } catch (err) {
-    res.status(err.status).json(err.message);
   }
 }
 

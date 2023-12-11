@@ -43,6 +43,7 @@
                 .then(() => {
                         localStorage.removeItem("user");
                         toggleDisplay([loginBtn, logoutBtn]);
+                        window.location.href = "/";
                     })
                 .catch(err => console.error(err));
         });
