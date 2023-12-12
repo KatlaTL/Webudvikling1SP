@@ -101,7 +101,7 @@
                 if (requestId) {
                     fetchWrapper.put(`/featureRequests/${requestId}/upvotes`, {
                         headers: {
-                            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`
+                            "Authorization": `Bearer ${JSON.parse(user).authorization}`
                         }
                     })
                         .then(data => cta.querySelector("p").innerHTML = data.amount)
