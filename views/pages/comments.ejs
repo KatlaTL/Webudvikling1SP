@@ -38,15 +38,17 @@
     let urlIdSplitted = urlId.split("/");
     const featureRequestIdUrl = urlIdSplitted[4];
 
-    const request1 = fetch('/featureRequests').then(response => response.json());
-    const request2 = fetch(`/showcomments/${featureRequestIdUrl}`).then(response => response.json());
+
+    const request1 = fetch(`/showcomments/${featureRequestIdUrl}`).then(response => response.json());
+    const request2 = fetch('/featureRequests').then(response => response.json());
+    
 
     Promise.all([request1,request2])
     .then(([request1,request2])=>{
 
         const outerDiv = document.querySelector('#commentsDiv');
 
-        const comments = request2.Comments;
+        const comments = request1.Comments;
 
         console.log(comments);
 
@@ -57,9 +59,9 @@
             let pTag = document.createElement("p");
             innerDiv.appendChild(pTag);
 
-            let comments = JSON.stringify(request2.Comments[i].comment);
-            let userName = JSON.stringify(request2.Comments[i].User.name);
-            let featureRequestId = JSON.stringify(request2.Comments[i].feature_request_id);
+            let comments = JSON.stringify(request1.Comments[i].comment);
+            let userName = JSON.stringify(request1.Comments[i].User.name);
+            let featureRequestId = JSON.stringify(request1.Comments[i].feature_request_id);
 
             let newStrComments = comments.replace(/"/g, '');
             let newStrUserName = userName.replace(/"/g, '');
@@ -72,7 +74,7 @@
             }
         };
     
-        const requests = request1.featureRequests;
+        const requests = request2.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
         
