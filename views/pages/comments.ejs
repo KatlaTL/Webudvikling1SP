@@ -61,6 +61,7 @@
 
             let comments = JSON.stringify(request1.Comments[i].comment);
             let userName = JSON.stringify(request1.Comments[i].User.name);
+            let featureRequestId = JSON.stringify(request1.Comments[i].feature_request_id);
 
             let newStrComments = comments.replace(/"/g, '');
             let newStrUserName = userName.replace(/"/g, '');
