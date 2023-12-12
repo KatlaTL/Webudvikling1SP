@@ -92,11 +92,16 @@
                 e.preventDefault();
                 const request = cta.closest(".feature-request");
                 const requestId = request.dataset.requestid;
+                const user = localStorage.getItem("user");
                 
+                if (!user) {
+                    window.location.href = redirectUrl()
+                }
+
                 if (requestId) {
                     fetchWrapper.put(`/featureRequests/${requestId}/upvotes`, {
                         headers: {
-                            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`
+                            "Authorization": `Bearer ${JSON.parse(user).authorization}`
                         }
                     })
                         .then(data => cta.querySelector("p").innerHTML = data.amount)

@@ -13,25 +13,6 @@ exports.getUser = async (attributes = {}, transaction = null) => {
     }
 };
 
-exports.createUser = async (data, transaction = null) => {
-    try {
-        //Set role to 5 by default. 5 is the user role
-        const { id, avatarURL, email, name, role = 5 } = data;
-        const user = await User.create({
-            id: id,
-            avatarURL: avatarURL,
-            email: email,
-            name: name
-        }, { transaction: transaction });
-
-        await user.addRole(role, { transaction: transaction });
-
-        return user;
-    } catch (err) {
-        throw (err);
-    }
-};
-
 exports.getOrCreateUser = async (data, transaction = null) => {
     let unManaged = false;
     if (!transaction) {

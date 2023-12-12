@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const jwtSecret = "e389bb7b-dc58-4b0b-8f54-dac159d5a609"; //Should be saved in an environment variable
+const jwtSecret = process.env.JWT_SECRET || "e389bb7b-dc58-4b0b-8f54-dac159d5a609"; //Should ideally not have a default value
 
 exports.verifyToken = (token, options = {}) => {
     if (token) {
