@@ -23,20 +23,6 @@ exports.createUpvote = async (request, transaction = null) => {
     }
 };
 
-exports.getOrCreateUpvote = async (request_id, amount = 0, transaction = null) => {
-    try {
-        return await Upvote.findOrCreate({ //returns an array with the user object and a created boolean
-            where: { feature_request_id: request_id },
-            defaults: {
-                amount: amount
-            },
-            transaction: transaction //The API for findOrCreate has changed and is now only taking 1 option object with where, default and transaction
-        });
-    } catch (err) {
-        throw (err);
-    }
-};
-
 exports.increment = async (upvote, transaction = null) => {
     try {
         await upvote.increment("amount", { transaction: transaction });
@@ -48,23 +34,6 @@ exports.increment = async (upvote, transaction = null) => {
 exports.decrement = async (upvote, transaction = null) => {
     try {
         await upvote.decrement("amount", { transaction: transaction });
-    } catch (err) {
-        throw (err);
-    }
-};
-
-exports.getUserUpvotes = async (feature_request_id, user_id, transaction = null) => {
-    try {
-        return await Upvote_has_user.findOne({
-            include: {
-                model: Upvote,
-                where: { feature_request_id: feature_request_id }
-            },
-            where: {
-                user_id: user_id,
-                upvote_id: { [Op.col]: "Upvote.id" }
-            }
-        }, { transaction: transaction });
     } catch (err) {
         throw (err);
     }
