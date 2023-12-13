@@ -6,6 +6,7 @@ const { Feature_request } = require('../models');
 exports.comments = async (req, res) => {
   try{
     const Comments = await Comment.findAll({
+      where: {feature_request_id: Number(req.params.requestId)},
       include: [User,
       Feature_request]
     });
@@ -21,10 +22,9 @@ exports.postComments = async (req,res) => {
     let comment =req.body.commentData;
     let featureRequestId = req.body.feature_request_id;
     let user_id = req.body.userId;
-    console.log(comment);
-    console.log(featureRequestId);
-    console.log(user_id);
+
     let commentPost = await Comment.create({ comment:comment, feature_request_id:featureRequestId , user_id:user_id });
+    
     return res.status(200).json({commentPost});
   } catch (e) {
     console.log(e);

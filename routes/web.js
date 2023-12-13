@@ -25,9 +25,10 @@ module.exports = () => {
     router.get('/login/sso/token', Login.login); //Should ideally be a POST route, as we create a user in our DB, but Webdock redirect only works with a GET route
     router.put('/logout', Login.logout);
 
-    router.get('/comments', CommentsController.comments);
     router.get('/showcomments/:requestId', CommentsController.comments);
+
     router.post('/comments/postcomments/posted', CommentsController.postComments);
+    
 
     return router;
 };
