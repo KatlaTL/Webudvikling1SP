@@ -1,6 +1,4 @@
-const e = require("cors");
-const { Upvote, Upvote_has_user, User } = require("../models");
-const { Op } = require("sequelize");
+const { Upvote } = require("../models");
 
 exports.getUpvote = async (request_id, transaction = null) => {
     try {
