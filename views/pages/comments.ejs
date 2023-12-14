@@ -139,17 +139,11 @@
             alert("This form has been successfully submitted!");
 
             let commentData = comment.value;
-            let userIdToSplit =  localStorage.getItem("user");
-
-
-            console.log(JSON.parse(userIdToSplit)); 
-
-            console.log(commentData);
-            console.log(userId);
-
+            let GetUserId =  JSON.parse(localStorage.getItem("user"));
+            let userId = GetUserId.user_id;
+            let feature_request_id = featureRequestIdUrl;
+            
             let formData = { commentData, feature_request_id, userId};
-
-            console.log(formData);
 
             fetch("/comments/postcomments/posted", {
                 method: "POST",
@@ -160,6 +154,7 @@
                 }   
             });
         }
+        location.reload();
     });
 
     document.querySelector("#backBtnComments").addEventListener("click", (e) => {
