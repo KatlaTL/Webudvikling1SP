@@ -407,6 +407,13 @@ li:hover ul#submenu {
 }
 
    /*Feature request comment*/
+
+.comment_header h4 {
+  position: relative;
+  color: #333;
+  padding: 15px;
+}
+
 #commentForm{
 border-radius: 10px;
 }
