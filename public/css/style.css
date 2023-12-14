@@ -48,21 +48,22 @@ margin-bottom: 25px;
 }
 
 #btngreen {
-  background-color: #00956c;
+  background-color: #E08531;
     line-height: 43px !important;
     padding: 0 34px;
     color: #fff;
     border: 2px solid #fff;
     font-weight: 700 !important;
-    border-radius: 4px;
+    border-radius: 10px;
     float: right;
     margin: 10px;
+
   }
   
   #btngreen:hover {
     background: #fff;
-    color: #01a1a1;
-    border: 2px solid #00956c;
+    color: #E08531;
+    border: 2px solid #E08531;
     float: right;
   }
 
@@ -127,6 +128,41 @@ footer {
     }
 
     /*Knapper*/
+    .feature-request:hover {
+      background-color: rgb(245, 244, 244);
+      padding: 1%;
+      border-radius: 10px;
+      }
+
+    #backBtnComments{
+      background: #00956c;
+      color: #ffff;
+      border: 2px solid #00956c;
+      border-radius: 10px;
+      padding: 1%;
+      width: 10%;
+    }
+
+    #backBtnComments:hover {
+      background: #fff;
+      color: #01a1a1;
+      border: 2px solid #00956c;
+    }
+  
+    #submit{
+      background: #E08531;
+      color: #ffff;
+      border: 2px solid #E08531;
+      border-radius: 10px;
+      padding: 1%;
+      width: 15%;
+    }
+
+    #submit:hover {
+      background: #fff;
+      color: #FFA154;
+      border: 2px solid #FFA154;
+    }
 .btn-outline-primary {
   border-color: #A8A8A8;
   color: black;
@@ -184,7 +220,9 @@ font-size: 11px;
 }
 
 #create-request-cta:hover {
-  background-color: #FFA154; 
+  background: #fff;
+      color: #FFA154;
+      border: 2px solid #FFA154;
 }
 /*Roadmap menu*/
 
@@ -222,7 +260,7 @@ h2 {
 /*Scroll function*/
 
 .with-scroll .scroll-box {
-  max-height: 500px; 
+  max-height: 750px; 
   overflow-y: auto;
   padding: 5px;
 }
@@ -233,7 +271,7 @@ h2 {
 
 
 .with-scroll .scroll-box-feature {
-  max-height: 550px; 
+  max-height: 660px; 
   overflow-y: auto;
   padding: 5px;
 }
@@ -368,30 +406,54 @@ li:hover ul#submenu {
   font-size: small;
 }
 
+   /*Feature request comment*/
+#commentForm{
+border-radius: 10px;
+}
+
+#commentsDiv{
+ background-color: #ffff;
+ font-size: 17px;
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid #999;
+    color: #999;
+    background-color: #fff;
+    height: 1px;
+    margin: 20px 0;
+  }
+
+  ::-webkit-scrollbar {
+   display: none;
+}      
+
+
 /*Mobile*/
 @media (max-width: 767px) {
   .with-scroll .scroll-box {
-    max-height: 420px;
+    max-height: 580px;
   }
 
   .with-scroll .scroll-box-feature{
-    max-height: 480px;
+    max-height: 600px;
   }
 
   #create-request-cta{
     padding:2%;
-    width: 100%;
+    width: 97%;
     margin-bottom: 1%;
   }
 
   #searchInput {
-    width: 156%;
+    width: 135%;
   }
 
   .search-box {
     position: relative;
     display: inline-block;
-    right: 18%;
+    right: 14%;
   }
 
   .status{
@@ -408,6 +470,10 @@ li:hover ul#submenu {
     .btn-outline-primary {
       width: 18%;
       height: 60px;
+    }
+
+    #backBtnComments{
+      width: 25%;
     }
     
 }
