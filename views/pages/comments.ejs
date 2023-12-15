@@ -7,9 +7,8 @@
                   </svg> Feature Requests Comments</h4></div>
                 <div class="card-body bg-white">
                     <div class="FeaureRequest">
-                        <button id="backBtnComments"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                          </svg> Back</button>
+                        <!-- Including the backCTA -->
+                        <%- include("../partials/components/backCTA.ejs") %>
                         <div class="row">
                             <div id="requestcomment" class="section with-scroll">
                                 <div class="scroll-box-feature">
@@ -165,11 +164,4 @@
         location.reload();
         }, 50);
     });
-
-    document.querySelector("#backBtnComments").addEventListener("click", (e) => {
-        e.preventDefault();
-        window.location.assign("/");
-
-    });
-    
 </script>
