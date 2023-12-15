@@ -2,10 +2,13 @@
     <div class="row">
         <div class="col-md-8 mb-3">
             <div class="box box-left border card text-white mb-3">
-                <div class="card-header">Feature requests comments</div>
+                <div class="card-header"> <h4><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                    <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+                  </svg> Feature Requests Comments</h4></div>
                 <div class="card-body bg-white">
                     <div class="FeaureRequest">
-                        <button id="backBtnComments">Back</button>
+                        <!-- Including the backCTA -->
+                        <%- include("../partials/components/backCTA.ejs") %>
                         <div class="row">
                             <div id="requestcomment" class="section with-scroll">
                                 <div class="scroll-box-feature">
@@ -14,8 +17,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="comment_header">
+                        <h4>Comments</h4>
+                    </div> 
                     <div id="commentsDiv">
-
+                       
                     </div>
                     <div class="commentsShow">
                         <div class="commentFormDiv">
@@ -34,22 +40,23 @@
 </div>
 
 <script>
-
-    const request1 = fetch('/featureRequests').then(response => response.json());
-    const request2 = fetch('/comments').then(response => response.json());
-
     let urlId = window.location.href;
     let urlIdSplitted = urlId.split("/");
-    const userIdUrl = urlIdSplitted[4];
+    const featureRequestIdUrl = urlIdSplitted[4];
+
+
+    const request1 = fetch(`/showcomments/${featureRequestIdUrl}`).then(response => response.json());
+    const request2 = fetch('/featureRequests').then(response => response.json());
+    
 
     Promise.all([request1,request2])
     .then(([request1,request2])=>{
 
         const outerDiv = document.querySelector('#commentsDiv');
 
-        const comments = request2.Comments;
-        /* console.log(comments.length) */;
- 
+        const comments = request1.Comments;
+
+        console.log(comments);
 
         for (let i = 0; i < comments.length; i++) {
             let innerDiv = document.createElement("div");
@@ -58,24 +65,22 @@
             let pTag = document.createElement("p");
             innerDiv.appendChild(pTag);
 
-            let comments = JSON.stringify(request2.Comments[i].comment);
-            let userName = JSON.stringify(request2.Comments[i].User.name);
-            let featureRequestId = JSON.stringify(request2.Comments[i].feature_request_id);
-            /* console.log(featureRequestId[i]); */
+            let comments = JSON.stringify(request1.Comments[i].comment);
+            let userName = JSON.stringify(request1.Comments[i].User.name);
+            let featureRequestId = JSON.stringify(request1.Comments[i].feature_request_id);
 
             let newStrComments = comments.replace(/"/g, '');
             let newStrUserName = userName.replace(/"/g, '');
 
-            if(userIdUrl === featureRequestId){
-                /* console.log(featureRequestId); */
+            if(featureRequestIdUrl === featureRequestId){
             
-            /* appender dataen til html'en */
-            pTag.innerHTML += newStrComments + "<br>";
-            pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
+                /* appender dataen til html'en */
+                pTag.innerHTML += newStrComments + "<br>";
+                pTag.innerHTML += "Written by: " + newStrUserName + "<br>";
             }
         };
     
-        const requests = request1.featureRequests;
+        const requests = request2.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
         
@@ -83,10 +88,8 @@
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);
             const date = new Date(parseDate);
-            /* console.log(userIdUrl); */
 
-            if(userIdUrl == requests[i].id) {
-             /* console.log(requests[i].id); */
+            if(featureRequestIdUrl == requests[i].id) {
             
             requestHtml += `
                 <div class="feature-request" data-requestid=${requests[i].id}>
@@ -139,31 +142,26 @@
             alert("Ensure you input a value in the field!");
 
         } else {
-            alert("This form has been successfully submitted!");
+            alert("The comment has been successfully submitted!");
 
             let commentData = comment.value;
-            let feature_request_id = userIdUrl;
-            console.log(feature_request_id);
-
-            let formData = { commentData, feature_request_id};
-
-            console.log(formData);
+            let GetUserId =  JSON.parse(localStorage.getItem("user"));
+            let userId = GetUserId.user_id;
+            let feature_request_id = featureRequestIdUrl;
+            
+            let formData = { commentData, feature_request_id, userId};
 
             fetch("/comments/postcomments/posted", {
                 method: "POST",
                 body: JSON.stringify(formData),
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).jwt : ""}`,
+                    "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).authorization: ""}`,
                     'Content-Type': 'application/json'
                 }   
             });
         }
+        setTimeout(function(){
+        location.reload();
+        }, 50);
     });
-
-    document.querySelector("#backBtnComments").addEventListener("click", (e) => {
-        e.preventDefault();
-        window.location.assign("/");
-
-    });
-    
 </script>

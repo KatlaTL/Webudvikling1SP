@@ -3,14 +3,14 @@ const UserService = require("./UserService");
 const PermissionService = require("../services/PermissionService");
 const cache = require("../loaders/cache");
 
-const postmarkServerApiToken = "c3d41965-18a4-479f-a591-4369b7f5952c"; //Should be saved in an environment variable
+const postmarkServerApiToken = process.env.POSTMARK_SERVER_API_TOKEN || "c3d41965-18a4-479f-a591-4369b7f5952c"; //Should ideally not have a default value
 
 exports.email = async (feature_request) => {
     try {
         const { id, title, description } = feature_request;
 
-        const sender = "uclfeedback@webdock.io";
-        const recipients = "balloupjuske2208@gmail.com";// "admin@webdock.io";
+        const sender = process.env.EMAIL_SENDER || "uclfeedback@webdock.io";
+        const recipients = process.env.EMAIL_RECIPIENTS || "admin@webdock.io";
         const ccRecipients = (await getRecipients()).toString(); //get all user emails with email notification permission
 
         const headers = {

@@ -5,12 +5,12 @@ const { serialize } = require("cookie");
 exports.redirect = (req, res) => {
     const { page, ...rest } = req.query;
 
-    const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud";
+    const host = process.env.SSO_redirect_back || "http://localhost:3000"; // "http://webdockproje.vps.webdock.cloud";
     const path = "/login/sso/token";
 
     const returnURL = new URL(host + path);
     returnURL.searchParams.append("page", page);
-    
+
     for (const [key, value] of Object.entries(rest)) {
         returnURL.searchParams.append(key, value);
     }
@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
             sameSite: "lax", //Cookie will not be sent along with requests initiated by third-party websites
             path: "/"
         }));
-        
+
         const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud";
         const url = new URL(`${host}/${page}`);
 
@@ -65,7 +65,7 @@ exports.login = async (req, res) => {
                 url.searchParams.append(key, value);
             }
         });
-        
+
         res.redirect(url);
     } catch (err) {
         return res.sendStatus(500);
@@ -75,21 +75,16 @@ exports.login = async (req, res) => {
 exports.logout = (req, res) => {
     const { authorization } = req.cookies;
 
-    if(!authorization) {
-        res.status(401).json({
-            status: 401,
-            message: "Not authorized"
-        });
+    if (authorization) {
+        //clear the cookie by creating a new cookie with the exact same settings, but setting maxAge to somewhere in the past
+        res.setHeader("Set-Cookie", serialize("authorization", null, {
+            httpOnly: true,
+            maxAge: 0,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: "lax",
+            path: "/"
+        }));
     }
-    
-    //clear the cookie by creating a new cookie with the exact same settings, but setting maxAge to somewhere in the past
-    res.setHeader("Set-Cookie", serialize("authorization", null, {
-        httpOnly: true, 
-        maxAge: 0,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: "lax",
-        path: "/"
-    }));
 
     res.status(200).json({
         status: 200,
