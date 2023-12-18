@@ -72,13 +72,12 @@ const auth = async (req) => {
         }
 
         const { authorization } = req.cookies;
-
+        
         if (authorization != token) {
             throw ("Authorization tokens are not a match")
         }
 
-        const decoded = TokenService.verifyToken(token);
-        const { jwtError, decodedToken } = decoded;
+        const { jwtError, decodedToken } = TokenService.verifyToken(token);
 
         if (jwtError) {
             throw (jwtError.message);
