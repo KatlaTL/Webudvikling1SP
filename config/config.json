@@ -5,7 +5,7 @@
     "database": "webdock",
     "host": "webdockproje.vps.webdock.cloud",
     "dialect": "mysql",
-    "logging": false
+    "logging": true
   },
   "test": {
     "username": "root",
