@@ -17,7 +17,7 @@ exports.upvote = async (req, res) => {
                 await UpvoteService.decrement(upvote, transaction);
                 await UpvoteService.removeUserUpvotes(upvote, user, transaction);
             }
-            return await upvote.reload({ transaction, transaction });
+            return await UpvoteService.reload(upvote, transaction);
         });
 
         return res.status(200).json(result);
