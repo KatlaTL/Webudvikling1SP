@@ -27,7 +27,7 @@ module.exports = () => {
 
     router.get('/showcomments/:requestId', CommentsController.comments);
 
-    router.post('/comments/postcomments/posted', CommentsController.postComments);
+    router.post('/comments/postcomments/posted', userAuth, CommentsController.postComments);
     
 
     return router;
