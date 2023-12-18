@@ -60,3 +60,11 @@ exports.upvoteHasUser = async (upvote, user, transaction = null) => {
         throw (err);
     }
 }
+
+exports.reload = async (upvote, transaction = null) => {
+    try {
+        return await upvote.reload({ transaction: transaction });
+    } catch (err) {
+        throw (err);
+    }
+}
