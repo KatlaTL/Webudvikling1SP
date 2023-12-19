@@ -5,11 +5,14 @@ const { serialize } = require("cookie");
 exports.redirect = (req, res) => {
     const { page, ...rest } = req.query;
 
-    const host = process.env.SSO_redirect_back || "http://localhost:3000"; // "http://webdockproje.vps.webdock.cloud";
+    const host = process.env.SSO_redirect_back || "http://localhost:3000";
     const path = "/login/sso/token";
 
     const returnURL = new URL(host + path);
-    returnURL.searchParams.append("page", page);
+
+    if (page) {
+        returnURL.searchParams.append("page", page);
+    }
 
     for (const [key, value] of Object.entries(rest)) {
         returnURL.searchParams.append(key, value);
