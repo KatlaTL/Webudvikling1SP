@@ -79,6 +79,7 @@ exports.create = async (req, res) => {
       message: `Feature request created with ID: ${featureRequest.id}`
     });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       status: 500,
       message: 'The request failed'

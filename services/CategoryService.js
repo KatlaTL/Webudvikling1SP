@@ -7,3 +7,12 @@ exports.getAllCategories = async (transaction = null) => {
         throw (err);
     }
 };
+
+exports.getAllCategoryNames = async (transaction = null) => {
+    try {
+        const categories = await Category.findAll({ transaction: transaction });
+        return categories.map(({ category }) => category);
+    } catch (err) {
+        throw (err);
+    }
+};

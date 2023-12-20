@@ -57,6 +57,10 @@
         })
         .catch(err => console.error(err));    
     
+    
+    const details = document.querySelector("#details");
+    countChars(details);
+
     const form = document.querySelector("#createForm");
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -68,14 +72,22 @@
             },
             body: {
                 category: { 
-                    id: category.options[category.selectedIndex].dataset.id,
+                    id: parseInt(category.options[category.selectedIndex].dataset.id),
                     category: category.value
                 },
                 title: title.value,
                 details: details.value
             }
         })
-        .then(data =>  window.location.href = new URL(document.baseURI).origin)
-        .catch(err => console.error(err));
+        .then(data => window.location.href = new URL(document.baseURI).origin)
+        .catch(err => {
+            let data;
+            try {
+                data = JSON.parse(err.message);
+            } catch (err) {
+                data = {};
+            }
+            insertMessage(data);
+        });
     });
 </script>

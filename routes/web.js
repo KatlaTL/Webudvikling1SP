@@ -5,6 +5,7 @@ const FeatureRequest = require('../controllers/FeatureRequestController');
 const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 const { userAuth, adminAuth } = require("../middleware/Auth");
+const { validate } = require("../middleware/Validator");
 const CommentsController = require('../controllers/CommentsController');
 
 const router = express.Router();
@@ -16,7 +17,7 @@ module.exports = () => {
     router.get('/comments/:requestId', Default.index);
     
     router.get('/featureRequests', FeatureRequest.getAll);
-    router.post('/featureRequests/create', userAuth, FeatureRequest.create);
+    router.post('/featureRequests/create', validate, userAuth, FeatureRequest.create);
     router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
  
     router.get('/categories', FeatureRequest.getAllCategories);

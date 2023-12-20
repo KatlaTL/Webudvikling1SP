@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     title: DataTypes.STRING(100),
-    description: DataTypes.STRING,
-    imageURL: DataTypes.STRING(255),
+    description: DataTypes.STRING(500),
+    imageURL: DataTypes.STRING,
     parent_feature_request_id: {
       type: DataTypes.INTEGER,
       references: {
