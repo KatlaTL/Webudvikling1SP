@@ -22,20 +22,38 @@ const removeMessage = () => {
     }
 }
 
-const countChars = (element) => {
+const countCharacters = (element, cb) => {
     element.addEventListener("input", (e) => {
-        console.log(element.value)
-        console.log(element.value.length);
-        if (element.value.length >= 500) {
-            console.log("here")
+        cb(element.value.length);
+    })
+}
+
+
+
+/* const countChars = (element, maxLength, cb) => {
+    let chars;
+
+    element.addEventListener("beforeinput", (e) => {
+        const selection = window.getSelection().toString();
+
+        if ((element.value.length - selection.length) < maxLength) {
+            cb(element.value.length - selection.length);
+            return;
+        }
+
+        if (e.inputType != "deleteContentBackward" && e.inputType != "deleteContentForward") {
             e.preventDefault();
         }
     })
 
     element.addEventListener("paste", (e) => {
         const paste = (e.clipboardData || window.clipboardData).getData("text");
-        if ((element.value.length + paste.length) > 500) {
+        const selection = window.getSelection().toString();
+
+        if ((element.value.length + paste.length - selection.length) > maxLength) {
             e.preventDefault();
         }
     })
-}
+
+    return chars;
+} */

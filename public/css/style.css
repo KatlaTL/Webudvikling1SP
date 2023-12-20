@@ -70,6 +70,16 @@ margin-bottom: 25px;
   #details {
     height: 200px;
   }
+#request-textarea {
+  position: relative;
+}
+#character-counter {
+  position: absolute;
+  bottom: 0;
+  left: 1%;
+  width: 100%;
+  color: #E08531;
+}
 
 .card-header {
   background-color: #3A8771;

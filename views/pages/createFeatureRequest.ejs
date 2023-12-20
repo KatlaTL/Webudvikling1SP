@@ -13,7 +13,7 @@
                         <form id="createForm">
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <select class="form-control" id="category" name="category">
+                                <select class="form-control" id="category" name="category" required>
                                     <option value="" disabled selected>Select a Category</option>
                                 </select>
                             </div>
@@ -21,13 +21,18 @@
                             <div class="form-group">
                                 <label for="title">Title</label>
                                 <input type="text" class="form-control" id="title" name="title"
-                                    placeholder="Short descriptive title">
+                                    placeholder="Short descriptive title" required>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="request-textarea">
                                 <label for="details">Details</label>
                                 <textarea class="form-control" id="details" name="details"
-                                    placeholder="Any additional details..."></textarea>
+                                    placeholder="Any additional details..." maxlength="500" required></textarea>
+                                <div id="character-counter">
+                                    <span id="typed-characters">0</span>
+                                    <span>/</span>
+                                    <span id="maximum-characters">500</span>
+                                </div>                               
                             </div>
 
                             <button id="btngreen" type="submit" class="btn">Submit</button>
@@ -59,7 +64,10 @@
     
     
     const details = document.querySelector("#details");
-    countChars(details);
+    const detailsChars = document.querySelector("#typed-characters");
+    countCharacters(details, (chars) => {
+        detailsChars.textContent = chars;
+    })
 
     const form = document.querySelector("#createForm");
     form.addEventListener("submit", (e) => {
