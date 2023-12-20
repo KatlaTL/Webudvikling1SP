@@ -27,33 +27,3 @@ const countCharacters = (element, cb) => {
         cb(element.value.length);
     })
 }
-
-
-
-/* const countChars = (element, maxLength, cb) => {
-    let chars;
-
-    element.addEventListener("beforeinput", (e) => {
-        const selection = window.getSelection().toString();
-
-        if ((element.value.length - selection.length) < maxLength) {
-            cb(element.value.length - selection.length);
-            return;
-        }
-
-        if (e.inputType != "deleteContentBackward" && e.inputType != "deleteContentForward") {
-            e.preventDefault();
-        }
-    })
-
-    element.addEventListener("paste", (e) => {
-        const paste = (e.clipboardData || window.clipboardData).getData("text");
-        const selection = window.getSelection().toString();
-
-        if ((element.value.length + paste.length - selection.length) > maxLength) {
-            e.preventDefault();
-        }
-    })
-
-    return chars;
-} */
