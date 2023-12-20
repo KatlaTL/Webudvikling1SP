@@ -69,15 +69,21 @@ margin-bottom: 25px;
 
   #details {
     height: 200px;
+    resize: none;
   }
+
+#createForm input.required:invalid, #createForm select.required:invalid, #createForm textarea.required:invalid {
+  border: 1px solid red;
+}
 #request-textarea {
   position: relative;
 }
 #character-counter {
   position: absolute;
   bottom: 0;
-  left: 1%;
+  right: 1%;
   width: 100%;
+  text-align: right;
   color: #E08531;
 }
 

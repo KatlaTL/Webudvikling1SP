@@ -12,7 +12,8 @@ exports.userAuth = async (req, res, next) => {
         console.error(err);
         res.status(401).json({
             status: 401,
-            message: "Not authorized"
+            message: "Not authorized",
+            UserFriendlyMessage: "Your session has expired. Please login again."
         });
     }
 };

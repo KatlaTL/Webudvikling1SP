@@ -1,9 +1,7 @@
-const insertMessage = (data) => {
+const insertMessage = (data, selector = "form") => {
     removeMessage();
-
-    for (const [key, value] of Object.entries(data)) {
-        const element = document.querySelector(`#${key}`);
-
+    
+    const createElement = (element, value) => {
         const span = document.createElement("span");
         const textNode = document.createTextNode(value);
 
@@ -12,6 +10,20 @@ const insertMessage = (data) => {
         span.classList.add("error-message");
 
         element.parentElement.insertBefore(span, null);
+    }
+
+    if (data.status && data.status === 401) {
+        const element = document.querySelector(selector);
+        createElement(element, data.UserFriendlyMessage || data.message);
+        return;
+    }
+
+    for (const [key, value] of Object.entries(data)) {
+        const element = document.querySelector(`#${key}`);
+        if (!element) {
+            continue;
+        } 
+        createElement(element, value);
     }
 }
 
@@ -26,4 +38,11 @@ const countCharacters = (element, cb) => {
     element.addEventListener("input", (e) => {
         cb(element.value.length);
     })
+}
+
+const addRequired = (selector) => {
+    const allRequired = document.querySelectorAll(`${selector} *[required]`);
+    for (i in allRequired) {
+        allRequired[i].classList?.add("required")
+    }
 }
