@@ -99,3 +99,15 @@ exports.getAllCategories = async (req, res) => {
   }
 }
 
+exports.getFeatureRequestComments = async (req, res) => {
+  try {
+      const feature_request_id = Number(req.params.requestId);
+      const featureRequest = await FeatureRequestService.getAllCommentsByRequestID(feature_request_id);
+      res.status(200).json({featureRequest});
+  } catch (err) {
+      return res.status(500).json({
+          status: 500,
+          message: "Request failed"
+      });
+  }
+}

@@ -46,7 +46,7 @@
 </div>
 
 <script>
-    fetchWrapper.get("/categories")
+    fetchWrapper.get("/internal/categories")
         .then(data => {
             const selectList = document.querySelector(".form-control");
             for (let i = 0; i < data.categories.length; i++) {
@@ -79,7 +79,7 @@
         e.preventDefault();
         const { category, title, details} = e.target;
 
-        fetchWrapper.post("/featureRequests/create", {
+        fetchWrapper.post("/internal/featureRequests/create", {
             headers: {
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`
             },

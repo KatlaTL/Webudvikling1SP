@@ -7,19 +7,19 @@ $font-family: 'Raleway', sans-serif;*/
 
 
 body {
-  font-family: "Raleway", sans-serif; 
+  font-family: "Raleway", sans-serif;
   background-color: #f1fafa;
 }
 
- /*Nav*/
+/*Nav*/
 
 textarea {
   width: auto;
 }
 
 .navbar {
-background-color: #1f9e85;
-margin-bottom: 25px;
+  background-color: #1f9e85;
+  margin-bottom: 25px;
 }
 
 #signin {
@@ -31,9 +31,10 @@ margin-bottom: 25px;
   border: 2px solid #fff;
   font-weight: 700 !important;
   border-radius: 4px
-} 
+}
 
-#login, #logout {
+#login,
+#logout {
   line-height: 43px !important;
   padding: 0 34px;
   color: #fff;
@@ -42,42 +43,47 @@ margin-bottom: 25px;
   border-radius: 4px
 }
 
-#login:hover, #logout:hover {
+#login:hover,
+#logout:hover {
   background: #fff;
   color: #01a1a1
 }
 
 #btngreen {
   background-color: #E08531;
-    line-height: 43px !important;
-    padding: 0 34px;
-    color: #fff;
-    border: 2px solid #fff;
-    font-weight: 700 !important;
-    border-radius: 10px;
-    float: right;
-    margin: 10px;
+  line-height: 43px !important;
+  padding: 0 34px;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: 700 !important;
+  border-radius: 10px;
+  float: right;
+  margin: 10px;
 
-  }
-  
-  #btngreen:hover {
-    background: #fff;
-    color: #E08531;
-    border: 2px solid #E08531;
-    float: right;
-  }
+}
 
-  #details {
-    height: 200px;
-    resize: none;
-  }
+#btngreen:hover {
+  background: #fff;
+  color: #E08531;
+  border: 2px solid #E08531;
+  float: right;
+}
 
-#createForm input.required:invalid, #createForm select.required:invalid, #createForm textarea.required:invalid {
+#details {
+  height: 200px;
+  resize: none;
+}
+
+#createForm input.required:invalid,
+#createForm select.required:invalid,
+#createForm textarea.required:invalid {
   border: 1px solid red;
 }
+
 #request-textarea {
   position: relative;
 }
+
 #character-counter {
   position: absolute;
   bottom: 0;
@@ -92,92 +98,111 @@ margin-bottom: 25px;
 }
 
 .card-body {
-  height: 80vh;
-}
-header, section, footer {
-  color: black; 
+  min-height: 80vh;
+  height: auto;
 }
 
-.card-text, .card-title {
+header,
+section,
+footer {
+  color: black;
+}
+
+.card-text,
+.card-title {
   color: black;
 }
 
 
 footer {
-  font-size: 14px; 
+  font-size: 14px;
 }
 
-.FeaureRequest{
+.FeaureRequest {
   padding: 2%;
-   }
+}
 
-   /*Tekst*/
-   .commenttekst{
-    color: black;
-    padding-top: 1%;
-         }
-    
-    .commenttitle{
-      color: black;
-      font-weight: bold;
-           }
-    
-    
-    #roadmaptitle{
-      color: black;
-           }
+/*Tekst*/
+.commenttekst {
+  color: black;
+  padding-top: 1%;
+}
+
+.comment-div {
+  border-bottom: 1px solid #646464;
+  margin-top: 20px;
+}
+
+
+.comment-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #646464;
+  margin-bottom: 0;
+}
+
+.commenttitle {
+  color: black;
+  font-weight: bold;
+}
+
+
+#roadmaptitle {
+  color: black;
+}
 
 #tekst {
   color: #707070;
-  }
-  
-  #tekst:hover {
-    color: #489F5D; 
-    text-decoration-line: underline;
-  }
-    
-    #commentstylling{
-    border-color: #A8A8A8;
-    border-radius: 5%;
-    width: 10%;
-    background-color: #FCFCFC;
-    }
+}
 
-    /*Knapper*/
-    .feature-request:hover {
-      background-color: rgb(245, 244, 244);
-      border-radius: 10px;
-      }
+#tekst:hover {
+  color: #489F5D;
+  text-decoration-line: underline;
+}
 
-    #backBtnComments{
-      background: #00956c;
-      color: #ffff;
-      border: 2px solid #00956c;
-      border-radius: 10px;
-      padding: 1%;
-      width: 10%;
-    }
+#commentstylling {
+  border-color: #A8A8A8;
+  border-radius: 5%;
+  width: 10%;
+  background-color: #FCFCFC;
+}
 
-    #backBtnComments:hover {
-      background: #fff;
-      color: #01a1a1;
-      border: 2px solid #00956c;
-    }
-  
-    #submit{
-      background: #E08531;
-      color: #ffff;
-      border: 2px solid #E08531;
-      border-radius: 10px;
-      padding: 1%;
-      width: 15%;
-    }
+/*Knapper*/
+.feature-request:hover {
+  background-color: rgb(245, 244, 244);
+  border-radius: 10px;
+}
 
-    #submit:hover {
-      background: #fff;
-      color: #FFA154;
-      border: 2px solid #FFA154;
-    }
+#backBtnComments {
+  background: #00956c;
+  color: #ffff;
+  border: 2px solid #00956c;
+  border-radius: 10px;
+  padding: 1%;
+  width: 10%;
+}
+
+#backBtnComments:hover {
+  background: #fff;
+  color: #01a1a1;
+  border: 2px solid #00956c;
+}
+
+#submit {
+  background: #E08531;
+  color: #ffff;
+  border: 2px solid #E08531;
+  border-radius: 10px;
+  padding: 1%;
+  width: 15%;
+}
+
+#submit:hover {
+  background: #fff;
+  color: #FFA154;
+  border: 2px solid #FFA154;
+}
+
 .btn-outline-primary {
   border-color: #A8A8A8;
   color: black;
@@ -199,37 +224,37 @@ footer {
   background-color: #00956c;
   border-color: #00956c;
   color: white;
-  }
-
-.btn-outline-primary:hover {
-background-color: #00956c;
-border-color: #00956c;
 }
 
-.status{
+.btn-outline-primary:hover {
+  background-color: #00956c;
+  border-color: #00956c;
+}
+
+.status {
   background-color: #4FA0F8;
   color: white;
   border-radius: 12px;
-  width: 10%;
+  width: 12%;
   padding: 1%;
-font-size: 11px;
-  }
+  font-size: 11px;
+}
 
-  .comment{
-    padding: 0;
-    border: none;
-    background: none;
-    }
+.comment {
+  padding: 0;
+  border: none;
+  background: none;
+}
 
 /*Create Request button*/
 
-#create-request-cta{
+#create-request-cta {
   background-color: #E08531;
   color: white;
   border-radius: 10px;
   text-align: center;
   border: #E08531;
-  padding:5%;
+  padding: 5%;
   width: 87%;
   margin-bottom: 5%;
   border: 2px solid #E08531;
@@ -237,12 +262,13 @@ font-size: 11px;
 
 #create-request-cta:hover {
   background: #fff;
-      color: #FFA154;
-      border: 2px solid #FFA154;
+  color: #FFA154;
+  border: 2px solid #FFA154;
 }
+
 /*Roadmap menu*/
 
-  #menu {
+#menu {
   padding: 10px;
   text-align: center;
 
@@ -276,18 +302,18 @@ h2 {
 /*Scroll function*/
 
 .with-scroll .scroll-box {
-  max-height: 750px; 
+  max-height: 750px;
   overflow-y: auto;
   padding: 5px;
 }
 
 .with-scroll .scroll-box p {
- margin: 15;
+  margin: 15;
 }
 
 
 .with-scroll .scroll-box-feature {
-  max-height: 660px; 
+  max-height: 660px;
   overflow-y: auto;
   padding: 5px;
 }
@@ -297,7 +323,7 @@ h2 {
 }
 
 .scroll-container {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 
@@ -308,11 +334,11 @@ h2 {
 
 #commentsDiv {
   background-color: #cccccc33;
-  height: 250px;
+  height: auto;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 15px;
-  color:black;
+  color: black;
 }
 
 #commentsDiv div {
@@ -329,18 +355,19 @@ h2 {
   margin-bottom: 20px;
 }
 
-.feature-request{
+.feature-request {
   cursor: pointer;
   overflow-x: hidden;
 }
 
 .commentFormDiv {
-  background-color: #cccccc33;
   margin-top: 20px;
 }
 
-#comment {
+#comment-textarea {
   width: 100%;
+  height: 100px;
+  resize: none;
 }
 
 #submit {
@@ -368,7 +395,7 @@ h2 {
 }
 
 #searchInput {
-  padding: 8px 30px 8px 30px; 
+  padding: 8px 30px 8px 30px;
   font-size: 19px;
   border-radius: 10px;
   border-color: #707070;
@@ -376,53 +403,61 @@ h2 {
 }
 
 /*Filterbar*/
-.dropdownmenu ul, .dropdownmenu li {
-	margin: 0;
-	padding: 0;
+.dropdownmenu ul,
+.dropdownmenu li {
+  margin: 0;
+  padding: 0;
 }
 
 .dropdownmenu li {
-	float: right;
-	position: relative;
-	width:auto;
+  float: right;
+  position: relative;
+  width: auto;
 }
+
 .dropdownmenu a {
-	color: black;
-	display: block;
-	padding: 10px 25px;
-	text-align: center;
-	text-decoration: none;
+  color: black;
+  display: block;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
 }
+
 .dropdownmenu li:hover a {
-	background: #00956c;
+  background: #00956c;
   color: white;
 }
+
 #submenu {
-	left: 0;
-	opacity: 0;
-	position: absolute;
-	top: 35px;
-	visibility: hidden;
-	z-index: 1;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 35px;
+  visibility: hidden;
+  z-index: 1;
 }
+
 li:hover ul#submenu {
-	opacity: 1;
-	top: 40px;
-	visibility: visible;
+  opacity: 1;
+  top: 40px;
+  visibility: visible;
 }
+
 #submenu li {
-	float: none;
-	width: 100%;
+  float: none;
+  width: 100%;
 }
+
 #submenu a:hover {
-	background: #00956c;
+  background: #00956c;
 }
+
 #submenu a {
-	background-color:#01a1a1;
+  background-color: #01a1a1;
   font-size: small;
 }
 
-   /*Feature request comment*/
+/*Feature request comment*/
 
 .comment_header h4 {
   position: relative;
@@ -430,27 +465,27 @@ li:hover ul#submenu {
   padding: 15px;
 }
 
-#commentForm{
-border-radius: 10px;
+#commentForm {
+  border-radius: 10px;
 }
 
-#commentsDiv{
- background-color: #ffff;
- font-size: 17px;
-  }
+#commentsDiv {
+  background-color: #ffff;
+  font-size: 17px;
+}
 
-  hr {
-    border: none;
-    border-top: 2px solid #999;
-    color: #999;
-    background-color: #fff;
-    height: 1px;
-    margin: 20px 0;
-  }
+hr {
+  border: none;
+  border-top: 2px solid #999;
+  color: #999;
+  background-color: #fff;
+  height: 1px;
+  margin: 20px 0;
+}
 
-  ::-webkit-scrollbar {
-   display: none;
-}      
+::-webkit-scrollbar {
+  display: none;
+}
 
 
 /*Mobile*/
@@ -459,12 +494,12 @@ border-radius: 10px;
     max-height: 580px;
   }
 
-  .with-scroll .scroll-box-feature{
+  .with-scroll .scroll-box-feature {
     max-height: 600px;
   }
 
-  #create-request-cta{
-    padding:2%;
+  #create-request-cta {
+    padding: 2%;
     width: 97%;
     margin-bottom: 1%;
   }
@@ -479,24 +514,24 @@ border-radius: 10px;
     right: 14%;
   }
 
-  .status{
+  .status {
     width: 25%;
     padding: 2%;
-  font-size: 12px;
-    }
+    font-size: 12px;
+  }
 
-    .smallupvote {
-      width: 18%;
-      height: 55px;
-    }
+  .smallupvote {
+    width: 18%;
+    height: 55px;
+  }
 
-    .btn-outline-primary {
-      width: 18%;
-      height: 60px;
-    }
+  .btn-outline-primary {
+    width: 18%;
+    height: 60px;
+  }
 
-    #backBtnComments{
-      width: 25%;
-    }
-    
+  #backBtnComments {
+    width: 25%;
+  }
+
 }

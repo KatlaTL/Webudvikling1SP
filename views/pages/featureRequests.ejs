@@ -24,7 +24,7 @@
 </div>
 
 <script>
-    fetchWrapper.get("/featureRequests")
+    fetchWrapper.get("/internal/featureRequests")
     .then((res) => {
         const requests = res.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
@@ -32,9 +32,10 @@
 
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);
-            const date = new Date(parseDate);
+            const date = new Date(parseDate).toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"});
+
             requestHtml += `
-                <div class="feature-request" data-requestid=${requests[i].id}>
+                <div class="feature-request request-click" data-requestid=${requests[i].id}>
                     <div>
                         <h5 class="commenttitle">${requests[i].title}</h5>
                     </div>
@@ -42,11 +43,11 @@
                         <h7>${requests[i].status}</h7>
                     </div>
                     <div class="row">
-                        <div class="col-md 10 request-click">
+                        <div class="col-md 10">
                             <p class="commenttekst">${requests[i].description}</p>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <p class="commenttekst">${date.toLocaleDateString()}</p>
+                                    <p class="commenttekst">${date}</p>
                                 </div>
                                 <div class="col-md-3"> <button class="comment" type="button">
                                         <span><i><svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -69,26 +70,22 @@
                 </div>`
         }
 
-        requestsDiv.innerHTML = requestHtml;
-
+        requestsDiv.innerHTML = requestHtml;  
+    })
+    .then(() => {
         const featureRequest = document.querySelectorAll(".request-click");
-
         featureRequest.forEach((x) => {
             x.addEventListener('click', (e) => {
                 e.preventDefault();
                 const request = x.closest(".feature-request");
                 const requestId = request.dataset.requestid;
-                console.log(requestId);
 
                 if (requestId) {
-                    window.location.assign(`/comments/${requestId}` );
+                    window.location.assign(`/featureRequests/${requestId}/comments` );
             }})
         });
-        
-    })
-    .then(() => {
-        const upvoteCTA = document.querySelectorAll(".upvote-cta");
 
+        const upvoteCTA = document.querySelectorAll(".upvote-cta");
         upvoteCTA.forEach((cta) => {
             cta.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -101,7 +98,7 @@
                 }
 
                 if (requestId) {
-                    fetchWrapper.put(`/featureRequests/${requestId}/upvotes`, {
+                    fetchWrapper.put(`/internal/featureRequests/${requestId}/upvotes`, {
                         headers: {
                             "Authorization": `Bearer ${JSON.parse(user).authorization}`
                         }
@@ -111,7 +108,5 @@
                 }
             })
         });
-
     })
-    
 </script>

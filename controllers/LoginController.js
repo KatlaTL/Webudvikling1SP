@@ -6,7 +6,7 @@ exports.redirect = (req, res) => {
     const { page, ...rest } = req.query;
 
     const host = process.env.SSO_redirect_back || "http://localhost:3000";
-    const path = "/login/sso/token";
+    const path = "/internal/login/sso/token";
 
     const returnURL = new URL(host + path);
 

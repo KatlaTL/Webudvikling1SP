@@ -1,4 +1,4 @@
-const { Feature_request, Status, Comment, Category, Upvote } = require("../models");
+const { Feature_request, Status, Comment, User, Upvote } = require("../models");
 const { Sequelize } = require("sequelize");
 
 exports.getAllRequests = async (transaction = null) => {
@@ -45,3 +45,31 @@ exports.updateRequest = async (feature_request_id, data, transaction = null) => 
         throw (err);
     }
 };
+
+exports.getAllCommentsByRequestID = async (Feature_request_id, transaction = null) => {
+    try {
+        return await Feature_request.findOne({
+            attributes: {
+                include: [
+                    [Sequelize.col("Upvote.amount"), "upvotes"],
+                    [Sequelize.col("Status.status"), "status"]
+                ]
+            },
+            include: [{
+                model: Status,
+                attributes: []
+            }, {
+                model: Upvote,
+                attributes: []
+            }, {
+                model: Comment,
+                include: {
+                    model: User
+                }
+            }],
+            where: { id: Feature_request_id }
+        }, { transaction: transaction });
+    } catch (err) {
+        throw (err);
+    }
+}

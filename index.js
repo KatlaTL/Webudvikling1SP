@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
+const internalApiRoutes = require('./routes/internalApi');
 
 const port = process.env.PORT || 80;
 let options = {}
@@ -28,6 +29,7 @@ app.set('view engine', 'ejs');
 
 app.use("/", webRoutes());
 app.use("/api", apiRoutes());
+app.use("/internal", internalApiRoutes());
 
 app.get('*', (req, res) => {
     res.status(404).send("404 - Page not found");
