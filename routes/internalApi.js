@@ -14,7 +14,7 @@ module.exports = () => {
     router.post('/featureRequests/create', validate, userAuth, FeatureRequest.create);
     router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
     router.get('/featureRequests/:requestId/comments', FeatureRequest.getFeatureRequestComments);
-    router.post('/featureRequests/:requestId/comments', userAuth, Comment.createComment);
+    router.post('/featureRequests/:requestId/comments', validate, userAuth, Comment.createComment);
  
     router.get('/categories', FeatureRequest.getAllCategories);
 

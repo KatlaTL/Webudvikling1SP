@@ -30,7 +30,7 @@
                     <div class="commentsShow">
                         <div class="commentFormDiv">
                             <form id="commentForm">
-                                <textarea name="comment" id="comment-textarea" placeholder="Write your comment here"></textarea>
+                                <textarea name="comment" id="comment" placeholder="Write your comment here"></textarea>
                                 <input type="submit" value="Submit" id="submit">
                             </form>
                         </div>
@@ -98,14 +98,22 @@
         
         fetchWrapper.post(`/internal/featureRequests/${requestId}/comments`, {
             headers: {
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`,
+                "Validation-Request-Type": "Comment"
             },
             body: {
                 comment: comment.value
             }
         })
         .then(data => insertComments(data.createdComment))
-        .catch(err => console.log(err));
+        .catch(err => {
+            try {
+                const data = JSON.parse(err.message);
+                insertMessage(data, "#commentForm");
+            } catch (err) {
+                console.error(err);
+            }
+        });
     });
 
     const insertComments = (comments) => {

@@ -1,6 +1,6 @@
 const insertMessage = (data, selector = "form") => {
     removeMessage();
-    
+
     const createElement = (element, value) => {
         const span = document.createElement("span");
         const textNode = document.createTextNode(value);
@@ -12,17 +12,20 @@ const insertMessage = (data, selector = "form") => {
         element.parentElement.insertBefore(span, null);
     }
 
-    if (data.status && data.status === 401) {
-        const element = document.querySelector(selector);
-        createElement(element, data.UserFriendlyMessage || data.message);
-        return;
+    switch (data.status) {
+        case 400:
+            throw (`${data.status}: ${data.message}`);
+        case 401:
+            const element = document.querySelector(selector);
+            createElement(element, data.UserFriendlyMessage || data.message);
+            return;
     }
 
     for (const [key, value] of Object.entries(data)) {
         const element = document.querySelector(`#${key}`);
         if (!element) {
             continue;
-        } 
+        }
         createElement(element, value);
     }
 }

@@ -19,7 +19,6 @@ exports.createComment = async (req, res) => {
 
         res.status(200).json({ createdComment });
     } catch (err) {
-        console.log(err);
         return res.status(500).json({
             status: 500,
             message: `Request failed. ${err.name}`

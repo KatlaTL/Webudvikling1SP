@@ -36,3 +36,15 @@ exports.request = async () => new Schema({
         }
     }
 });
+
+exports.comment = () => new Schema({
+    comment: {
+        type: String,
+        required: true,
+        length: { min: 1, max: 2000 },
+        message: {
+            required: "You must write a comment before submitting",
+            length: "The comment can only have a maximum of 2000 characters"
+        }
+    }
+});

@@ -2,6 +2,7 @@ const { Comment, User } = require("../models");
 
 exports.createComment = async (data, transaction = null) => {
     try {
+        //Sequelize hook that will execute after a comment has been created
         Comment.afterCreate(async (comment, options) => {
             await comment.reload({
                 include: {
