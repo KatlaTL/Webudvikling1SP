@@ -17,7 +17,7 @@ const insertMessage = (data, selector = "form") => {
             throw (`${data.status}: ${data.message}`);
         case 401:
             const element = document.querySelector(selector);
-            createElement(element, data.UserFriendlyMessage || data.message);
+            createElement(element, data.userFriendlyMessage || data.message);
             return;
     }
 

@@ -99,7 +99,7 @@
         fetchWrapper.post(`/internal/featureRequests/${requestId}/comments`, {
             headers: {
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`,
-                "Validation-Request-Type": "Comment"
+                "Validation-Request-Type": "Comments"
             },
             body: {
                 comment: comment.value

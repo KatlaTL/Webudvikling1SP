@@ -18,7 +18,7 @@ exports.validate = async (req, res, next) => {
     }
 
     if (!validation) {
-        res.status(400).json({
+        return res.status(400).json({
             status: 400,
             message: "validation-request-type header missing"
         })
@@ -34,7 +34,7 @@ exports.validate = async (req, res, next) => {
                 message[errors[i].path] = errors[i].message
             }
         }
-        res.status(400).json(message)
+        return res.status(400).json(message)
     } else {
         next();
     }

@@ -10,10 +10,10 @@ exports.userAuth = async (req, res, next) => {
         next();
     } catch (err) {
         console.error(err);
-        res.status(401).json({
+        return res.status(401).json({
             status: 401,
             message: "Not authorized",
-            UserFriendlyMessage: "Your session has expired. Please login again."
+            userFriendlyMessage: "Your session has expired. Please login again."
         });
     }
 };
@@ -47,9 +47,10 @@ exports.adminAuth = async (req, res, next) => {
         next();
     } catch (err) {
         console.error(err);
-        res.status(401).json({
+        return res.status(401).json({
             status: 401,
-            message: "Not authorized"
+            message: "Not authorized",
+            userFriendlyMessage: "Your session has expired. Please login again."
         });
     }
 };
