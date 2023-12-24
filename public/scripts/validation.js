@@ -38,7 +38,7 @@ const removeMessage = () => {
 }
 
 const countCharacters = (element, cb) => {
-    element.addEventListener("input", (e) => {
+    element.addEventListener("input", () => {
         cb(element.value.length);
     })
 }

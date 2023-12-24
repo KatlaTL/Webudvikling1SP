@@ -80,11 +80,11 @@ textarea {
   border: 1px solid red;
 }
 
-#request-textarea {
+#request-textarea, #comment-textarea {
   position: relative;
 }
 
-#character-counter {
+.character-counter {
   position: absolute;
   bottom: 0;
   right: 1%;
@@ -366,7 +366,7 @@ h2 {
 
 #comment {
   width: 100%;
-  height: 100px;
+  height: 150px;
   resize: none;
 }
 

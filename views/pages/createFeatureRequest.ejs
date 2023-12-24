@@ -28,10 +28,10 @@
                                 <label for="details">Details</label>
                                 <textarea class="form-control" id="details" name="details"
                                     placeholder="Any additional details..." maxlength="500" required></textarea>
-                                <div id="character-counter">
-                                    <span id="typed-characters">0</span>
+                                <div class="character-counter">
+                                    <span class="typed-characters">0</span>
                                     <span>/</span>
-                                    <span id="maximum-characters">500</span>
+                                    <span class="maximum-characters">500</span>
                                 </div>                               
                             </div>
 
@@ -64,7 +64,7 @@
     
     
     const details = document.querySelector("#details");
-    const detailsChars = document.querySelector("#typed-characters");
+    const detailsChars = document.querySelector(".typed-characters");
     countCharacters(details, (chars) => {
         detailsChars.textContent = chars;
     })
@@ -79,7 +79,7 @@
         e.preventDefault();
         const { category, title, details} = e.target;
 
-        fetchWrapper.post("/internal/featureRequests/create", {
+        fetchWrapper.post("/internal/feature-requests", {
             headers: {
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`,
                 "Validation-Request-Type": "FeatureRequest"

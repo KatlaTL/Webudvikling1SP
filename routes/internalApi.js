@@ -10,11 +10,11 @@ const { validate } = require("../middleware/Validator");
 const router = express.Router();
 
 module.exports = () => {
-    router.get('/featureRequests', FeatureRequest.getAll);
-    router.post('/featureRequests/create', validate, userAuth, FeatureRequest.create);
-    router.put('/featureRequests/:requestId/upvotes', userAuth, Upvote.upvote);
-    router.get('/featureRequests/:requestId/comments', FeatureRequest.getFeatureRequestComments);
-    router.post('/featureRequests/:requestId/comments', validate, userAuth, Comment.createComment);
+    router.get('/feature-requests', FeatureRequest.getAll);
+    router.post('/feature-requests', validate, userAuth, FeatureRequest.create);
+    router.put('/feature-requests/:requestId/upvotes', userAuth, Upvote.upvote);
+    router.get('/feature-requests/:requestId/comments', FeatureRequest.getFeatureRequestComments);
+    router.post('/feature-requests/:requestId/comments', validate, userAuth, Comment.createComment);
  
     router.get('/categories', FeatureRequest.getAllCategories);
 

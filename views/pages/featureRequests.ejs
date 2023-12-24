@@ -24,7 +24,7 @@
 </div>
 
 <script>
-    fetchWrapper.get("/internal/featureRequests")
+    fetchWrapper.get("/internal/feature-requests")
     .then((res) => {
         const requests = res.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
@@ -98,7 +98,7 @@
                 }
 
                 if (requestId) {
-                    fetchWrapper.put(`/internal/featureRequests/${requestId}/upvotes`, {
+                    fetchWrapper.put(`/internal/feature-requests/${requestId}/upvotes`, {
                         headers: {
                             "Authorization": `Bearer ${JSON.parse(user).authorization}`
                         }

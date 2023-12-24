@@ -30,7 +30,14 @@
                     <div class="commentsShow">
                         <div class="commentFormDiv">
                             <form id="commentForm">
-                                <textarea name="comment" id="comment" placeholder="Write your comment here"></textarea>
+                                <div class="form-group" id="comment-textarea">
+                                    <textarea class="form-control" name="comment" id="comment" placeholder="Write your comment here" maxlength="2000" required></textarea>
+                                    <div class="character-counter">
+                                        <span class="typed-characters">0</span>
+                                        <span>/</span>
+                                        <span class="maximum-characters">2000</span>
+                                    </div> 
+                                </div>
                                 <input type="submit" value="Submit" id="submit">
                             </form>
                         </div>
@@ -50,7 +57,7 @@
 <% } %>
 
 <script>
-    fetchWrapper.get(`/internal/featureRequests/${requestId}/comments`)
+    fetchWrapper.get(`/internal/feature-requests/${requestId}/comments`)
         .then(data => {
             const request = data.featureRequest;
             const requestDiv = document.querySelector(".scroll-box-feature");
@@ -90,13 +97,20 @@
         })
         .catch(err => console.error(err));
 
+
+    const commentElement = document.querySelector("#comment");
+    const commentsChars = document.querySelector(".typed-characters");
+    countCharacters(commentElement, (chars) => {
+        commentsChars.textContent = chars;
+    })
+
     const commentForm = document.querySelector("#commentForm");
     commentForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const { comment } = e.target;
         
-        fetchWrapper.post(`/internal/featureRequests/${requestId}/comments`, {
+        fetchWrapper.post(`/internal/feature-requests/${requestId}/comments`, {
             headers: {
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`,
                 "Validation-Request-Type": "Comment"
@@ -128,16 +142,19 @@
         const commentsDiv = document.querySelector("#commentsDiv");
             for (i in comments) {
                 const parseDate = Date.parse(comments[i].createdAt);
-                const date = new Date(parseDate).toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"});
-
+                const date = new Date(parseDate).toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric" });
                 const newLineArr = comments[i].comment.split("\n");
-                let commentsTag = "";
+
+                let commentsTag = `<p class="comment">`;
                 for (k in newLineArr) {
                     if (newLineArr[k] == "") {
+                        commentsTag += `</p><p class="comment">`
                         continue;
                     }
-                    commentsTag += `<p class="comment">${newLineArr[k]}</p>`;
+                    commentsTag += `${newLineArr[k]}<br/>`;
                 }
+                commentsTag += `</p>`
+
                 commentsDiv.innerHTML += `
                     <div class="comment-div">
                         <p class="comment-user"><strong>${comments[i].User.name}</strong></p>   
