@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
             }
         });
 
-        res.redirect(url);
+        return res.redirect(url);
     } catch (err) {
         return res.sendStatus(500);
     }

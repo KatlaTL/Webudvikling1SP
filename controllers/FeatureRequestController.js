@@ -74,7 +74,7 @@ exports.create = async (req, res) => {
     if (!emailSent) {
       throw ("email failed")
     }
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: `Feature request created with ID: ${featureRequest.id}`
     });
@@ -90,12 +90,12 @@ exports.create = async (req, res) => {
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await CategoryService.getAllCategories();
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       categories: categories
     })
   } catch (err) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 }
 
@@ -103,7 +103,7 @@ exports.getFeatureRequestComments = async (req, res) => {
   try {
       const feature_request_id = Number(req.params.requestId);
       const featureRequest = await FeatureRequestService.getAllCommentsByRequestID(feature_request_id);
-      res.status(200).json({featureRequest});
+      return res.status(200).json({featureRequest});
   } catch (err) {
       return res.status(500).json({
           status: 500,
