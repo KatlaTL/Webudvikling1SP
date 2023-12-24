@@ -187,7 +187,13 @@ footer {
   color: #01a1a1;
   border: 2px solid #00956c;
 }
-
+.login-cta {
+  float: right;
+  margin-top: 20px;
+  margin-right: 10px;
+  color: #000;
+  font-weight: 300;
+}
 #submit {
   background: #E08531;
   color: #ffff;

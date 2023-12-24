@@ -35,7 +35,11 @@
                                 </div>                               
                             </div>
 
-                            <button id="btngreen" type="submit" class="btn">Submit</button>
+                            <button id="btngreen" type="submit" class="btn is-logged-in-cta">Submit</button>
+                            <% if (!locals.loginInfo) { %>
+                                <!-- Including the loginLink -->
+                                <%- include("../partials/components/loginLink.ejs") %>
+                            <% } %>
                         </form>
                 </div>
             </div>

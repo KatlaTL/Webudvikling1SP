@@ -38,7 +38,11 @@
                                         <span class="maximum-characters">2000</span>
                                     </div> 
                                 </div>
-                                <input type="submit" value="Submit" id="submit">
+                                <button type="submit" id="submit" class="btn is-logged-in-cta">Comment</button>
+                                <% if (!locals.loginInfo) { %>
+                                    <!-- Including the loginLink -->
+                                    <%- include("../partials/components/loginLink.ejs") %>
+                                <% } %>
                             </form>
                         </div>
                     </div>
