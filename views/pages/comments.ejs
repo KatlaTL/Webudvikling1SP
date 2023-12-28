@@ -123,7 +123,10 @@
                 comment: comment.value
             }
         })
-        .then(data => insertComments(data.createdComment))
+        .then(data => {
+            insertComments(data.createdComment);
+            commentElement.value = "";
+        })
         .catch(err => {
             try {
                 const data = JSON.parse(err.message);
@@ -138,7 +141,7 @@
         if (!comments) {
             return;
         }
-
+        console.log(comments)
         if (!Array.isArray(comments)) {
             comments = [comments];
         }
