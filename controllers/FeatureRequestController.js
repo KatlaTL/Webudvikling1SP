@@ -3,6 +3,8 @@ const FeatureRequestService = require("../services/FeatureRequestService");
 const StatusService = require("../services/StatusService");
 const UpvoteService = require("../services/UpvoteService");
 const CategoryService = require("../services/CategoryService");
+const CommentService = require("../services/CommentService");
+const UserService = require("../services/UserService");
 const { axiosPost } = require("../libs/axios");
 const { sequelize } = require("../models");
 
@@ -87,6 +89,44 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.mergeRequest = async (req, res) => {
+  try {
+    const { "merge-request-select": request_to_merge } = req.body;
+    const user_id = req.user?.id;
+    const feature_request_id = Number(req.params.requestId);
+
+    const user = await sequelize.transaction(async (transaction) => {
+      const statusFound = await StatusService.getStatusByName("Closed", transaction);
+
+      await FeatureRequestService.updateRequest(feature_request_id, { 
+        parent_feature_request_id: request_to_merge,
+        status_id: statusFound.id
+      }, transaction);
+
+      const comment = `Feature request :feature_request_id:${feature_request_id}:feature_request_id: has been merged into this post`;
+      await CommentService.createComment({
+          comment,
+          feature_request_id: request_to_merge,
+          user_id
+      }, transaction);
+      
+      return await UserService.getUser(user_id, transaction);
+    });
+
+    return res.status(200).json({
+      User: user,
+      createdAt: new Date(),
+      merged_request_id: request_to_merge
+    });
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    });
+  }
+}
+
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await CategoryService.getAllCategories();
@@ -95,7 +135,10 @@ exports.getAllCategories = async (req, res) => {
       categories: categories
     })
   } catch (err) {
-    return res.sendStatus(500);
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    });
   }
 }
 

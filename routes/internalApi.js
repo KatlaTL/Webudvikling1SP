@@ -15,7 +15,8 @@ module.exports = () => {
     router.put('/feature-requests/:requestId/upvotes', userAuth, Upvote.upvote);
     router.get('/feature-requests/:requestId/comments', FeatureRequest.getFeatureRequestComments);
     router.post('/feature-requests/:requestId/comments', validate, userAuth, Comment.createComment);
- 
+    router.put('/feature-requests/:requestId/merge', validate, adminAuth, FeatureRequest.mergeRequest);
+
     router.get('/categories', FeatureRequest.getAllCategories);
 
     router.get('/login/sso/redirect', Login.redirect);

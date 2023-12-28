@@ -1,3 +1,4 @@
+const { sequelize } = require("../models");
 const TokenService = require("../services/TokenService");
 const UserService = require("../services/UserService");
 const { serialize } = require("cookie");
@@ -42,13 +43,20 @@ exports.login = async (req, res) => {
             return res.status(401).json({ messsage: "Not authorized" });
         }
 
-        const { id, name, email } = await UserService.getOrCreateUser(decodedToken);
+        const user = await sequelize.transaction(async (transaction) => {
+            let user = await UserService.getOrCreateUser(decodedToken, transaction);
+            user.roles = await UserService.getUserRoles(user.id, transaction);
+            return user;
+        });
+
+        const { id, name, email, roles } = user;
         const maxAge = 0.5 * 60 * 60; //30 min in secounds
 
         const token = TokenService.createToken({
             user_id: id,
             user_name: name,
-            user_email: email
+            user_email: email,
+            user_roles: roles
         }, { expiresIn: maxAge });
 
         res.setHeader("Set-Cookie", serialize("authorization", token, {
@@ -71,7 +79,7 @@ exports.login = async (req, res) => {
 
         return res.redirect(url);
     } catch (err) {
-        return res.sendStatus(500);
+        return res.status(500).render("../views/layout/error");
     }
 };
 

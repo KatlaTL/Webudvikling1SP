@@ -48,3 +48,13 @@ exports.comment = () => new Schema({
         }
     }
 });
+
+exports.merge = () => new Schema({
+    "merge-request-select": {
+        type: String,
+        required:  true,
+        message: {
+            required: "You must choose a feature request before merging"
+        }
+    }
+})

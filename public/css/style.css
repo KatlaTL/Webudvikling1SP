@@ -11,6 +11,10 @@ body {
   background-color: #f1fafa;
 }
 
+.clear {
+  clear: both;
+}
+
 /*Nav*/
 
 textarea {
@@ -62,6 +66,28 @@ textarea {
 
 }
 
+#merge-request-form {
+  float: right;
+}
+
+#merge-request-cta {
+  background-color: #E08531;
+  line-height: 35px !important;
+  padding: 0 34px;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: 700 !important;
+  border-radius: 10px;
+  margin-top: 10px;
+  float: right;
+}
+
+#merge-request-cta:hover {
+  background: #fff;
+  color: #E08531;
+  border: 2px solid #E08531;
+}
+
 #btngreen:hover {
   background: #fff;
   color: #E08531;
@@ -72,6 +98,10 @@ textarea {
 #details {
   height: 200px;
   resize: none;
+}
+
+#merge-request-select {
+  width: auto !important;
 }
 
 #createForm input.required:invalid,

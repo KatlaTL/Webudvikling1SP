@@ -1,6 +1,16 @@
 const { Feature_request, Status, Comment, User, Upvote } = require("../models");
 const { Sequelize } = require("sequelize");
 
+exports.getRequestById = async (feature_request_id, transaction) => {
+    try {
+        return await Feature_request.findOne({
+            where: { id: feature_request_id }
+        }, { transaction: transaction })
+    } catch (err) {
+        throw (err);
+    }
+}
+
 exports.getAllRequests = async (transaction = null) => {
     try {
         return await Feature_request.findAll({

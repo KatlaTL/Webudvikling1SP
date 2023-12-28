@@ -7,9 +7,9 @@ const insertMessage = (data, selector = "form") => {
 
         span.appendChild(textNode);
         span.style.color = "red";
+        span.style.display = "block";
         span.classList.add("error-message");
-
-        element.parentElement.insertBefore(span, null);
+        element.after(span);
     }
 
     switch (data.status) {
