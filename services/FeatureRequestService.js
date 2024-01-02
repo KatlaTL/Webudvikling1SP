@@ -1,5 +1,5 @@
 const { Feature_request, Status, Comment, User, Upvote } = require("../models");
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 exports.getRequestById = async (feature_request_id, transaction) => {
     try {
@@ -11,7 +11,7 @@ exports.getRequestById = async (feature_request_id, transaction) => {
     }
 }
 
-exports.getAllRequests = async (transaction = null) => {
+exports.getAllRequests = async (searchString = "", transaction = null) => {
     try {
         return await Feature_request.findAll({
             attributes: {
@@ -20,6 +20,18 @@ exports.getAllRequests = async (transaction = null) => {
                     [Sequelize.col("Upvote.amount"), "upvotes"],
                     [Sequelize.col("Status.status"), "status"]
                 ]
+            },
+            where: {
+                [Op.or]: [{
+                    title: {
+                        [Op.substring]: searchString
+                    }
+                },
+                {
+                    description: {
+                        [Op.substring]: searchString
+                    }
+                }]
             },
             include: [{
                 model: Status,
