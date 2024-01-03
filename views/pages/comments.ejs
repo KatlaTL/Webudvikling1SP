@@ -48,6 +48,7 @@
     const request1 = fetch(`/showcomments/${featureRequestIdUrl}`).then(response => response.json());
     const request2 = fetch('/featureRequests').then(response => response.json());
     
+    
 
     Promise.all([request1,request2])
     .then(([request1,request2])=>{

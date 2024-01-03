@@ -4,10 +4,10 @@ const Op = Sequelize.Op;
 
 exports.searchFeature = async (req, res) => {
     try {
-    let { searchFeature } = req.query;
+        let { searchFeature } = req.query;
 
-   const search = await Feature_request.findAll({where: { title: {[Op.like]: '%' + searchFeature + '%'} }});
-   return res.status(200).json({search });
+        const search = await Feature_request.findAll({where: { title: {[Op.like]: '%' + searchFeature + '%'} }});
+        return res.status(200).json({ searchFeature: search });
    } catch(e) {
     console.log(e);
   }

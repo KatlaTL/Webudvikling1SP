@@ -24,11 +24,17 @@
 </div>
 
 <script>
-    fetchWrapper.get("/featureRequests")
-    .then((res) => {
-        const requests = res.featureRequests;
+    const request1 = fetch('/featureRequests').then(response => response.json());
+    /* const request2 = fetch(`/${searchFeature}`).then(response => response.json());
+    console.log(request2); */
+ 
+
+    Promise.all([request1/* ,request2 */])
+    .then(([request1/* ,request2 */])=>{
+        const requests = request1.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
+        console.log(requests);
 
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);
