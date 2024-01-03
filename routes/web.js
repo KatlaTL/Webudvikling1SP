@@ -6,6 +6,7 @@ const Upvote = require("../controllers/UpvoteController");
 const Login = require("../controllers/LoginController");
 const { userAuth, adminAuth } = require("../middleware/Auth");
 const CommentsController = require('../controllers/CommentsController');
+const SearchFeatureRequest = require('../controllers/SearchFeatureRequest');
 
 const router = express.Router();
 
@@ -28,6 +29,8 @@ module.exports = () => {
     router.get('/showcomments/:requestId', CommentsController.comments);
 
     router.post('/comments/postcomments/posted', userAuth, CommentsController.postComments);
+
+    router.get('/search', SearchFeatureRequest.searchFeature);
     
 
     return router;
