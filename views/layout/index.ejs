@@ -26,7 +26,7 @@
 
     <% if (locals.loginInfo) { %>
         <script>
-            const user = <% - loginInfo %>;
+            const user = <%- loginInfo %>;
             if (user && Object.keys(user).length > 0) {
                 localStorage.setItem("user", JSON.stringify(user));
             }           
