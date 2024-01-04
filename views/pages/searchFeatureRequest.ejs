@@ -27,7 +27,7 @@
     let urlId = window.location.href;
     let urlIdSplitted = urlId.split("/");
     const searchFeature = urlIdSplitted[4];
-    /* console.log(searchFeature); */
+    console.log(searchFeature);
 
     const request1 = fetch('/featureRequests').then(response => response.json());
     const request2 = fetch(`/search/${searchFeature}`).then(response => response.json());

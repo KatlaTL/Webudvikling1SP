@@ -32,7 +32,7 @@
 
 </html>
 <script>
-     let searchFormData = document.querySelector("#searchForm");
+    let searchFormData = document.querySelector("#searchForm");
     searchFormData.addEventListener("submit",  (e) => {
         e.preventDefault()
         
@@ -44,20 +44,15 @@
 
         } else
         { 
-            let formData = { searchFeature };
 
-            console.log(formData);
+            let baseUrl = window.location.href + 'searchFeatureRequests/searchTerms/Terms';
+            console.log(baseUrl);
 
-            fetch("/searchFeatureRequests/searchTerms/Terms", {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                    /* "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).authorization: ""}`, */
-                    'Content-Type': 'application/json'
-                }   
-            });
+            const url = new URL(baseUrl);
+            url.searchParams.set('searchFeature', searchFeature);
+            console.log(url.toString());
 
-            /* window.location.assign(`/searchFeatureRequests/${searchFeature}` ); */
+            window.location.assign(`${url.toString()}` );
         }
     });
 </script>

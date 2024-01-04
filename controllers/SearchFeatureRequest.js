@@ -4,7 +4,7 @@ const Op = Sequelize.Op;
 
 exports.searchFeature = async (req, res) => {
     try {
-        let searchFeature = req.body;
+        let searchFeature = req.query.searchFeature;
 
         console.log(searchFeature);
 
