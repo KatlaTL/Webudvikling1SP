@@ -16,11 +16,14 @@
 <script>
     const searchString = document.querySelector("#searchInput");
 
-    searchString.addEventListener("input", () => {
+    //debounce functions to limited amount of DB calls
+    const fillRequestsDebounce = debounce(() => {
         fetchWrapper.get(`/internal/feature-requests?searchString=${searchString.value}`)
-        .then(res => {
-            fillRequests(res.featureRequests); //TO-DO Implement Debounce to improve performance
-        })
-        .catch(err => console.error(err))
-    })
+            .then(res => {
+                fillRequests(res.featureRequests);
+            })
+            .catch(err => console.error(err))
+    });   
+
+    searchString.addEventListener("input", fillRequestsDebounce)
 </script>

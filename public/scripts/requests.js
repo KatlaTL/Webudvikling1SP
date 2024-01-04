@@ -1,4 +1,8 @@
 const fillRequests = (requests) => {
+    if (!requests) {
+        return;
+    }
+    
     const requestsDiv = document.querySelector(".scroll-box-feature");
     let requestHtml = "";
 
