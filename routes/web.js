@@ -15,6 +15,7 @@ module.exports = () => {
     router.get('/', Default.index);
     router.get('/createFeatureRequest', Default.index);
     router.get('/comments/:requestId', Default.index);
+    router.get('/searchFeatureRequests/:searchFeature', Default.index);
     
     router.get('/featureRequests', FeatureRequest.getAll);
     router.post('/featureRequests/create', userAuth, FeatureRequest.create);
@@ -30,7 +31,7 @@ module.exports = () => {
 
     router.post('/comments/postcomments/posted', userAuth, CommentsController.postComments);
 
-    router.get('/search/:searchTerm', SearchFeatureRequest.searchFeature);
+    router.get('/searchFeatureRequests/searchTerms/Terms', SearchFeatureRequest.searchFeature);
     
 
     return router;

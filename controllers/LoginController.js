@@ -5,7 +5,7 @@ const { serialize } = require("cookie");
 exports.redirect = (req, res) => {
     const { page, ...rest } = req.query;
 
-    const host = process.env.SSO_redirect_back || "http://localhost:3000";
+    const host =  "http://localhost:3000";
     const path = "/login/sso/token";
 
     const returnURL = new URL(host + path);

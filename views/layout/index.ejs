@@ -31,3 +31,33 @@
     <% } %>
 
 </html>
+<script>
+     let searchFormData = document.querySelector("#searchForm");
+    searchFormData.addEventListener("submit",  (e) => {
+        e.preventDefault()
+        
+        const searchFeature = searchFeatureInput.value;
+        console.log(searchFeature);
+
+        if (searchFeature === "") {
+            alert("Ensure you input a value in the field!");
+
+        } else
+        { 
+            let formData = { searchFeature };
+
+            console.log(formData);
+
+            fetch("/searchFeatureRequests/searchTerms/Terms", {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    /* "Authorization": `Bearer ${localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).authorization: ""}`, */
+                    'Content-Type': 'application/json'
+                }   
+            });
+
+            /* window.location.assign(`/searchFeatureRequests/${searchFeature}` ); */
+        }
+    });
+</script>

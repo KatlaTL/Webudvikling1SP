@@ -25,18 +25,23 @@
 
 <script>
     let urlId = window.location.href;
-    let urlIdSplitted = urlId.split("=");
-    const searchFeature = urlIdSplitted[1];
+    let urlIdSplitted = urlId.split("/");
+    const searchFeature = urlIdSplitted[4];
+    /* console.log(searchFeature); */
 
     const request1 = fetch('/featureRequests').then(response => response.json());
-    const request2 = fetch(`/search/${searchFeature}`).then(response => response.json()) || fetch('/featureRequests').then(response => response.json());
+    const request2 = fetch(`/search/${searchFeature}`).then(response => response.json());
+    /* console.log(request2); */
  
 
     Promise.all([request1,request2])
     .then(([request1,request2])=>{
         const requests = request1.featureRequests;
+        const searchRequests = request2.searchFeature;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
+
+        console.log(searchRequests);
 
         const searchTerm = request2.searchFeature;
         searchTerm.push(searchFeature);
@@ -45,7 +50,7 @@
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);
             const date = new Date(parseDate);
-            if(searchTerm.length === '0'){
+            if(searchTerm.length === ''){
             requestHtml += `
                 <div class="feature-request" data-requestid=${requests[i].id}>
                     <div>
