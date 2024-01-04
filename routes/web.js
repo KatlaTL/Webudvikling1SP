@@ -30,7 +30,7 @@ module.exports = () => {
 
     router.post('/comments/postcomments/posted', userAuth, CommentsController.postComments);
 
-    router.get('/search', SearchFeatureRequest.searchFeature);
+    router.get('/search/:searchTerm', SearchFeatureRequest.searchFeature);
     
 
     return router;
