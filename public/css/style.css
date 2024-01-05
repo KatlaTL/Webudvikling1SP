@@ -359,6 +359,13 @@ h2 {
   width: 120%;
 }
 
+#resultsList {
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  width: 200px;
+}
+
 /*Filterbar*/
 .dropdownmenu ul, .dropdownmenu li {
 	margin: 0;
