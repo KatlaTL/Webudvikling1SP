@@ -36,14 +36,14 @@
     const filterURL = new URL("/", document.baseURI)
     const queryString = window.location.search;
     const searchParams = new URLSearchParams(queryString);
-    const filterOptions = ["status", "category", "sortBy"];
+    const filterOptions = ["status", "category", "sortBy", "myOwn"];
 
     searchParams.forEach((value, key) => {
         filterURL.searchParams.append(key, value);
         if (filterOptions.includes(key)) {
             const div = document.createElement("div");
             const aTag = document.createElement("a");
-            const textNode = document.createTextNode(value);
+            const textNode = document.createTextNode(key === "myOwn" ? key : value);
 
             aTag.appendChild(textNode);
             aTag.setAttribute("href", "#");
@@ -59,9 +59,7 @@
     });
 
     fetchWrapper.get(`/internal/feature-requests${queryString}`)
-        .then((res) => {
-            fillRequests(res.featureRequests);
-        })
+        .then((res) => fillRequests(res.featureRequests))
         .then(() => {
             const featureRequest = document.querySelectorAll(".request-click");
             featureRequest.forEach((x) => {
@@ -94,8 +92,8 @@
                                 "Authorization": `Bearer ${JSON.parse(user).authorization}`
                             }
                         })
-                            .then(data => cta.querySelector("p").innerHTML = data.amount)
-                            .catch(err => window.location.href = redirectUrl());
+                        .then(data => cta.querySelector("p").innerHTML = data.amount)
+                        .catch(err => window.location.href = redirectUrl());
                     }
                 })
             });

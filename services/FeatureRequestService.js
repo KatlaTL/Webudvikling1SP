@@ -65,6 +65,9 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
                     const status = await StatusService.getStatusByName(value, transaction);
                     queryOptions.where.status_id = status.id;
                     break;
+                case "myOwn":
+                    queryOptions.where.user_id = value
+                    break;
             }
         }
 

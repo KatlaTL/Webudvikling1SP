@@ -3,6 +3,15 @@
 <!-- Make the title dynamic -->
 <%- include("../partials/header.ejs", {title: "Feature Requests" }) %>
 
+<% if (locals.loginInfo) { %>
+    <script>
+        const user = <%- loginInfo %>;
+        if (user && Object.keys(user).length > 0) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }           
+    </script>
+<% } %>
+
     <body>
         <%- include("../partials/navbar.ejs") %>
 
@@ -28,17 +37,7 @@
             <%- include("../partials/footer.ejs") %>
     </body>
 
-    <% if (locals.loginInfo) { %>
-        <script>
-            const user = <%- loginInfo %>;
-            if (user && Object.keys(user).length > 0) {
-                localStorage.setItem("user", JSON.stringify(user));
-            }           
-        </script>
-        <% } %>
-
-        <script>
-            disabledCTAs();
-        </script>
-
+    <script>
+        disabledCTAs();
+    </script>
 </html>

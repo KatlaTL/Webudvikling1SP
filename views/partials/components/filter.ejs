@@ -13,7 +13,6 @@
   <li><a href="#" onclick="window.location.href = addSearchParams('status', '', true); return false;">Showing &darr;</a>
     <ul class="submenu" id="sortByStatus">
       <!-- Statuses will be inserted here -->
-      <!-- <li><a href="#">My Own</a></li> -->
     </ul>
   </li>
 </nav>
@@ -43,7 +42,7 @@
     return filterURL.pathname + filterURL.search;
   }
 
-  const generateListItems = (list, paramName, value) => {
+  const generateListItems = (list, paramName, value, id = value) => {
     const listItem = document.createElement("li");
     const linkItem = document.createElement("a");
     const textNode = document.createTextNode(value);
@@ -53,7 +52,7 @@
     linkItem.setAttribute("class", "submenu-a");
     linkItem.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location.href = addSearchParams(paramName, value);
+      window.location.href = addSearchParams(paramName, id);
     })
     listItem.appendChild(linkItem);
     list.appendChild(listItem);
@@ -72,9 +71,20 @@
   fetchWrapper.get("/internal/statuses")
     .then(data => {
       const statusList = document.querySelector("#sortByStatus");
+      const isAdmin = <%- locals.admin %>;
       for (let i = 0; i < data.statuses.length; i++) {
         const status = data.statuses[i].status;
+        if (!isAdmin && status === "Closed") {
+          continue;
+        }
         generateListItems(statusList, "status", status);
+      }
+      return statusList;
+    })
+    .then(statusList => {
+      const userObj = localStorage.getItem("user");
+      if (userObj) {
+        generateListItems(statusList, "myOwn", "My Own", JSON.parse(userObj).user_id);
       }
     })
     .catch(err => console.error(err));

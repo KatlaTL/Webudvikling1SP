@@ -26,7 +26,8 @@ textarea {
   margin-bottom: 25px;
 }
 
-#signin, #signin-user {
+#signin,
+#signin-user {
   line-height: 43px !important;
   margin-left: 2px;
   padding: 0 34px;
@@ -110,7 +111,8 @@ textarea {
   border: 1px solid red;
 }
 
-#request-textarea, #comment-textarea {
+#request-textarea,
+#comment-textarea {
   position: relative;
 }
 
@@ -127,6 +129,7 @@ textarea {
   background-color: #3A8771;
   padding-top: 0.8rem;
 }
+
 .card-header svg {
   margin-bottom: 5px;
 }
@@ -221,6 +224,7 @@ footer {
   color: #01a1a1;
   border: 2px solid #00956c;
 }
+
 .login-cta {
   float: right;
   margin-top: 20px;
@@ -228,6 +232,7 @@ footer {
   color: #000;
   font-weight: 300;
 }
+
 #submit {
   background: #E08531;
   color: #ffff;
@@ -493,7 +498,7 @@ li:hover ul.submenu {
 }
 
 .submenu-a {
-  background-color: #00956c!important;
+  background-color: #00956c !important;
   font-size: small;
 }
 
@@ -506,7 +511,7 @@ li:hover ul.submenu {
 }
 
 .clear-selected-filter {
-  background-color:#E08531;
+  background-color: #E08531;
   color: white;
   text-align: center;
   font-size: 13px;
@@ -516,6 +521,7 @@ li:hover ul.submenu {
   border-radius: 10px;
   float: left;
 }
+
 .clear-selected-filter a::before {
   content: "\00d7";
   display: inline-block;
@@ -527,6 +533,7 @@ li:hover ul.submenu {
   text-indent: -5px;
   vertical-align: middle;
 }
+
 /*Feature request comment*/
 
 .comment_header h4 {
