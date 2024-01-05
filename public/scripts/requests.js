@@ -11,15 +11,15 @@ const fillRequests = (requests) => {
         const date = new Date(parseDate).toLocaleDateString('en-us', { year: "numeric", month: "long", day: "numeric" });
 
         requestHtml += `
-            <div class="feature-request request-click" data-requestid=${requests[i].id}>
-                <div>
+            <div class="feature-request" data-requestid=${requests[i].id}>
+                <div class="request-click">
                     <h5 class="commenttitle">${requests[i].title}</h5>
                 </div>
-                <div class="status">
+                <div class="status request-click">
                     <h7>${requests[i].status}</h7>
                 </div>
                 <div class="row">
-                    <div class="col-md 10">
+                    <div class="col-md 10 request-click">
                         <p class="commenttekst">${requests[i].description}</p>
                         <div class="row">
                             <div class="col-md-3">
