@@ -24,12 +24,54 @@
 </div>
 
 <script>
+    let baseUrl = window.location.href + 'searchFeatureRequests/searchTerms/Terms';
+    const url = new URL(baseUrl);
+
+    let searchFormData = document.querySelector("#searchForm");
+    searchFormData.addEventListener("submit",  (e) => {
+        e.preventDefault()
+        
+        const searchFeature = searchFeatureInput.value;
+        console.log(searchFeature)
+
+        if (searchFeature === "") {
+            alert("Ensure you input a value in the field!");
+
+        } else
+        { 
+
+           
+            url.searchParams.set('searchFeature', searchFeature);
+            
+
+            /* window.location.assign(`${url.toString()}` ); */
+           /*  window.location.assign(`/searchFeatureRequests/${searchFeature}` ); */
+           fetchWrapper.get(`${url.toString()}`)
+           .then( res => {
+                const searchData = res.searchFeature;
+                console.log(searchData);
+
+
+            
+                for (let i = 0; i < searchData.length; i++) {
+                    console.log(searchData[i]);
+                }
+                
+            });
+        }
+    });
+
+   /*  let urlId = window.location.href;
+    let urlIdSplitted = urlId.split("/");
+    const searchFeature = urlIdSplitted[4];
+    console.log(searchFeature); */
+
     fetchWrapper.get("/featureRequests")
-    .then((res)=>{
+    .then((res) => {
         const requests = res.featureRequests;
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
-        console.log(res);
+
 
         for (let i = 0; i < requests.length; i++) {
             const parseDate = Date.parse(requests[i].createdAt);

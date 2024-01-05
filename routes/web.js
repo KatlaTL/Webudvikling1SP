@@ -28,10 +28,12 @@ module.exports = () => {
     router.put('/logout', Login.logout);
 
     router.get('/showcomments/:requestId', CommentsController.comments);
-
     router.post('/comments/postcomments/posted', userAuth, CommentsController.postComments);
 
+    /* router.get('/showSearchFeatureRequests/:searchFeature', CommentsController.comments); */
     router.get('/searchFeatureRequests/searchTerms/Terms', SearchFeatureRequest.searchFeature);
+
+
     
 
     return router;

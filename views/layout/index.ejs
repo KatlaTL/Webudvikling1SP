@@ -31,28 +31,3 @@
     <% } %>
 
 </html>
-<script>
-    let searchFormData = document.querySelector("#searchForm");
-    searchFormData.addEventListener("submit",  (e) => {
-        e.preventDefault()
-        
-        const searchFeature = searchFeatureInput.value;
-        console.log(searchFeature);
-
-        if (searchFeature === "") {
-            alert("Ensure you input a value in the field!");
-
-        } else
-        { 
-
-            let baseUrl = window.location.href + 'searchFeatureRequests/searchTerms/Terms';
-            console.log(baseUrl);
-
-            const url = new URL(baseUrl);
-            url.searchParams.set('searchFeature', searchFeature);
-            console.log(url.toString());
-
-            window.location.assign(`${url.toString()}` );
-        }
-    });
-</script>
