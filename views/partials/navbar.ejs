@@ -10,7 +10,8 @@
                 <a class="nav-link" style="display: none;" id="logout" href="#">Logout</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="signin" href="#">Sign Up</a>
+                <a class="nav-link" style="display: block;" id="signin" href="#">Sign Up</a>
+                <a class="nav-link" style="display: none;" id="signin-user"></a>
             </li>
         </ul>
     </div>
@@ -32,9 +33,13 @@
         const loggedInUser = localStorage.getItem("user");
         const loginBtn = document.querySelector("#login");
         const logoutBtn = document.querySelector("#logout");
-
-        if (loggedInUser) {         
-            toggleDisplay([loginBtn, logoutBtn]);
+        const signinBtn = document.querySelector("#signin");
+        const signinUser = document.querySelector("#signin-user");
+        
+        if (loggedInUser) {
+            console.log(JSON.parse(loggedInUser).user_name);         
+            signinUser.innerHTML = JSON.parse(loggedInUser).user_name;
+            toggleDisplay([loginBtn, logoutBtn, signinBtn, signinUser]);
         }
 
         logoutBtn.addEventListener("click", (e) => {
@@ -42,7 +47,7 @@
             fetchWrapper.put("/internal/logout")
                 .then(() => {
                         localStorage.removeItem("user");
-                        toggleDisplay([loginBtn, logoutBtn]);
+                        toggleDisplay([loginBtn, logoutBtn, signinBtn, signinUser]);
                         window.location.href = "/";
                     })
                 .catch(err => console.error(err));

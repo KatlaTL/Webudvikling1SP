@@ -26,7 +26,7 @@ textarea {
   margin-bottom: 25px;
 }
 
-#signin {
+#signin, #signin-user {
   line-height: 43px !important;
   margin-left: 2px;
   padding: 0 34px;
