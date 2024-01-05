@@ -234,7 +234,7 @@
                 let commentsTag = `<p class="comment">`;
                     
                 if (merged) {
-                    commentsTag = `This post has been merged into: <a href="/featureRequests/${comments[i].merged_request_id}/comments#" style="color:black">${comments[i].merged_request_id}</a>`
+                    commentsTag = `This post has been merged into: <a href="/feature-requests/${comments[i].merged_request_id}/comments#" style="color:black">${comments[i].merged_request_id}</a>`
                 } else {    
                     const newLineArr = comments[i].comment.split("\n");
                     for (k in newLineArr) {
@@ -244,7 +244,7 @@
                         }
                         const mergedPost = newLineArr[k].split(":feature_request_id:");
                         if (mergedPost[1]) {
-                            commentsTag += `${mergedPost[0]} <a href="/featureRequests/${mergedPost[1]}/comments#" style="color:black">${mergedPost[1]}</a> ${mergedPost[2]} `
+                            commentsTag += `${mergedPost[0]} <a href="/feature-requests/${mergedPost[1]}/comments#" style="color:black">${mergedPost[1]}</a> ${mergedPost[2]} `
                         } else {
                             commentsTag += `${newLineArr[k]}<br/>`;
                         }

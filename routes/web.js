@@ -6,7 +6,7 @@ const router = express.Router();
 
 module.exports = () => {
     router.get('/', Default.index);
-    router.get('/featureRequests/create', Default.index);
-    router.get('/featureRequests/:requestId/comments', Default.index);
+    router.get('/feature-requests/create', Default.index);
+    router.get('/feature-requests/:requestId/comments', Default.index);
     return router;
 };
