@@ -12,6 +12,11 @@
         </div>
     </div>
 </div>
+<% if (pageUrl && pageUrl != "featureRequests") { %>
+    <script>
+        document.querySelector("#searchInput").disabled = true;
+    </script>
+<% } %>
 
 <script>
     const searchString = document.querySelector("#searchInput");

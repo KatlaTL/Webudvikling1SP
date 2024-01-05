@@ -2,9 +2,16 @@
     <div class="row">
         <div class="col-md-8 mb-3">
             <div class="box box-left border card text-white mb-3">
-                <div class="card-header"> <h4><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
-                    <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
-                  </svg> Feature Requests</h4></div>
+                <div class="card-header">
+                    <h4><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
+                            class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5" />
+                        </svg> Feature Requests</h4>
+                    <div id="selected-filter">
+                        <!-- Selected filters goes here -->
+                    </div>
+                </div>
                 <div class="card-body bg-white">
                     <div class="FeaureRequest">
                         <div class="row">
@@ -24,46 +31,73 @@
 </div>
 
 <script>
+    const selectedFilter = document.querySelector("#selected-filter");
+
+    const filterURL = new URL("/", document.baseURI)
     const queryString = window.location.search;
-    fetchWrapper.get(`/internal/feature-requests${queryString}`)
-    .then((res) => {
-        fillRequests(res.featureRequests);
-    })
-    .then(() => {
-        const featureRequest = document.querySelectorAll(".request-click");
-        featureRequest.forEach((x) => {
-            x.addEventListener('click', (e) => {
+    const searchParams = new URLSearchParams(queryString);
+    const filterOptions = ["status", "category", "sortBy"];
+
+    searchParams.forEach((value, key) => {
+        filterURL.searchParams.append(key, value);
+        if (filterOptions.includes(key)) {
+            const div = document.createElement("div");
+            const aTag = document.createElement("a");
+            const textNode = document.createTextNode(value);
+
+            aTag.appendChild(textNode);
+            aTag.setAttribute("href", "#");
+            aTag.addEventListener("click", (e) => {
                 e.preventDefault();
-                const request = x.closest(".feature-request");
-                const requestId = request.dataset.requestid;
-
-                if (requestId) {
-                    window.location.assign(`/feature-requests/${requestId}/comments` );
-            }})
-        });
-
-        const upvoteCTA = document.querySelectorAll(".upvote-cta");
-        upvoteCTA.forEach((cta) => {
-            cta.addEventListener("click", (e) => {
-                e.preventDefault();
-                const request = cta.closest(".feature-request");
-                const requestId = request.dataset.requestid;
-                const user = localStorage.getItem("user");
-                
-                if (!user) {
-                    window.location.href = redirectUrl();
-                }
-
-                if (requestId) {
-                    fetchWrapper.put(`/internal/feature-requests/${requestId}/upvotes`, {
-                        headers: {
-                            "Authorization": `Bearer ${JSON.parse(user).authorization}`
-                        }
-                    })
-                        .then(data => cta.querySelector("p").innerHTML = data.amount)
-                        .catch(err => window.location.href = redirectUrl());
-                }
+                filterURL.searchParams.delete(key);
+                window.location.href = filterURL;
             })
-        });
-    })
+            div.appendChild(aTag);
+            div.setAttribute("class", "clear-selected-filter");
+            selectedFilter.appendChild(div);
+        }
+    });
+
+    fetchWrapper.get(`/internal/feature-requests${queryString}`)
+        .then((res) => {
+            fillRequests(res.featureRequests);
+        })
+        .then(() => {
+            const featureRequest = document.querySelectorAll(".request-click");
+            featureRequest.forEach((x) => {
+                x.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const request = x.closest(".feature-request");
+                    const requestId = request.dataset.requestid;
+
+                    if (requestId) {
+                        window.location.assign(`/feature-requests/${requestId}/comments`);
+                    }
+                })
+            });
+
+            const upvoteCTA = document.querySelectorAll(".upvote-cta");
+            upvoteCTA.forEach((cta) => {
+                cta.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const request = cta.closest(".feature-request");
+                    const requestId = request.dataset.requestid;
+                    const user = localStorage.getItem("user");
+
+                    if (!user) {
+                        window.location.href = redirectUrl();
+                    }
+
+                    if (requestId) {
+                        fetchWrapper.put(`/internal/feature-requests/${requestId}/upvotes`, {
+                            headers: {
+                                "Authorization": `Bearer ${JSON.parse(user).authorization}`
+                            }
+                        })
+                            .then(data => cta.querySelector("p").innerHTML = data.amount)
+                            .catch(err => window.location.href = redirectUrl());
+                    }
+                })
+            });
+        })
 </script>

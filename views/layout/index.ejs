@@ -8,7 +8,11 @@
 
             <div class="container">
                 <div class="row">
-                    <%- include("../partials/components/filter.ejs") %>
+                    <div class="col-md-8">
+                        <% if (pageUrl && pageUrl === "featureRequests") { %>
+                            <%- include("../partials/components/filter.ejs") %>
+                        <% } %>
+                    </div>
                     <%- include("../partials/components/createRequestCTA.ejs") %>
                     <%- include("../partials/components/search.ejs") %>
                 </div>

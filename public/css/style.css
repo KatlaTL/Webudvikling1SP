@@ -125,6 +125,10 @@ textarea {
 
 .card-header {
   background-color: #3A8771;
+  padding-top: 0.8rem;
+}
+.card-header svg {
+  margin-bottom: 5px;
 }
 
 .card-body {
@@ -484,15 +488,45 @@ li:hover ul.submenu {
   width: 100%;
 }
 
-.submenu a:hover {
-  background: #00956c;
+.submenu-a:hover {
+  background: #01a1a1 !important;
 }
 
-.submenu a {
-  background-color: #01a1a1;
+.submenu-a {
+  background-color: #00956c!important;
   font-size: small;
 }
 
+.card-header h4 {
+  float: left;
+}
+
+#selected-filter {
+  float: right;
+}
+
+.clear-selected-filter {
+  background-color:#E08531;
+  color: white;
+  text-align: center;
+  font-size: 13px;
+  padding: 2px 4px;
+  margin: 0px 5px 5px 5px;
+  border: 2px solid #E08531;
+  border-radius: 10px;
+  float: left;
+}
+.clear-selected-filter a::before {
+  content: "\00d7";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  font-size: 22px;
+  line-height: 12px;
+  text-align: center;
+  text-indent: -5px;
+  vertical-align: middle;
+}
 /*Feature request comment*/
 
 .comment_header h4 {

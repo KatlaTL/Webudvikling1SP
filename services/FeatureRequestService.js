@@ -1,4 +1,6 @@
-const { Feature_request, Status, Comment, User, Upvote } = require("../models");
+const { Feature_request, Status, Comment, User, Upvote, sequelize } = require("../models");
+const StatusService = require("./StatusService");
+const CategoryService = require("./CategoryService");
 const { Sequelize, Op } = require("sequelize");
 
 exports.getRequestById = async (feature_request_id, transaction) => {
@@ -12,6 +14,11 @@ exports.getRequestById = async (feature_request_id, transaction) => {
 }
 
 exports.getAllRequests = async (options = {}, transaction = null) => {
+    let unManaged = false;
+    if (!transaction) {
+        transaction = await sequelize.transaction();
+        unManaged = true;
+    }
     try {
         let queryOptions = {
             where: {},
@@ -24,15 +31,15 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
                         continue;
                     }
                     queryOptions.where[Op.or] = [{
-                            title: {
-                                [Op.substring]: value
-                            }
-                        },
-                        {
-                            description: {
-                                [Op.substring]: value
-                            }
-                        }]
+                        title: {
+                            [Op.substring]: value
+                        }
+                    },
+                    {
+                        description: {
+                            [Op.substring]: value
+                        }
+                    }]
                     break;
                 case "sortBy":
                     switch (value) {
@@ -51,15 +58,17 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
                     }
                     break;
                 case "category":
-                    queryOptions.where.category_id = value;
+                    const category = await CategoryService.getCategoryByName(value, transaction);
+                    queryOptions.where.category_id = category.id;
                     break;
                 case "status":
-                    queryOptions.where.status_id = value;
+                    const status = await StatusService.getStatusByName(value, transaction);
+                    queryOptions.where.status_id = status.id;
                     break;
             }
         }
 
-        return await Feature_request.findAll({
+        const requests = await Feature_request.findAll({
             attributes: {
                 include: [
                     [Sequelize.fn("COUNT", Sequelize.col("Comments.id")), "commentCount"],
@@ -80,8 +89,12 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
             }],
             group: ["Feature_request.id"]
         }, { transaction: transaction });
+
+        if (unManaged) await transaction.commit();
+
+        return requests;
     } catch (err) {
-        console.log(err)
+        if (unManaged) await transaction.rollback();
         throw (err);
     }
 };

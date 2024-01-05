@@ -16,3 +16,13 @@ exports.getAllCategoryNames = async (transaction = null) => {
         throw (err);
     }
 };
+
+exports.getCategoryByName = async (category_name, transaction = null) => {
+    try {
+        return await Category.findOne({
+            where: { category: category_name }
+        }, { transaction: transaction });
+    } catch (err) {
+        throw (err);
+    }
+}
