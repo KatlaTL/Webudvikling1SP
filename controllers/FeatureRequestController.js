@@ -10,8 +10,7 @@ const { sequelize } = require("../models");
 
 exports.getAll = async (req, res) => {
   try {
-    const { searchString } = req.query;
-    const requests = await FeatureRequestService.getAllRequests(searchString);
+    const requests = await FeatureRequestService.getAllRequests({ ...req.query });
     return res.status(200).json({ featureRequests: requests });
   } catch (e) {
     return res.sendStatus(500);
@@ -134,6 +133,21 @@ exports.getAllCategories = async (req, res) => {
     return res.status(200).json({
       status: 200,
       categories: categories
+    })
+  } catch (err) {
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    });
+  }
+}
+
+exports.getAllStatuses = async (req, res) => {
+  try {
+    const statuses = await StatusService.getAllStatuses();
+    return res.status(200).json({
+      status: 200,
+      statuses: statuses
     })
   } catch (err) {
     return res.status(500).json({

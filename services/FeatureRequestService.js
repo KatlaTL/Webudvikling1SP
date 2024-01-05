@@ -11,8 +11,54 @@ exports.getRequestById = async (feature_request_id, transaction) => {
     }
 }
 
-exports.getAllRequests = async (searchString = "", transaction = null) => {
+exports.getAllRequests = async (options = {}, transaction = null) => {
     try {
+        let queryOptions = {
+            where: {},
+            order: [["title", "DESC"]]
+        }
+        for (const [key, value] of Object.entries(options)) {
+            switch (key) {
+                case "search":
+                    if (!value) {
+                        continue;
+                    }
+                    queryOptions.where[Op.or] = [{
+                            title: {
+                                [Op.substring]: value
+                            }
+                        },
+                        {
+                            description: {
+                                [Op.substring]: value
+                            }
+                        }]
+                    break;
+                case "sortBy":
+                    switch (value) {
+                        case "Trending":
+                            queryOptions.order = [["commentCount", "DESC"]]
+                            break;
+                        case "Top":
+                            queryOptions.order = [["upvotes", "DESC"]]
+                            break;
+                        case "New":
+                            queryOptions.order = [["createdAt", "DESC"]]
+                            break;
+                        default:
+                            queryOptions.order = [["title", "DESC"]]
+                            break;
+                    }
+                    break;
+                case "category":
+                    queryOptions.where.category_id = value;
+                    break;
+                case "status":
+                    queryOptions.where.status_id = value;
+                    break;
+            }
+        }
+
         return await Feature_request.findAll({
             attributes: {
                 include: [
@@ -21,18 +67,7 @@ exports.getAllRequests = async (searchString = "", transaction = null) => {
                     [Sequelize.col("Status.status"), "status"]
                 ]
             },
-            where: {
-                [Op.or]: [{
-                    title: {
-                        [Op.substring]: searchString
-                    }
-                },
-                {
-                    description: {
-                        [Op.substring]: searchString
-                    }
-                }]
-            },
+            ...queryOptions,
             include: [{
                 model: Status,
                 attributes: []
@@ -46,6 +81,7 @@ exports.getAllRequests = async (searchString = "", transaction = null) => {
             group: ["Feature_request.id"]
         }, { transaction: transaction });
     } catch (err) {
+        console.log(err)
         throw (err);
     }
 };

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <img src="https://webdock.io/static/common/images/webdock-logo-hvid.svg" height="34" class="d-inline-block align-top" alt="Logo">
         </a>
 
@@ -36,8 +36,7 @@
         const signinBtn = document.querySelector("#signin");
         const signinUser = document.querySelector("#signin-user");
         
-        if (loggedInUser) {
-            console.log(JSON.parse(loggedInUser).user_name);         
+        if (loggedInUser) {    
             signinUser.innerHTML = JSON.parse(loggedInUser).user_name;
             toggleDisplay([loginBtn, logoutBtn, signinBtn, signinUser]);
         }

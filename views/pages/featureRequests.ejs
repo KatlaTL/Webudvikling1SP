@@ -24,7 +24,8 @@
 </div>
 
 <script>
-    fetchWrapper.get("/internal/feature-requests")
+    const queryString = window.location.search;
+    fetchWrapper.get(`/internal/feature-requests${queryString}`)
     .then((res) => {
         fillRequests(res.featureRequests);
     })

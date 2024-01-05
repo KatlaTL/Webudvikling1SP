@@ -15,15 +15,39 @@
 
 <script>
     const searchString = document.querySelector("#searchInput");
+    const sq = window.location.search;
+    const sp = new URLSearchParams(sq);
+    if (sp.has("search")) {
+        searchString.value = sp.get("search");
+    }
 
     //debounce functions to limited amount of DB calls
     const fillRequestsDebounce = debounce(() => {
-        fetchWrapper.get(`/internal/feature-requests?searchString=${searchString.value}`)
+        //get existing filter params
+        const searchURL = new URL("/internal/feature-requests", document.baseURI)
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        urlParams.forEach((value, key) => {
+            if (key === "search") {
+                return;
+            }
+            searchURL.searchParams.append(key, value);
+        })
+        searchURL.searchParams.append("search", searchString.value);
+
+        fetchWrapper.get(searchURL)
             .then(res => {
-                fillRequests(res.featureRequests);
+                fillRequests(res.featureRequests)
+                const url = new URL(window.location);
+                if (searchString.value != "") {
+                    url.searchParams.set('search', searchString.value);
+                } else {
+                    url.searchParams.delete('search');
+                }
+                window.history.pushState({}, '', url);
             })
             .catch(err => console.error(err))
-    });   
+    });
 
     searchString.addEventListener("input", fillRequestsDebounce)
 </script>

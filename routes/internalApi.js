@@ -18,6 +18,7 @@ module.exports = () => {
     router.put('/feature-requests/:requestId/merge', validate, adminAuth, FeatureRequest.mergeRequest);
 
     router.get('/categories', FeatureRequest.getAllCategories);
+    router.get('/statuses', FeatureRequest.getAllStatuses);
 
     router.get('/login/sso/redirect', Login.redirect);
     router.get('/login/sso/token', Login.login); //Should ideally be a POST route, as we create a user in our DB, but Webdock redirect only works with a GET route
