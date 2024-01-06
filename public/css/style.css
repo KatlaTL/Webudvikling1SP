@@ -340,7 +340,7 @@ h2 {
 .search-box {
   position: relative;
   display: inline-block;
-  right: 20%;
+  right: 25%;
 }
 
 .search-icon {
@@ -359,11 +359,34 @@ h2 {
   width: 120%;
 }
 
-#resultsList {
-  position: absolute;
-  z-index: 100;
-  background-color: white;
-  width: 200px;
+#searchForm {
+  display: flex;
+  align-items: center;
+}
+
+#searchFeatureInput {
+  padding: 8px 30px 8px 30px;
+  font-size: 19px;
+  border-radius: 10px;
+  border-color: #707070;
+  width: 149px;
+}
+
+.search-container {
+  margin-left: 9px;
+  width: 80%;
+}
+
+#submitSearch {
+  margin-left: 5px;
+      background-color: #E08531;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    border: #E08531;
+    padding: 5%;
+    width: 87%;
+    border: 2px solid #E08531;
 }
 
 /*Filterbar*/
