@@ -1,3 +1,5 @@
+//Fetch wrapper to simplify the code need to do a fetch
+
 const get = (url, options = {}) => {
     const requestOptions = {
         method: 'GET',

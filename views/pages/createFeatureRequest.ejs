@@ -50,6 +50,7 @@
 </div>
 
 <script>
+    //Fetch all categories and populate the category select
     fetchWrapper.get("/internal/categories")
         .then(data => {
             const selectList = document.querySelector(".form-control");
@@ -66,18 +67,20 @@
         })
         .catch(err => console.error(err));    
     
-    
+    //Add character count to details field
     const details = document.querySelector("#details");
     const detailsChars = document.querySelector(".typed-characters");
     countCharacters(details, (chars) => {
         detailsChars.textContent = chars;
     })
 
+    //Add required class to elements with the required attribute to enable styling
     const submitBtn = document.querySelector("#btngreen");
     submitBtn.addEventListener("click", (e) => {
         addRequired("#createForm");
     })
 
+    //Do a post request to create a new feature request
     const form = document.querySelector("#createForm");
     form.addEventListener("submit", (e) => {
         e.preventDefault();

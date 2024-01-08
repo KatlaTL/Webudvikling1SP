@@ -1,3 +1,4 @@
+//Function to create a redirect URL to our backend controller and attach all current query params to it
 const redirectUrl = () => {
     const redirectURL = new URL("/internal/login/sso/redirect", document.baseURI);
     const pathName = window.location.pathname.split("/").slice(1).join("/");
@@ -13,6 +14,7 @@ const redirectUrl = () => {
     return redirectURL;
 }
 
+//Function to disable all elements with the class .is-logged-in-cta
 const disabledCTAs = () => {
     const user = localStorage.getItem("user");
 

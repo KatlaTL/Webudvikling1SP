@@ -1,8 +1,9 @@
+//Populate the list of feature requests
 const fillRequests = (requests) => {
     if (!requests) {
         return;
     }
-    
+
     const requestsDiv = document.querySelector(".scroll-box-feature");
     let requestHtml = "";
 
@@ -39,7 +40,7 @@ const fillRequests = (requests) => {
                     <div class="col-md-2">
                         <button class="upvote-cta btn mr-2 mb-2 btn-pill btn-icon btn-outline-primary">
                             <span><i>↑</i></span>
-                            <p>${requests[i].upvotes}</p>
+                            <p class="upvote-p">${requests[i].upvotes}</p>
                         </button>
                     </div>
                 </div>
@@ -47,4 +48,61 @@ const fillRequests = (requests) => {
     }
 
     requestsDiv.innerHTML = requestHtml;
+}
+
+//Populate the road map with feature requests
+const fillRoadMap = (requests, statusSelector) => {
+    if (!requests) {
+        return;
+    }
+
+    const statusDiv = document.querySelector(statusSelector);
+    const requestDiv = statusDiv.querySelector(".scroll-box")
+    let requestHTML = "";
+
+    for (let i = 0; i < requests.length; i++) {
+        requestHTML += `
+            <div class="row feature-request" data-requestid=${requests[i].id}>
+                <div class="col-md-9">
+                    <h6 class="commenttitle">${requests[i].title}</h6>
+                    <p class="commenttekst">${requests[i].description}</p>
+                </div>
+
+                <div class="col-md-3">
+                    <button class="smallupvote">
+                        <span><i>↑</i></span>
+                        <p class="upvote-p">${requests[i].upvotes}</p>
+                    </button>
+                </div>
+            </div>
+        `
+    }
+    requestDiv.innerHTML = requestHTML;
+}
+
+//Enable upvote functionality for all feature requests
+const enableUpvoteCTA = (selector) => {
+    const upvoteCTA = document.querySelectorAll(selector);
+    upvoteCTA.forEach((cta) => {
+        cta.addEventListener("click", (e) => {
+            e.preventDefault();
+            const request = cta.closest(".feature-request");
+            const requestId = request.dataset.requestid;
+            const user = localStorage.getItem("user");
+
+            if (!user) {
+                window.location.href = redirectUrl();
+            }
+
+            if (requestId) {
+                fetchWrapper.put(`/internal/feature-requests/${requestId}/upvotes`, {
+                    headers: {
+                        "Authorization": `Bearer ${JSON.parse(user).authorization}`
+                    }
+                })
+                .then(data => document.querySelectorAll(`.feature-request-upvotes [data-requestid="${requestId}"] .upvote-p`).forEach((value) => value.innerHTML = data.amount))
+                .catch(err => window.location.href = redirectUrl());
+            }
+        })
+    });
 }

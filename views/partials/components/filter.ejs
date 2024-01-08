@@ -19,6 +19,7 @@
 
 
 <script>
+  //Function to add or remove filter params to the URL
   const addSearchParams = (name, value, clear = false) => {
     const filterURL = new URL("/", document.baseURI)
     const queryString = window.location.search;
@@ -28,20 +29,16 @@
       filterURL.searchParams.set(key, value); //attach all existing query params to the new URL
     })
 
-
-    if (filterURL.searchParams.has("sortBy") && name === "sortBy") {
-      filterURL.searchParams.set("sortBy", value);
-    } else {
-      filterURL.searchParams.set(name, value);
-    }
-
     if (clear) {
       filterURL.searchParams.delete(name);
+    } else {
+      filterURL.searchParams.set(name, value);
     }
 
     return filterURL.pathname + filterURL.search;
   }
 
+  //Function to generate list items for given list
   const generateListItems = (list, paramName, value, id = value) => {
     const listItem = document.createElement("li");
     const linkItem = document.createElement("a");

@@ -1,3 +1,4 @@
+//Function to add error messages to elements in a form
 const insertMessage = (data, selector = "form") => {
     removeMessage();
 
@@ -30,6 +31,7 @@ const insertMessage = (data, selector = "form") => {
     }
 }
 
+//Function to remove error messages
 const removeMessage = () => {
     const elements = document.querySelectorAll(".error-message");
     for (let i = 0; i < elements.length; i++) {
@@ -37,12 +39,14 @@ const removeMessage = () => {
     }
 }
 
+//Function to show the current chararacter count of an element
 const countCharacters = (element, cb) => {
     element.addEventListener("input", () => {
         cb(element.value.length);
     })
 }
 
+//Function to add the required class to elements with the required attribute
 const addRequired = (selector) => {
     const allRequired = document.querySelectorAll(`${selector} *[required]`);
     for (i in allRequired) {

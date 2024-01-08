@@ -12,7 +12,17 @@ exports.getAll = async (req, res) => {
   try {
     const requests = await FeatureRequestService.getAllRequests({ ...req.query });
     return res.status(200).json({ featureRequests: requests });
-  } catch (e) {
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+};
+
+exports.getAllByStatus = async (req, res) => {
+  try {
+    const { status } = req.params;
+    const requests = await FeatureRequestService.getAllRequestByStatus(status);
+    return res.status(200).json({ featureRequests: requests });
+  } catch (err) {
     return res.sendStatus(500);
   }
 };

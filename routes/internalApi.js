@@ -12,6 +12,7 @@ const router = express.Router();
 module.exports = () => {
     router.get('/feature-requests', FeatureRequest.getAll);
     router.post('/feature-requests', validate, userAuth, FeatureRequest.create);
+    router.get('/feature-requests/:status', FeatureRequest.getAllByStatus);
     router.put('/feature-requests/:requestId/upvotes', userAuth, Upvote.upvote);
     router.get('/feature-requests/:requestId/comments', FeatureRequest.getFeatureRequestComments);
     router.post('/feature-requests/:requestId/comments', validate, userAuth, Comment.createComment);

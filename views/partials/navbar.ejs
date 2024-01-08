@@ -17,6 +17,7 @@
     </div>
 </nav>
 <script>
+    //Function to toggle display of an element or an array of elements
     const toggleDisplay = (btn) => {
         if (Array.isArray(btn)) {
             for (let i = 0; i < btn.length; i++) {
@@ -41,6 +42,7 @@
             toggleDisplay([loginBtn, logoutBtn, signinBtn, signinUser]);
         }
 
+        //Enable logout functionality
         logoutBtn.addEventListener("click", (e) => {
             e.preventDefault();           
             fetchWrapper.put("/internal/logout")
@@ -52,6 +54,7 @@
                 .catch(err => console.error(err));
         });
 
+        //Enable login functionality
         loginBtn.addEventListener("click", (e) => {
             e.preventDefault();            
             window.location.href = redirectUrl();
