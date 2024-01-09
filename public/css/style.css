@@ -346,18 +346,12 @@ h2 {
 
 /*Scroll function*/
 
-.with-scroll .scroll-box {
-  max-height: 750px;
-  overflow-y: auto;
-  padding: 5px;
-}
-
 .with-scroll .scroll-box p {
   margin: 15;
 }
 
 
-.with-scroll .scroll-box-feature {
+.with-scroll .scroll-box-feature, .with-scroll .scroll-box {
   max-height: 660px;
   overflow-y: auto;
   padding: 5px;
@@ -564,6 +558,20 @@ hr {
   display: none;
 }
 
+.loader {
+  border: 9px solid #cecaca; /* Light grey */
+  border-top: 9px solid #4FA0F8;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /*Mobile*/
 @media (max-width: 767px) {

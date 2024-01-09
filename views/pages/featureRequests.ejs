@@ -33,6 +33,7 @@
 <script>
     const selectedFilter = document.querySelector("#selected-filter");
 
+    //Get the URL and query params
     const filterURL = new URL("/", document.baseURI)
     const queryString = window.location.search;
     const searchParams = new URLSearchParams(queryString);
@@ -59,23 +60,65 @@
         }
     });
 
+    const limit = 5;
+    let newOffset = 0;
+    let totalAmountOfRequests;
     //Fetch all feature requests base on the filter options
-    fetchWrapper.get(`/internal/feature-requests${queryString}`)
-        .then((res) => fillRequests(res.featureRequests))
-        .then(() => {
-            const featureRequest = document.querySelectorAll(".request-click");
-            featureRequest.forEach((x) => {
-                x.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const request = x.closest(".feature-request");
-                    const requestId = request.dataset.requestid;
+    const getRequests = (pagination = {}) => {
+        //Set pagination query params
+        if (Object.keys(pagination).length > 0) {
+            filterURL.searchParams.set("offset", pagination.offset || 0);
+            filterURL.searchParams.set("limit", pagination.limit || totalAmountOfRequests);
+        }
 
-                    if (requestId) {
-                        window.location.assign(`/feature-requests/${requestId}/comments`);
-                    }
-                })
-            });
-        })
-        .then(() => enableUpvoteCTA(".upvote-cta"))
-        .catch(err => console.error(err))
+        //Create loader div
+        const requestsDiv = document.querySelector(".scroll-box-feature");
+        const loadDiv = document.createElement("div");
+        loadDiv.setAttribute("class", "loader");
+        requestsDiv.insertAdjacentElement("afterend", loadDiv);
+
+        fetchWrapper.get(`/internal/feature-requests${filterURL.search}`)
+            .then((res) => {
+                newOffset += res.featureRequests.length;
+                totalAmountOfRequests = res.totalAmountOfRecords;
+                fillRequests(res.featureRequests);
+            })
+            .then(() => {
+                const featureRequest = document.querySelectorAll(".request-click");
+                featureRequest.forEach((x) => {
+                    x.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const request = x.closest(".feature-request");
+                        const requestId = request.dataset.requestid;
+
+                        if (requestId) {
+                            window.location.assign(`/feature-requests/${requestId}/comments`);
+                        }
+                    })
+                });
+            })
+            .then(() => enableUpvoteCTA(".upvote-cta"))
+            .catch(err => console.error(err))
+            .finally(() => {
+                filterURL.searchParams.delete("offset");
+                filterURL.searchParams.delete("limit");
+                requestsDiv.parentElement.removeChild(loadDiv)
+            })
+    }
+
+    //Call getRequest() once on load, to fetch the first batch of feature requests
+    getRequests();
+    const getRequestDebounce = debounce(getRequests);
+    
+    const scrollDiv = document.querySelector(".scroll-box-feature")
+    scrollDiv.addEventListener("scroll", (e) => {
+        if (!hasMoreRequest(newOffset, totalAmountOfRequests)) {
+            return;
+        }
+        //Check if the user has scrolled to the bottom of the feature requets scroll div.
+        //Following the documentation Math.abs is used since scrollTop can contain a decimal value 
+        if (Math.abs(scrollDiv.scrollHeight - scrollDiv.clientHeight - scrollDiv.scrollTop) < 50){
+            getRequestDebounce({offset: newOffset, limit});
+        }
+    }, { passive: true })
 </script>

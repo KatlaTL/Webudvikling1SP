@@ -41,7 +41,7 @@ exports.getAllRequestByStatus = async (status_name, transaction = null) => {
                     [Sequelize.col("Upvote.amount"), "upvotes"]
                 ]
             },
-            include:  {
+            include: {
                 model: Upvote,
                 attributes: []
             },
@@ -66,10 +66,21 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
     try {
         let queryOptions = {
             where: {},
-            order: [["title", "DESC"]]
+            order: [["title", "DESC"]],
+            limit: 7,
+            offset: 0
         }
         for (const [key, value] of Object.entries(options)) {
             switch (key) {
+                case "offset":
+                    queryOptions.offset = Number(value);
+                    break;
+                case "limit":
+                    if (!Number(value)) {
+                        continue;
+                    }
+                    queryOptions.limit = Number(value);
+                    break;
                 case "search":
                     if (!value) {
                         continue;
@@ -115,6 +126,13 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
             }
         }
 
+        //Use count() and findAll() separately since findAndCountAll() doesn't return the desired result when used with group by
+        //Following a bug that has since been changed to a doc issue in this thread https://github.com/sequelize/sequelize/issues/6148
+        const count = await Feature_request.count({
+            ...queryOptions,
+            subQuery: false
+        }, { transaction: transaction })
+
         const requests = await Feature_request.findAll({
             attributes: {
                 include: [
@@ -134,12 +152,13 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
                 model: Comment,
                 attributes: []
             }],
+            distinct: true,
+            subQuery: false,
             group: ["Feature_request.id"]
         }, { transaction: transaction });
 
         if (unManaged) await transaction.commit();
-
-        return requests;
+        return { requests, count };
     } catch (err) {
         if (unManaged) await transaction.rollback();
         throw (err);

@@ -47,7 +47,7 @@ const fillRequests = (requests) => {
             </div>`
     }
 
-    requestsDiv.innerHTML = requestHtml;
+    requestsDiv.innerHTML += requestHtml;
 }
 
 //Populate the road map with feature requests
@@ -100,9 +100,14 @@ const enableUpvoteCTA = (selector) => {
                         "Authorization": `Bearer ${JSON.parse(user).authorization}`
                     }
                 })
-                .then(data => document.querySelectorAll(`.feature-request-upvotes [data-requestid="${requestId}"] .upvote-p`).forEach((value) => value.innerHTML = data.amount))
-                .catch(err => window.location.href = redirectUrl());
+                    .then(data => document.querySelectorAll(`.feature-request-upvotes [data-requestid="${requestId}"] .upvote-p`).forEach((value) => value.innerHTML = data.amount))
+                    .catch(err => window.location.href = redirectUrl());
             }
         })
     });
+}
+
+//Function to check if there are more requests to fetch
+const hasMoreRequest = (amount, total) => {
+    return amount < total;
 }

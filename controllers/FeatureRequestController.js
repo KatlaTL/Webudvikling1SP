@@ -10,8 +10,8 @@ const { sequelize } = require("../models");
 
 exports.getAll = async (req, res) => {
   try {
-    const requests = await FeatureRequestService.getAllRequests({ ...req.query });
-    return res.status(200).json({ featureRequests: requests });
+    const { requests, count } = await FeatureRequestService.getAllRequests({ ...req.query });
+    return res.status(200).json({ featureRequests: requests, totalAmountOfRecords: count });
   } catch (err) {
     return res.sendStatus(500);
   }

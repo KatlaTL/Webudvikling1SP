@@ -55,6 +55,7 @@
     list.appendChild(listItem);
   }
 
+  //Get all categories and populate the category list
   fetchWrapper.get("/internal/categories")
     .then(data => {
       const categoryList = document.querySelector("#sortByCategory");
@@ -65,6 +66,7 @@
     })
     .catch(err => console.error(err));
 
+  //Get all statuses and populate the status list
   fetchWrapper.get("/internal/statuses")
     .then(data => {
       const statusList = document.querySelector("#sortByStatus");
@@ -86,6 +88,7 @@
     })
     .catch(err => console.error(err));
 
+  //Populate the sort list
   const sortByList = document.querySelector("#sortBy");
   const sortOptions = ["Trending", "Top", "New"];
   for (i in sortOptions) {
