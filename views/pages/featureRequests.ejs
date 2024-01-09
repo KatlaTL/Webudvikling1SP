@@ -24,14 +24,15 @@
 </div>
 
 <script>
-    let baseUrl = window.location.href + 'searchFeatureRequests/searchTerms/Terms';
-    const url = new URL(baseUrl);
+    let baseUrl = window.location.href + 'searchFeatureRequests/searchTerms/terms';
+    let url = new URL(baseUrl);
 
     let searchFormData = document.querySelector("#searchForm");
     searchFormData.addEventListener("submit",  (e) => {
         e.preventDefault()
         
         const searchFeature = searchFeatureInput.value;
+        console.log(searchFeature);
 
         if (searchFeature === "") {
             alert("Ensure you input a value in the field!");
@@ -39,15 +40,17 @@
         } else { 
            
             url.searchParams.set('searchFeature', searchFeature);
-            
-          const request1 = fetch(`${url.toString()}`).then(response => response.json());
+            const searchParamsUrl = `${url.toString()}`;
+            console.log(searchParamsUrl);
+
+          const request1 = fetch(searchParamsUrl).then(response => response.json());
           const request2 = fetch('/featureRequests').then(response => response.json());
 
-            Promise.all([request1,request2])
+            /* Promise.all([request1,request2])
             .then(([request1,request2])=>{
-                        
                 const searchData = request1.searchFeature;
                 const requests = request2.featureRequests;
+            
                 const searchDiv = document.querySelector(".scroll-box-feature");
                 let searchHtml = "";   
                 console.log(requests);
@@ -100,14 +103,13 @@
                         e.preventDefault();
                         const request = x.closest(".feature-request");
                         const requestId = request.dataset.requestid;
-                        console.log(requestId);
 
                         if (requestId) {
                             window.location.assign(`/comments/${requestId}` );
                     }})
                 });
                 
-            });
+            }); */
         }
     });
 
@@ -116,9 +118,21 @@
     const searchFeature = urlIdSplitted[4];
     console.log(searchFeature); */
 
-    fetchWrapper.get("/featureRequests")
-    .then((res) => {
-        const requests = res.featureRequests;
+    const request1 = fetch('/featureRequests').then(response => response.json());
+    const request2 = fetch('/categories').then(response => response.json());
+    const request3 = fetch('/statuses').then(response => response.json());
+    
+
+    Promise.all([request1,request2,request3])
+    .then(([request1,request2,request3])=>{
+        const requests = request1.featureRequests;
+        const categories = request2.categories;
+        const statuses = request3.statuses;
+
+        /* console.log(categories);
+        console.log(statuses); */
+
+
         const requestsDiv = document.querySelector(".scroll-box-feature");
         let requestHtml = "";
 
@@ -161,10 +175,60 @@
                     </div>
                 </div>`
         }
-
+    
         requestsDiv.innerHTML = requestHtml;
 
+        const category = document.querySelector(".category");
+        let categoryHtml = "";
+
+
+        for (let i = 0; i < categories.length; i++) {
+            categoryHtml += `
+                <li  id="${categories[i].id}"><p class="category_li">${categories[i].category}</p></li>
+            `    
+        }
+
+        category.innerHTML = categoryHtml;
+
+        const categoryList = document.querySelectorAll(".category_li");
+
+        categoryList.forEach((x) => {
+            x.addEventListener('click', (e) => {
+                e.preventDefault();
+                let category = x.closest("li");
+                let categoryId = category.id;
+                console.log(categoryId);
+
+
+                if (categoryId) {
+                    let baseUrl = window.location.href + 'categories/filterCategories/terms';
+                    let url = new URL(baseUrl);
+                    url.searchParams.set('categoryId', categoryId);
+                    const categoriesUrl  = `${url.toString()}`;
+                    console.log(categoriesUrl);
+
+                   /*  window.location.assign(`${categoriesUrl}` ); */
+                   /*  fetch(`/categories/${categoryId}`).then(response => response.json()); */
+            }})
+        });
+
+
+
+        const status = document.querySelector(".status");
+        let statusHtml = "";
+
+
+        for (let i = 0; i < statuses.length; i++) {
+            statusHtml += `
+                <li class="${statuses[i].status}"><p href="#">${statuses[i].status}</p></li>
+            `    
+        }
+
+        status.innerHTML = statusHtml;
+
+
         const featureRequest = document.querySelectorAll(".request-click");
+
 
         featureRequest.forEach((x) => {
             x.addEventListener('click', (e) => {

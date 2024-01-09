@@ -400,16 +400,17 @@ h2 {
 	position: relative;
 	width:auto;
 }
-.dropdownmenu a {
+.dropdownmenu p {
 	color: black;
 	display: block;
 	padding: 10px 25px;
 	text-align: center;
 	text-decoration: none;
 }
-.dropdownmenu li:hover a {
+.dropdownmenu li:hover p {
 	background: #00956c;
   color: white;
+  width: 150px;
 }
 #submenu {
 	left: 0;
