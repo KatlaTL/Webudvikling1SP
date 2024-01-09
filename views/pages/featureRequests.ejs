@@ -41,12 +41,11 @@
            
             url.searchParams.set('searchFeature', searchFeature);
             const searchParamsUrl = `${url.toString()}`;
-            console.log(searchParamsUrl);
 
           const request1 = fetch(searchParamsUrl).then(response => response.json());
           const request2 = fetch('/featureRequests').then(response => response.json());
 
-            /* Promise.all([request1,request2])
+            Promise.all([request1,request2])
             .then(([request1,request2])=>{
                 const searchData = request1.searchFeature;
                 const requests = request2.featureRequests;
@@ -109,7 +108,7 @@
                     }})
                 });
                 
-            }); */
+            });
         }
     });
 
@@ -207,7 +206,7 @@
                     const categoriesUrl  = `${url.toString()}`;
                     console.log(categoriesUrl);
 
-                   /*  window.location.assign(`${categoriesUrl}` ); */
+                    window.location.assign(`${categoriesUrl}` );
                    /*  fetch(`/categories/${categoryId}`).then(response => response.json()); */
             }})
         });

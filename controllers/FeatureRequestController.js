@@ -99,7 +99,7 @@ exports.getAllCategories = async (req, res) => {
 
 exports.FilterAllCategories = async (req, res) => {
   try {
-    let categoriesId = req.query.categoriesId;
+    let categoriesId = req.query.categoryId ;
     console.log(categoriesId);
 
     const findAllCategories = await Feature_request.findAll({
