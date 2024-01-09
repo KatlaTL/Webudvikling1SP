@@ -406,10 +406,12 @@ h2 {
 	padding: 10px 25px;
 	text-align: center;
 	text-decoration: none;
+  cursor: pointer;
 }
 .dropdownmenu li:hover p {
 	background: #00956c;
   color: white;
+  cursor: pointer;
   width: 150px;
 }
 #submenu {
@@ -435,6 +437,14 @@ li:hover ul#submenu {
 #submenu a {
 	background-color:#01a1a1;
   font-size: small;
+}
+
+.category_li {
+  margin: 0;
+}
+
+.status_li{
+  margin: 0;
 }
 
    /*Feature request comment*/
