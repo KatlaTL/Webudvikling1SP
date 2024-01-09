@@ -47,7 +47,7 @@
 <script>
     //Function to fetch all feature request by status name
     const fetchRequests = (status) => {
-        fetchWrapper.get(`internal/feature-requests/${status}`)
+        fetchWrapper.get(`/internal/feature-requests/${status}`)
             .then((res) => {
                 fillRoadMap(res.featureRequests, `#${status}`);
                 document.querySelector(`#${status}`).setAttribute("data-filled", "true");

@@ -165,11 +165,10 @@
                     </div>
                 </div>
             </div>`
-               
-            return request.Comments;     
+            return request;     
         })
-        .then(comments => {
-            insertComments(comments);
+        .then(request => {
+            insertComments(request.Comments);
 
             if (request.parent_feature_request_id) {
                 insertComments({
