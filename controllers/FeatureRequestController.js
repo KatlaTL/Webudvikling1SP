@@ -3,10 +3,11 @@ const FeatureRequestService = require("../services/FeatureRequestService");
 const StatusService = require("../services/StatusService");
 const UpvoteService = require("../services/UpvoteService");
 const CategoryService = require("../services/CategoryService");
-const { Category } = require("../models");
+const { Status } = require("../models");
 const { Feature_request } = require('../models');
 const { axiosPost } = require("../libs/axios");
 const { sequelize } = require("../models");
+const { Sequelize } = require("sequelize");
 
 exports.getAll = async (req, res) => {
   try {
@@ -118,6 +119,26 @@ exports.getAllStatuses = async (req, res) => {
     return res.status(200).json({ statuses: statuses });
   } catch (err) {
     res.sendStatus(500);
+  }
+}
+
+exports.FilterAllStatuses = async (req, res) => {
+  try {
+    let statusesId = req.query.statusId;
+    console.log(statusesId);
+
+    const findAllStatuses = await Feature_request.findAll({
+    where: {status_id: statusesId},
+    attributes: {
+        include: [
+            [Sequelize.col("Status.status"), "status"]
+        ]
+    },
+    include: [Status]
+    });
+    return res.status(200).json({statusesId: findAllStatuses});
+  } catch (err) {
+    throw (err);
   }
 }
 
