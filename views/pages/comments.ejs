@@ -32,7 +32,7 @@
 
                             <script>
                                 //Fetch all feature requests and populate the merge list
-                                fetchWrapper.get("/internal/feature-requests")
+                                fetchWrapper.get("/internal/feature-requests?limit=none")
                                     .then(data => {
                                         const selectList = document.querySelector("#merge-request-select");
                                         for (let i = 0; i < data.featureRequests.length; i++) {

@@ -76,6 +76,10 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
                     queryOptions.offset = Number(value);
                     break;
                 case "limit":
+                    if (value === "none") {
+                        delete queryOptions.limit;
+                        continue;
+                    }
                     if (!Number(value)) {
                         continue;
                     }
