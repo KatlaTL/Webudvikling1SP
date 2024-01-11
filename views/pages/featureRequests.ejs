@@ -81,7 +81,7 @@
             .then((res) => {
                 newOffset += res.featureRequests.length;
                 totalAmountOfRequests = res.totalAmountOfRecords;
-                fillRequests(res.featureRequests);
+                fillRequests(res.featureRequests, true);
             })
             .then(() => {
                 const featureRequest = document.querySelectorAll(".request-click");

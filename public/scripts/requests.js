@@ -1,5 +1,5 @@
 //Populate the list of feature requests
-const fillRequests = (requests) => {
+const fillRequests = (requests, infinite = false) => {
     if (!requests) {
         return;
     }
@@ -47,7 +47,11 @@ const fillRequests = (requests) => {
             </div>`
     }
 
-    requestsDiv.innerHTML += requestHtml;
+    if (infinite) {
+        requestsDiv.innerHTML += requestHtml;
+    } else {
+        requestsDiv.innerHTML = requestHtml;
+    }
 }
 
 //Populate the road map with feature requests

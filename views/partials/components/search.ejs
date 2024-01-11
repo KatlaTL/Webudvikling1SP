@@ -44,6 +44,7 @@
         //Get all feature requests bases on filter params 
         fetchWrapper.get(searchURL)
             .then(res => {
+                console.log(res)
                 fillRequests(res.featureRequests)
                 const url = new URL(window.location);
                 if (searchString.value != "") {
