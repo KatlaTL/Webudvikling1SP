@@ -445,6 +445,12 @@ li:hover ul#submenu {
 
 .status_li{
   margin: 0;
+  font-size: 16px;
+}
+
+
+#submenu li p{
+  margin: 0;
 }
 
    /*Feature request comment*/
