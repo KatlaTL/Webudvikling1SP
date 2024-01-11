@@ -84,6 +84,22 @@ const fillRoadMap = (requests, statusSelector) => {
     requestDiv.innerHTML = requestHTML;
 }
 
+//Enable on click event listener for feature requests
+const enableRequestClick = (selector) => {
+    const featureRequest = document.querySelectorAll(selector);
+    featureRequest.forEach((x) => {
+        x.addEventListener('click', (e) => {
+            e.preventDefault();
+            const request = x.closest(".feature-request");
+            const requestId = request.dataset.requestid;
+
+            if (requestId) {
+                window.location.assign(`/feature-requests/${requestId}/comments`);
+            }
+        })
+    });
+}
+
 //Enable upvote functionality for all feature requests
 const enableUpvoteCTA = (selector) => {
     const upvoteCTA = document.querySelectorAll(selector);

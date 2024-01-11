@@ -83,20 +83,7 @@
                 totalAmountOfRequests = res.totalAmountOfRecords;
                 fillRequests(res.featureRequests, true);
             })
-            .then(() => {
-                const featureRequest = document.querySelectorAll(".request-click");
-                featureRequest.forEach((x) => {
-                    x.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const request = x.closest(".feature-request");
-                        const requestId = request.dataset.requestid;
-
-                        if (requestId) {
-                            window.location.assign(`/feature-requests/${requestId}/comments`);
-                        }
-                    })
-                });
-            })
+            .then(() => enableRequestClick(".request-click"))
             .then(() => enableUpvoteCTA(".upvote-cta"))
             .catch(err => console.error(err))
             .finally(() => {

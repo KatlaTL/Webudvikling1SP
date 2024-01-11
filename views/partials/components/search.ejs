@@ -53,6 +53,8 @@
                 }
                 window.history.pushState({}, '', url);
             })
+            .then(() => enableRequestClick(".request-click"))
+            .then(() => enableUpvoteCTA(".upvote-cta"))
             .catch(err => console.error(err))
     });
     searchString.addEventListener("input", fillRequestsDebounce)
