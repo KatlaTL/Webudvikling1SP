@@ -129,7 +129,6 @@ exports.mergeRequest = async (req, res) => {
       merged_request_id: request_to_merge
     });
   } catch (err) {
-    console.log(err)
     return res.status(500).json({
       status: 500,
       message: 'The request failed'
