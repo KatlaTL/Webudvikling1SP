@@ -75,7 +75,7 @@
                                             document.querySelector("#merge-request-select").disabled = true;
                                             document.querySelector("#merge-request-cta").disabled = true;
                                             document.querySelector("#comment").disabled = true;
-                                            document.querySelector("#is-logged-in-cta").disabled = true;
+                                            document.querySelector("#disable-if-logged-out").disabled = true;
                                         })
                                         .catch(err => {
                                             try {
@@ -107,14 +107,14 @@
                         <div class="commentFormDiv">
                             <form id="commentForm">
                                 <div class="form-group" id="comment-textarea">
-                                    <textarea class="form-control" name="comment" id="comment" placeholder="Write your comment here" maxlength="2000" required></textarea>
+                                    <textarea class="form-control disable-if-logged-out" name="comment" id="comment" placeholder="Write your comment here" maxlength="2000" required></textarea>
                                     <div class="character-counter">
                                         <span class="typed-characters">0</span>
                                         <span>/</span>
                                         <span class="maximum-characters">2000</span>
                                     </div> 
                                 </div>
-                                <button type="submit" id="submit" class="btn is-logged-in-cta">Comment</button>
+                                <button type="submit" id="submit" class="btn disable-if-logged-out">Comment</button>
                                 <% if (!locals.loginInfo) { %>
                                     <!-- Including the loginLink -->
                                     <%- include("../partials/components/loginLink.ejs", { action: "comment"}) %>
@@ -179,7 +179,7 @@
                 document.querySelector("#merge-request-select").disabled = true;
                 document.querySelector("#merge-request-cta").disabled = true;
                 document.querySelector("#comment").disabled = true;
-                document.querySelector(".is-logged-in-cta").disabled = true;
+                document.querySelector(".disable-if-logged-out").disabled = true;
             }
         })
         .then(() => enableUpvoteCTA(".upvote-cta"))

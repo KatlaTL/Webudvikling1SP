@@ -63,8 +63,7 @@ textarea {
   font-weight: 700 !important;
   border-radius: 10px;
   float: right;
-  margin: 10px;
-
+  margin-top: 10px;
 }
 
 #merge-request-form {
@@ -227,10 +226,10 @@ footer {
 
 .login-cta {
   float: right;
-  margin-top: 20px;
+  margin-top: 21px;
   margin-right: 10px;
   color: #000;
-  font-weight: 300;
+  font-weight: 550;
 }
 
 #submit {

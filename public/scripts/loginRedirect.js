@@ -14,12 +14,12 @@ const redirectUrl = () => {
     return redirectURL;
 }
 
-//Function to disable all elements with the class .is-logged-in-cta
+//Function to disable all elements with the class .disable-if-logged-out
 const disabledCTAs = () => {
     const user = localStorage.getItem("user");
 
     if (!user) {        
-        const CTAs = document.querySelectorAll(".is-logged-in-cta");
+        const CTAs = document.querySelectorAll(".disable-if-logged-out");
         
         for (i in CTAs) {
             CTAs[i].disabled = true;
