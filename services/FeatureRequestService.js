@@ -156,7 +156,6 @@ exports.getAllRequests = async (options = {}, transaction = null) => {
                 model: Comment,
                 attributes: []
             }],
-            distinct: true,
             subQuery: false,
             group: ["Feature_request.id"]
         }, { transaction: transaction });
