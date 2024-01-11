@@ -38,7 +38,7 @@
                             <button id="btngreen" type="submit" class="btn is-logged-in-cta">Submit</button>
                             <% if (!locals.loginInfo) { %>
                                 <!-- Including the loginLink -->
-                                <%- include("../partials/components/loginLink.ejs") %>
+                                <%- include("../partials/components/loginLink.ejs", { action: "create a feature request"}) %>
                             <% } %>
                         </form>
                 </div>

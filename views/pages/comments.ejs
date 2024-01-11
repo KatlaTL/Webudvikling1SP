@@ -117,7 +117,7 @@
                                 <button type="submit" id="submit" class="btn is-logged-in-cta">Comment</button>
                                 <% if (!locals.loginInfo) { %>
                                     <!-- Including the loginLink -->
-                                    <%- include("../partials/components/loginLink.ejs") %>
+                                    <%- include("../partials/components/loginLink.ejs", { action: "comment"}) %>
                                 <% } %>
                             </form>
                         </div>
