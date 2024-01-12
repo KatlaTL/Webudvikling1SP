@@ -279,8 +279,9 @@ footer {
   background-color: #4FA0F8;
   color: white;
   border-radius: 12px;
+  text-align: center;
   width: 12%;
-  padding: 1%;
+  padding: 0.8% 0.5%;
   font-size: 11px;
 }
 

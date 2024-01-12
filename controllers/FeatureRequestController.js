@@ -104,9 +104,10 @@ exports.mergeRequest = async (req, res) => {
     const { "merge-request-select": request_to_merge } = req.body;
     const user_id = req.user?.id;
     const feature_request_id = Number(req.params.requestId);
+    const newStatus = "Closed";
 
     const user = await sequelize.transaction(async (transaction) => {
-      const statusFound = await StatusService.getStatusByName("Closed", transaction);
+      const statusFound = await StatusService.getStatusByName(newStatus, transaction);
 
       await FeatureRequestService.updateRequest(feature_request_id, {
         parent_feature_request_id: request_to_merge,
@@ -125,6 +126,7 @@ exports.mergeRequest = async (req, res) => {
 
     return res.status(200).json({
       User: user,
+      status: newStatus,
       createdAt: new Date(),
       merged_request_id: request_to_merge
     });

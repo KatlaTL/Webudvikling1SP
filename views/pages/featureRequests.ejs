@@ -96,7 +96,7 @@
     //Call getRequest() once on load, to fetch the first batch of feature requests
     getRequests();
     const getRequestDebounce = debounce(getRequests);
-    
+
     const scrollDiv = document.querySelector(".scroll-box-feature")
     scrollDiv.addEventListener("scroll", (e) => {
         if (!hasMoreRequest(newOffset, totalAmountOfRequests)) {
@@ -104,8 +104,8 @@
         }
         //Check if the user has scrolled to the bottom of the feature requets scroll div.
         //Following the documentation Math.abs is used since scrollTop can contain a decimal value 
-        if (Math.abs(scrollDiv.scrollHeight - scrollDiv.clientHeight - scrollDiv.scrollTop) < 50){
-            getRequestDebounce({offset: newOffset, limit});
+        if (Math.abs(scrollDiv.scrollHeight - scrollDiv.clientHeight - scrollDiv.scrollTop) < 50) {
+            getRequestDebounce({ offset: newOffset, limit });
         }
     }, { passive: true })
 </script>
