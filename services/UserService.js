@@ -1,6 +1,5 @@
 
-const { User, sequelize } = require("../models");
-const { User_has_role } = require("../models");
+const { User, sequelize, User_has_role } = require("../models");
 const { Op, Sequelize } = require("sequelize");
 
 exports.getUser = async (attributes = {}, transaction = null) => {
