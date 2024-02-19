@@ -8,5 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v4
+      - name: Use node.js
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: "18.x"
+      - name: Install jest
       - run: npm install --save-dev jest
+      - name: Run tests
       - run: npm run test 
