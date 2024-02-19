@@ -23,7 +23,8 @@
   },
   "scripts": {
     "dev": "nodemon index.js",
-    "db:reset": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
+    "db:reset": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
+    "test": "jest"
   },
   "description": "",
   "main": "index.js",
@@ -36,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/KatlaTL/Webudvikling1SP/issues"
   },
-  "homepage": "https://github.com/KatlaTL/Webudvikling1SP#readme"
+  "homepage": "https://github.com/KatlaTL/Webudvikling1SP#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
