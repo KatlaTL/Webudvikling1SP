@@ -20,7 +20,7 @@ background-color: #1f9e85;
 margin-bottom: 25px;
 }
 
-#signin {
+#signin, #signin-user {
   line-height: 43px !important;
   margin-left: 2px;
   padding: 0 34px;
@@ -54,7 +54,7 @@ margin-bottom: 25px;
     font-weight: 700 !important;
     border-radius: 4px;
     float: right;
-    margin: 10px;
+    margin-top: 10px;
   }
   
   #btngreen:hover {

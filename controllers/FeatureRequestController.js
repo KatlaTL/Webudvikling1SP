@@ -3,14 +3,26 @@ const FeatureRequestService = require("../services/FeatureRequestService");
 const StatusService = require("../services/StatusService");
 const UpvoteService = require("../services/UpvoteService");
 const CategoryService = require("../services/CategoryService");
+const CommentService = require("../services/CommentService");
+const UserService = require("../services/UserService");
 const { axiosPost } = require("../libs/axios");
 const { sequelize } = require("../models");
 
 exports.getAll = async (req, res) => {
   try {
-    const requests = await FeatureRequestService.getAllRequests();
+    const { requests, count } = await FeatureRequestService.getAllRequests({ ...req.query });
+    return res.status(200).json({ featureRequests: requests, totalAmountOfRecords: count });
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+};
+
+exports.getAllByStatus = async (req, res) => {
+  try {
+    const { status } = req.params;
+    const requests = await FeatureRequestService.getAllRequestByStatus(status);
     return res.status(200).json({ featureRequests: requests });
-  } catch (e) {
+  } catch (err) {
     return res.sendStatus(500);
   }
 };
@@ -74,11 +86,12 @@ exports.create = async (req, res) => {
     if (!emailSent) {
       throw ("email failed")
     }
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: `Feature request created with ID: ${featureRequest.id}`
     });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       status: 500,
       message: 'The request failed'
@@ -86,15 +99,84 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.mergeRequest = async (req, res) => {
+  try {
+    const { "merge-request-select": request_to_merge } = req.body;
+    const user_id = req.user?.id;
+    const feature_request_id = Number(req.params.requestId);
+    const newStatus = "Closed";
+
+    const user = await sequelize.transaction(async (transaction) => {
+      const statusFound = await StatusService.getStatusByName(newStatus, transaction);
+
+      await FeatureRequestService.updateRequest(feature_request_id, {
+        parent_feature_request_id: request_to_merge,
+        status_id: statusFound.id
+      }, transaction);
+
+      const comment = `Feature request :feature_request_id:${feature_request_id}:feature_request_id: has been merged into this post`;
+      await CommentService.createComment({
+        comment,
+        feature_request_id: request_to_merge,
+        user_id
+      }, transaction);
+
+      return await UserService.getUser(user_id, transaction);
+    });
+
+    return res.status(200).json({
+      User: user,
+      status: newStatus,
+      createdAt: new Date(),
+      merged_request_id: request_to_merge
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    });
+  }
+}
+
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await CategoryService.getAllCategories();
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       categories: categories
     })
   } catch (err) {
-    res.sendStatus(500);
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    });
   }
 }
 
+exports.getAllStatuses = async (req, res) => {
+  try {
+    const statuses = await StatusService.getAllStatuses();
+    return res.status(200).json({
+      status: 200,
+      statuses: statuses
+    })
+  } catch (err) {
+    return res.status(500).json({
+      status: 500,
+      message: 'The request failed'
+    });
+  }
+}
+
+exports.getFeatureRequestComments = async (req, res) => {
+  try {
+    const feature_request_id = Number(req.params.requestId);
+    const featureRequest = await FeatureRequestService.getAllCommentsByRequestID(feature_request_id);
+    return res.status(200).json({ featureRequest });
+  } catch (err) {
+    return res.status(500).json({
+      status: 500,
+      message: "Request failed"
+    });
+  }
+}

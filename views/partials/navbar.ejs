@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <img src="https://webdock.io/static/common/images/webdock-logo-hvid.svg" height="34" class="d-inline-block align-top" alt="Logo">
         </a>
 
@@ -10,12 +10,14 @@
                 <a class="nav-link" style="display: none;" id="logout" href="#">Logout</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="signin" href="#">Sign Up</a>
+                <a class="nav-link" style="display: block;" id="signin" href="#">Sign Up</a>
+                <a class="nav-link" style="display: none;" id="signin-user"></a>
             </li>
         </ul>
     </div>
 </nav>
 <script>
+    //Function to toggle display of an element or an array of elements
     const toggleDisplay = (btn) => {
         if (Array.isArray(btn)) {
             for (let i = 0; i < btn.length; i++) {
@@ -32,22 +34,27 @@
         const loggedInUser = localStorage.getItem("user");
         const loginBtn = document.querySelector("#login");
         const logoutBtn = document.querySelector("#logout");
-
-        if (loggedInUser) {         
-            toggleDisplay([loginBtn, logoutBtn]);
+        const signinBtn = document.querySelector("#signin");
+        const signinUser = document.querySelector("#signin-user");
+        
+        if (loggedInUser) {    
+            signinUser.innerHTML = JSON.parse(loggedInUser).user_name;
+            toggleDisplay([loginBtn, logoutBtn, signinBtn, signinUser]);
         }
 
+        //Enable logout functionality
         logoutBtn.addEventListener("click", (e) => {
             e.preventDefault();           
-            fetchWrapper.put("/logout")
+            fetchWrapper.put("/internal/logout")
                 .then(() => {
                         localStorage.removeItem("user");
-                        toggleDisplay([loginBtn, logoutBtn]);
+                        toggleDisplay([loginBtn, logoutBtn, signinBtn, signinUser]);
                         window.location.href = "/";
                     })
                 .catch(err => console.error(err));
         });
 
+        //Enable login functionality
         loginBtn.addEventListener("click", (e) => {
             e.preventDefault();            
             window.location.href = redirectUrl();

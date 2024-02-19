@@ -1,130 +1,41 @@
 <div class="col-md-4">
     <div class="box box-right border card text-white mb-3">
-        <div class="card-header"> <h4><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-map-fill" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1z"/>
-          </svg>  Roadmap</h4></div>
+        <div class="card-header">
+            <h4><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-map-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1z" />
+                </svg> Roadmap</h4>
+        </div>
         <div class="card-body bg-white">
             <div class="progresstitle">
                 <div id="menu">
                     <ul>
                         <li><a id="tekst" href="#planned">Planned</a></li>
                         <li><a id="tekst" href="#inProgress">In Progress</a></li>
-                        <li><a id="tekst" href="#complete">Complete</a></li>
+                        <li><a id="tekst" href="#completed">Completed</a></li>
                     </ul>
                 </div>
 
 
-                <div id="planned" class="section with-scroll">
+                <div id="planned" class="section with-scroll status-section">
                     <h5 class="commenttitle">Planned</h5>
-                    <div class="scroll-box">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h6 class="commenttitle">Title</h6>
-                                <p class="commenttekst">Contrary to popular belief, Lorem Ipsum is not simply random
-                                    text.
-                                    It has roots in a piece of classical Latin literature</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <button class="smallupvote">
-                                    <span><i>↑</i></span>
-                                    <p>5</p>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h6 class="commenttitle">Title</h6>
-                                <p class="commenttekst">Contrary to popular belief, Lorem Ipsum is not simply random
-                                    text.
-                                    It has roots in a piece of classical Latin literature</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <button class="smallupvote">
-                                    <span><i>↑</i></span>
-                                    <p>5</p>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h6 class="commenttitle">Title</h6>
-                                <p class="commenttekst">Contrary to popular belief, Lorem Ipsum is not simply random
-                                    text.
-                                    It has roots in a piece of classical Latin literature</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <button class="smallupvote">
-                                    <span><i>↑</i></span>
-                                    <p>5</p>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h6 class="commenttitle">Title</h6>
-                                <p class="commenttekst">Contrary to popular belief, Lorem Ipsum is not simply random
-                                    text.
-                                    It has roots in a piece of classical Latin literature</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <button class="smallupvote">
-                                    <span><i>↑</i></span>
-                                    <p>5</p>
-                                </button>
-                            </div>
-                        </div>
-
+                    <div class="scroll-box feature-request-upvotes">
+                        <!-- Feature requests goes here -->
                     </div>
                 </div>
 
-                <div id="inProgress" class="section with-scroll" style="display: none;">
+                <div id="inProgress" class="section with-scroll status-section" style="display: none;">
                     <h5 class="commenttitle">In Progress</h5>
-                    <div class="scroll-box">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h6 class="commenttitle">Title</h6>
-                                <p class="commenttekst">Contrary to popular belief, Lorem Ipsum is not simply random
-                                    text.
-                                    It has roots in a piece of classical Latin literature</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <button class="smallupvote">
-                                    <span><i>↑</i></span>
-                                    <p>5</p>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="scroll-box feature-request-upvotes">
+                        <!-- Feature requests goes here -->
                     </div>
-
                 </div>
 
-                <div id="complete" class="section with-scroll" style="display: none;">
-                    <h5 class="commenttitle">Complete</h5>
-                    <div class="scroll-box">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h6 class="commenttitle">Title</h6>
-                                <p class="commenttekst">Contrary to popular belief, Lorem Ipsum is not simply random
-                                    text.
-                                    It has roots in a piece of classical Latin literature</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <button class="smallupvote">
-                                    <span><i>↑</i></span>
-                                    <p>5</p>
-                                </button>
-                            </div>
-                        </div>
-
+                <div id="completed" class="section with-scroll status-section" style="display: none;">
+                    <h5 class="commenttitle">Completed</h5>
+                    <div class="scroll-box feature-request-upvotes">
+                        <!-- Feature requests goes here -->
                     </div>
                 </div>
 
@@ -134,33 +45,48 @@
 </div>
 
 <script>
-    /* document.addEventListener("DOMContentLoaded", function () {
-        const links = document.querySelectorAll('a[href^="#"]');
+    //Function to fetch all feature request by status name
+    const fetchRequests = (status) => {
+        fetchWrapper.get(`/internal/feature-requests/${status}`)
+            .then((res) => {
+                fillRoadMap(res.featureRequests, `#${status}`);
+                document.querySelector(`#${status}`).setAttribute("data-filled", "true");
+            })
+            .then(() => enableUpvoteCTA(".smallupvote"))
+            .catch(err => console.error(err));
+    }
+
+    //Envoke fetchRequests() with planned status on load 
+    fetchRequests("planned");
+
+    //Toggle display for requests with different statuses
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll('.progresstitle a');
         links.forEach(link => {
-            link.addEventListener('click', toggleSection);
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const targetId = e.target.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                const isFilled = targetElement?.dataset?.filled;
+
+                //Only fetch the data if it has not already been fetched
+                if (!isFilled) {
+                    fetchRequests(targetId.substring(1));
+                }
+
+                const sections = document.querySelectorAll('.status-section');
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                targetElement.style.display = 'block';
+
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            });
         });
     });
-
-    function toggleSection(e) {
-        e.preventDefault();
-
-        const targetId = e.target.getAttribute('href').substring(1);
-        console.log(targetId)
-        const targetElement = document.getElementById(targetId);
-
-
-        const sections = document.querySelectorAll('.section');
-        sections.forEach(section => {
-            section.style.display = 'none';
-        });
-
-
-        targetElement.style.display = 'block';
-
-
-        window.scrollTo({
-            top: targetElement.offsetTop,
-            behavior: 'smooth'
-        });
-    } */
 </script>

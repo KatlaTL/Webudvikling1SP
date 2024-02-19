@@ -13,24 +13,33 @@
                         <form id="createForm">
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <select class="form-control" id="category" name="category">
+                                <select class="form-control disable-if-logged-out" id="category" name="category" required>
                                     <option value="" disabled selected>Select a Category</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                    placeholder="Short descriptive title">
+                                <input type="text" class="form-control disable-if-logged-out" id="title" name="title"
+                                    placeholder="Short descriptive title" maxlength="100" required>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="request-textarea">
                                 <label for="details">Details</label>
-                                <textarea class="form-control" id="details" name="details"
-                                    placeholder="Any additional details..."></textarea>
+                                <textarea class="form-control disable-if-logged-out" id="details" name="details"
+                                    placeholder="Any additional details..." maxlength="500" required></textarea>
+                                <div class="character-counter">
+                                    <span class="typed-characters">0</span>
+                                    <span>/</span>
+                                    <span class="maximum-characters">500</span>
+                                </div>                               
                             </div>
 
-                            <button id="btngreen" type="submit" class="btn">Submit</button>
+                            <button id="btngreen" type="submit" class="btn disable-if-logged-out">Submit</button>
+                            <% if (!locals.loginInfo) { %>
+                                <!-- Including the loginLink -->
+                                <%- include("../partials/components/loginLink.ejs", { action: "create a feature request"}) %>
+                            <% } %>
                         </form>
                 </div>
             </div>
@@ -41,7 +50,8 @@
 </div>
 
 <script>
-    fetchWrapper.get("/categories")
+    //Fetch all categories and populate the category select
+    fetchWrapper.get("/internal/categories")
         .then(data => {
             const selectList = document.querySelector(".form-control");
             for (let i = 0; i < data.categories.length; i++) {
@@ -57,25 +67,47 @@
         })
         .catch(err => console.error(err));    
     
+    //Add character count to details field
+    const details = document.querySelector("#details");
+    const detailsChars = document.querySelector(".typed-characters");
+    countCharacters(details, (chars) => {
+        detailsChars.textContent = chars;
+    })
+
+    //Add required class to elements with the required attribute to enable styling
+    const submitBtn = document.querySelector("#btngreen");
+    submitBtn.addEventListener("click", (e) => {
+        addRequired("#createForm");
+    })
+
+    //Do a post request to create a new feature request
     const form = document.querySelector("#createForm");
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         const { category, title, details} = e.target;
 
-        fetchWrapper.post("/featureRequests/create", {
+        fetchWrapper.post("/internal/feature-requests", {
             headers: {
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).authorization}`,
+                "Validation-Request-Type": "FeatureRequest"
             },
             body: {
                 category: { 
-                    id: category.options[category.selectedIndex].dataset.id,
+                    id: parseInt(category.options[category.selectedIndex].dataset.id),
                     category: category.value
                 },
                 title: title.value,
                 details: details.value
             }
         })
-        .then(data =>  window.location.href = new URL(document.baseURI).origin)
-        .catch(err => console.error(err));
+        .then(data => window.location.href = new URL(document.baseURI).origin)
+        .catch(err => {
+            try {
+                const data = JSON.parse(err.message);
+                insertMessage(data, "#createForm");
+            } catch (err) {
+                console.error(err);
+            }
+        });
     });
 </script>

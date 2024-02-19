@@ -1,3 +1,5 @@
+//Fetch wrapper to simplify the code need to do a fetch
+
 const get = (url, options = {}) => {
     const requestOptions = {
         method: 'GET',
@@ -31,7 +33,7 @@ const put = (url, options = {}) => {
         },
         body: JSON.stringify(body)
     };
-    return fetch(url, requestOptions).then(handleResponse);    
+    return fetch(url, requestOptions).then(handleResponse);
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
@@ -44,9 +46,9 @@ const _delete = (url, options = {}) => {
 }
 
 // helper function
-const handleResponse = (response) => {
+const handleResponse = async (response) => {
     if (!response.ok) {
-        return Promise.reject(`${response.url}: ${response.status} ${response.statusText}`);
+        return response.text().then(text => { throw new Error(text) })
     }
     return response.json().catch(err => Promise.reject(err.message));
 }

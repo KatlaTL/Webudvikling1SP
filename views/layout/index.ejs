@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Make the title dynamic -->
-    <%- include("../partials/header.ejs", {title: "Feature Requests"}) %>
+<!-- Make the title dynamic -->
+<%- include("../partials/header.ejs", {title: "Feature Requests" }) %>
+
+<% if (locals.loginInfo) { %>
+    <script>
+        const user = <%- loginInfo %>;
+        if (user && Object.keys(user).length > 0) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }           
+    </script>
+<% } %>
 
     <body>
         <%- include("../partials/navbar.ejs") %>
 
-        <%- include("../partials/components/filter.ejs") %>
-        <%- include("../partials/components/createRequestCTA.ejs") %>
-        <%- include("../partials/components/search.ejs") %>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <% if (pageUrl && pageUrl === "featureRequests") { %>
+                            <%- include("../partials/components/filter.ejs") %>
+                        <% } %>
+                    </div>
+                    <%- include("../partials/components/createRequestCTA.ejs") %>
+                    <%- include("../partials/components/search.ejs") %>
+                </div>
+            </div>
 
-       
 
-        <div id="main-content">
-            <% if (pageUrl) { %>
-                <%- include("../pages/" + pageUrl + ".ejs") %>
-            <% } %>
-        </div>
+            <div id="main-content">
+                <% if (pageUrl) { %>
+                    <%- include("../pages/" + pageUrl + ".ejs" ) %>
+                <% } %>
+            </div>
 
-        <%- include("../partials/footer.ejs") %>
+            <%- include("../partials/footer.ejs") %>
     </body>
 
-    <% if (locals.loginInfo) { %>
-        <script>
-            const user = <%- loginInfo %>;
-            if (user && Object.keys(user).length > 0) {
-                localStorage.setItem("user", JSON.stringify(user));
-            }           
-        </script>
-    <% } %>
-
+    <script>
+        disabledCTAs();
+    </script>
 </html>

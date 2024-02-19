@@ -2,16 +2,60 @@
     <div class="search-container">
         <div class="search-box">
             <label for="searchInput" class="search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="#D2D2D2" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="#D2D2D2" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
             </label>
             <input type="text" id="searchInput" placeholder="Search..." class="search-input">
         </div>
-        <ul id="resultsList"></ul>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div
+<% if (pageUrl && pageUrl != "featureRequests") { %>
+    <script>
+        document.querySelector("#searchInput").disabled = true;
+    </script>
+<% } %>
+
+<script>
+    //Get search string from query params
+    const searchString = document.querySelector("#searchInput");
+    const sq = window.location.search;
+    const sp = new URLSearchParams(sq);
+    if (sp.has("search")) {
+        searchString.value = sp.get("search");
+    }
+
+    //Debounce functions to limited amount of backend calls
+    const fillRequestsDebounce = debounce(() => {
+        //Get existing filter params and attach them to the URL
+        const searchURL = new URL("/internal/feature-requests", document.baseURI)
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        urlParams.forEach((value, key) => {
+            if (key === "search") {
+                return;
+            }
+            searchURL.searchParams.append(key, value);
+        })
+        searchURL.searchParams.append("search", searchString.value);
+
+        //Get all feature requests bases on filter params 
+        fetchWrapper.get(searchURL)
+            .then(res => {
+                fillRequests(res.featureRequests)
+                const url = new URL(window.location);
+                if (searchString.value != "") {
+                    url.searchParams.set('search', searchString.value);
+                } else {
+                    url.searchParams.delete('search');
+                }
+                window.history.pushState({}, '', url);
+            })
+            .then(() => enableRequestClick(".request-click"))
+            .then(() => enableUpvoteCTA(".upvote-cta"))
+            .catch(err => console.error(err))
+    });
+    searchString.addEventListener("input", fillRequestsDebounce)
+</script>

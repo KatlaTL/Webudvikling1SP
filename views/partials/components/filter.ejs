@@ -1,36 +1,97 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <nav class="dropdownmenu">
-                <li><a href="#">Sort &darr;</a>
-                    <ul id="submenu">
-                      <li><a href="#">Trending</a></li>
-                      <li><a href="#">Top</a></li>
-                      <li><a href="#">New</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">Post In &darr;</a>
-                    <ul id="submenu">
-                      <li><a href="#">All Categories</a></li>
-                      <li><a href="#">Dashboard Features</a></li>
-                      <li><a href="#">Documentaion</a></li>
-                      <li><a href="#">Billing Features</a></li>
-                      <li><a href="#">Networking</a></li>
-                      <li><a href="#">Hardware And Products </a></li>
-                      <li><a href="#">Perfect Server Stacks</a></li>
-                      <li><a href="#">Mobile App</a></li>
-                      <li><a href="#">Webdock API</a></li>
-                      <li><a href="#">Compettion</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">Showing &darr;</a>
-                    <ul id="submenu">
-                      <li><a href="#">Under Review</a></li>
-                      <li><a href="#">Planned</a></li>
-                      <li><a href="#">In Progress</a></li>
-                      <li><a href="#">Complete</a></li>
-                      <li><a href="#">My Own</a></li>
-                    </ul>
-                  </li>
-              </nav>
-        </div>
+<nav class="dropdownmenu">
+  <li><a href="#" onclick="window.location.href = addSearchParams('sortBy', '', true); return false;">Sort &darr;</a>
+    <ul class="submenu" id="sortBy">
+      <!-- SortBy will be inserted here -->
+    </ul>
+  </li>
+  <li><a href="#" onclick="window.location.href = addSearchParams('category', '', true); return false;">Posted In
+      &darr;</a>
+    <ul class="submenu" id="sortByCategory">
+      <!-- Categories will be inserted here -->
+    </ul>
+  </li>
+  <li><a href="#" onclick="window.location.href = addSearchParams('status', '', true); return false;">Showing &darr;</a>
+    <ul class="submenu" id="sortByStatus">
+      <!-- Statuses will be inserted here -->
+    </ul>
+  </li>
+</nav>
+
+
+<script>
+  //Function to add or remove filter params to the URL
+  const addSearchParams = (name, value, clear = false) => {
+    const filterURL = new URL("/", document.baseURI)
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    urlParams.forEach((value, key) => {
+      filterURL.searchParams.set(key, value); //attach all existing query params to the new URL
+    })
+
+    if (clear) {
+      filterURL.searchParams.delete(name);
+    } else {
+      filterURL.searchParams.set(name, value);
+    }
+
+    return filterURL.pathname + filterURL.search;
+  }
+
+  //Function to generate list items for given list
+  const generateListItems = (list, paramName, value, id = value) => {
+    const listItem = document.createElement("li");
+    const linkItem = document.createElement("a");
+    const textNode = document.createTextNode(value);
+
+    linkItem.appendChild(textNode);
+    linkItem.setAttribute("href", "#");
+    linkItem.setAttribute("class", "submenu-a");
+    linkItem.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = addSearchParams(paramName, id);
+    })
+    listItem.appendChild(linkItem);
+    list.appendChild(listItem);
+  }
+
+  //Get all categories and populate the category list
+  fetchWrapper.get("/internal/categories")
+    .then(data => {
+      const categoryList = document.querySelector("#sortByCategory");
+      for (let i = 0; i < data.categories.length; i++) {
+        const category = data.categories[i].category;
+        generateListItems(categoryList, "category", category);
+      }
+    })
+    .catch(err => console.error(err));
+
+  //Get all statuses and populate the status list
+  fetchWrapper.get("/internal/statuses")
+    .then(data => {
+      const statusList = document.querySelector("#sortByStatus");
+      const isAdmin = <%- locals.admin %>;
+      for (let i = 0; i < data.statuses.length; i++) {
+        const status = data.statuses[i].status;
+        if (!isAdmin && status === "Closed") {
+          continue;
+        }
+        generateListItems(statusList, "status", status);
+      }
+      return statusList;
+    })
+    .then(statusList => {
+      const userObj = localStorage.getItem("user");
+      if (userObj) {
+        generateListItems(statusList, "myOwn", "My Own", JSON.parse(userObj).user_id);
+      }
+    })
+    .catch(err => console.error(err));
+
+  //Populate the sort list
+  const sortByList = document.querySelector("#sortBy");
+  const sortOptions = ["Trending", "Top", "New"];
+  for (i in sortOptions) {
+    generateListItems(sortByList, "sortBy", sortOptions[i]);
+  }
+</script>
