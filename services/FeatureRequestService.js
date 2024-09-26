@@ -1,6 +1,5 @@
 const { Feature_request, Status, Comment, Category, Upvote } = require("../models");
 const { Sequelize } = require("sequelize");
-const axios = require("axios");
 
 exports.getAllRequests = async (transaction = null) => {
     try {
@@ -37,48 +36,12 @@ exports.createRequest = async (data, transaction = null) => {
     }
 };
 
-exports.getCategoryByName = async (category_name, transaction = null) => {
+exports.updateRequest = async (feature_request_id, data, transaction = null) => {
     try {
-        return await Category.findOne({
-            where: {
-                category: category_name
-            }
-        }, { transaction: transaction });
+        return await Feature_request.update(data, {
+            where: { id: feature_request_id }
+        }, { transaction: transaction })
     } catch (err) {
         throw (err);
     }
-};
-
-exports.getAllCategories = async (transaction = null) => {
-    try {
-        return await Category.findAll({ transaction: transaction });
-    } catch (err) {
-        throw (err);
-    }
-};
-
-exports.getStatusByName = async (status_name, transaction = null) => {
-    try {
-        return await Status.findOne({
-            where: { status: status_name }
-        }, { transaction: transaction });
-    } catch (err) {
-        throw (err);
-    }
-}
-
-exports.axiosPost = async (data) => {
-    return await axios.post('https://webdock.io/en/platform_data/feature_requests/new', data)
-        .then(response => {
-            return {
-                status: response.status,
-                data: response.data
-            }
-        })
-        .catch(error => {
-            return {
-                status: error.response.status,
-                message: error.message
-            }
-        });
 };

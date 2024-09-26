@@ -6,7 +6,8 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" id="login" href="#">Login</a>
+                <a class="nav-link" style="display: block;" id="login" href="#">Login</a>
+                <a class="nav-link" style="display: none;" id="logout" href="#">Logout</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="signin" href="#">Sign Up</a>
@@ -15,8 +16,41 @@
     </div>
 </nav>
 <script>
-    document.querySelector("#login").addEventListener("click", (e) => {
-        e.preventDefault();
-        window.location.href = redirectUrl();
-   });
+    const toggleDisplay = (btn) => {
+        if (Array.isArray(btn)) {
+            for (let i = 0; i < btn.length; i++) {
+                let display = btn[i].style.display;
+                btn[i].style.display = (display === "none") || (display.length === 0) ? "block" : "none";
+            }
+        } else {
+            let display = btn.style.display;
+            btn.style.display = (display === "none") || (display.length === 0) ? "block" : "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const loggedInUser = localStorage.getItem("user");
+        const loginBtn = document.querySelector("#login");
+        const logoutBtn = document.querySelector("#logout");
+
+        if (loggedInUser) {         
+            toggleDisplay([loginBtn, logoutBtn]);
+        }
+
+        logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault();           
+            fetchWrapper.put("/logout")
+                .then(() => {
+                        localStorage.removeItem("user");
+                        toggleDisplay([loginBtn, logoutBtn]);
+                        window.location.href = "/";
+                    })
+                .catch(err => console.error(err));
+        });
+
+        loginBtn.addEventListener("click", (e) => {
+            e.preventDefault();            
+            window.location.href = redirectUrl();
+        });
+    })
 </script>

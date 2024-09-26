@@ -5,12 +5,15 @@ const { serialize } = require("cookie");
 exports.redirect = (req, res) => {
     const { page, ...rest } = req.query;
 
-    const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud";
+    const host = process.env.SSO_redirect_back || "http://localhost:3000";
     const path = "/login/sso/token";
 
     const returnURL = new URL(host + path);
-    returnURL.searchParams.append("page", page);
-    
+
+    if (page) {
+        returnURL.searchParams.append("page", page);
+    }
+
     for (const [key, value] of Object.entries(rest)) {
         returnURL.searchParams.append(key, value);
     }
@@ -52,10 +55,10 @@ exports.login = async (req, res) => {
             httpOnly: true, //makes so the cookie can't be accessed through client site javascript
             maxAge: maxAge,
             secure: process.env.NODE_ENV === 'production', //Secure set httpOnly to httpsOnly, for development set it to false
-            sameSite: "strict", //Cookie will not be sent along with requests initiated by third-party websites
+            sameSite: "lax", //Cookie will not be sent along with requests initiated by third-party websites
             path: "/"
         }));
-        
+
         const host = process.env.SSO_redirect_back || "http://webdockproje.vps.webdock.cloud";
         const url = new URL(`${host}/${page}`);
 
@@ -65,9 +68,29 @@ exports.login = async (req, res) => {
                 url.searchParams.append(key, value);
             }
         });
-        
+
         res.redirect(url);
     } catch (err) {
         return res.sendStatus(500);
     }
 };
+
+exports.logout = (req, res) => {
+    const { authorization } = req.cookies;
+
+    if (authorization) {
+        //clear the cookie by creating a new cookie with the exact same settings, but setting maxAge to somewhere in the past
+        res.setHeader("Set-Cookie", serialize("authorization", null, {
+            httpOnly: true,
+            maxAge: 0,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: "lax",
+            path: "/"
+        }));
+    }
+
+    res.status(200).json({
+        status: 200,
+        message: "Logged out"
+    });
+}

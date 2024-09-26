@@ -1,20 +1,6 @@
 const { sequelize } = require("../models");
 const UpvoteService = require("../services/UpvoteService");
 
-exports.getUpvotes = async (req, res) => {
-    try {
-        const feature_request_id = Number(req.params.requestId);
-        const [upvote] = await UpvoteService.getUpvote(feature_request_id, transaction);
-
-        return res.status(200).json(upvote);
-    } catch (err) {
-        return res.status(500).json({
-            status: 500,
-            message: "Request failed"
-        });
-    }
-};
-
 exports.upvote = async (req, res) => {
     try {
         const result = await sequelize.transaction(async (transaction) => {
@@ -31,7 +17,7 @@ exports.upvote = async (req, res) => {
                 await UpvoteService.decrement(upvote, transaction);
                 await UpvoteService.removeUserUpvotes(upvote, user, transaction);
             }
-            return await upvote.reload({ transaction, transaction });
+            return await UpvoteService.reload(upvote, transaction);
         });
 
         return res.status(200).json(result);
